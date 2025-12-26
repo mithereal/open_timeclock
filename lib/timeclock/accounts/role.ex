@@ -1,18 +1,34 @@
 defmodule Timeclock.Accounts.Role do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Ash.Resource,
+    otp_app: :timeclock,
+    domain: Timeclock.Accounts,
+    data_layer: AshPostgres.DataLayer,
+    authorizers: [],
+    extensions: [AshCommanded.Commanded.Dsl]
 
-  schema "roles" do
-    field :name, :string
-    field :permissions, {:array, :string}
+  attributes do
+    uuid_primary_key :id
 
-    timestamps(type: :utc_datetime)
+    attribute :name, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :permissions, :array do
+      public? true
+      allow_nil? false
+    end
+
+    create_timestamp :created_at
+    update_timestamp :updated_at
   end
 
-  @doc false
-  def changeset(role, attrs) do
-    role
-    |> cast(attrs, [:name, :permissions])
-    |> validate_required([:name, :permissions])
+  identities do
+    identity :unique_id, [:id]
+  end
+
+  postgres do
+    table "roles"
+    repo Timeclock.Repo
   end
 end

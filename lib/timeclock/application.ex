@@ -11,6 +11,11 @@ defmodule Timeclock.Application do
       TimeclockWeb.Telemetry,
       Timeclock.Repo,
       {DNSCluster, query: Application.get_env(:timeclock, :dns_cluster_query) || :ignore},
+      {Oban,
+       AshOban.config(
+         Application.fetch_env!(:timeclock, :ash_domains),
+         Application.fetch_env!(:timeclock, Oban)
+       )},
       {Phoenix.PubSub, name: Timeclock.PubSub},
       # Start a worker by calling: Timeclock.Worker.start_link(arg)
       # {Timeclock.Worker, arg},

@@ -9,8 +9,8 @@ defmodule Timeclock.Accounts do
     resource Timeclock.Accounts.Token
     resource Timeclock.Accounts.User
     resource Timeclock.Accounts.Account
-#    resource Timeclock.Accounts.Employee
-#    resource Timeclock.Accounts.Manager
-#    resource Timeclock.Accounts.Role
+    resource Timeclock.Accounts.Employee
+    resource Timeclock.Accounts.Manager
+    resource Timeclock.Accounts.Role
   end
 end

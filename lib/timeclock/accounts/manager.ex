@@ -1,18 +1,29 @@
 defmodule Timeclock.Accounts.Manager do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Ash.Resource,
+    otp_app: :timeclock,
+    domain: Timeclock.Accounts,
+    data_layer: AshPostgres.DataLayer,
+    authorizers: [],
+    extensions: [AshCommanded.Commanded.Dsl]
 
-  schema "managers" do
-    field :user_id, :id
-    field :department_id, :id
+  attributes do
+    uuid_primary_key :id
 
-    timestamps(type: :utc_datetime)
+    create_timestamp :created_at
+    update_timestamp :updated_at
   end
 
-  @doc false
-  def changeset(manager, attrs) do
-    manager
-    |> cast(attrs, [])
-    |> validate_required([])
+  identities do
+    identity :unique_id, [:id]
+  end
+
+  postgres do
+    table "managers"
+    repo Timeclock.Repo
+  end
+
+  relationships do
+    belongs_to :user, Timeclock.Accounts.User
+    #    belongs_to :department, Timeclock.Company.Dept
   end
 end

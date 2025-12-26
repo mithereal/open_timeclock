@@ -4,7 +4,7 @@ defmodule Timeclock.Accounts.User do
     domain: Timeclock.Accounts,
     data_layer: AshPostgres.DataLayer,
     authorizers: [Ash.Policy.Authorizer],
-    extensions: [AshAuthentication]
+    extensions: [AshAuthentication, AshCommanded.Commanded.Dsl]
 
   authentication do
     add_ons do

@@ -1,20 +1,31 @@
 defmodule Timeclock.Accounts.Employee do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Ash.Resource,
+    otp_app: :timeclock,
+    domain: Timeclock.Accounts,
+    data_layer: AshPostgres.DataLayer,
+    authorizers: [],
+    extensions: [AshCommanded.Commanded.Dsl]
 
-  schema "employees" do
-    field :position, :string
-    field :hired_at, :utc_datetime
-    field :user_id, :id
-    field :department_id, :id
+  attributes do
+    uuid_primary_key :id
+    attribute :position, :string
+    attribute :hired_at, :string
 
-    timestamps(type: :utc_datetime)
+    create_timestamp :created_at
+    update_timestamp :updated_at
   end
 
-  @doc false
-  def changeset(employee, attrs) do
-    employee
-    |> cast(attrs, [:position, :hired_at])
-    |> validate_required([:position, :hired_at])
+  identities do
+    identity :unique_id, [:id]
+  end
+
+  relationships do
+    belongs_to :user, Timeclock.Accounts.User
+    #    belongs_to :department, Timeclock.Company.Dept
+  end
+
+  postgres do
+    table "employees"
+    repo Timeclock.Repo
   end
 end

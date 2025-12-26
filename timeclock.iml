@@ -90,7 +90,10 @@
       <excludeFolder url="file://$MODULE_DIR$/deps" />
       <excludeFolder url="file://$MODULE_DIR$/doc" />
       <excludeFolder url="file://$MODULE_DIR$/logs" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ash_commanded" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ash_oban" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ash_sqids" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/oban" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/sqids" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
@@ -259,5 +262,9 @@
     <orderEntry type="library" name="sqids" level="project" />
     <orderEntry type="library" name="benchfella" level="project" />
     <orderEntry type="library" name="freedom_formatter" level="project" />
+    <orderEntry type="library" name="ash_oban" level="project" />
+    <orderEntry type="library" name="oban" level="project" />
+    <orderEntry type="library" name="ash_commanded" level="project" />
+    <orderEntry type="library" name="mock" level="project" />
   </component>
 </module>

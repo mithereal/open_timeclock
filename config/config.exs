@@ -7,6 +7,15 @@
 # General application configuration
 import Config
 
+config :ash_oban, pro?: false
+
+config :timeclock, Oban,
+  engine: Oban.Engines.Basic,
+  notifier: Oban.Notifiers.Postgres,
+  queues: [default: 10],
+  repo: Timeclock.Repo,
+  plugins: [{Oban.Plugins.Cron, []}]
+
 config :cinder, default_theme: "modern"
 
 config :ash,
