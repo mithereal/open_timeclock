@@ -1,4 +1,5 @@
 import Config
+config :ash, policies: [show_policy_breakdowns?: true]
 
 # Configure your database
 config :timeclock, Timeclock.Repo,
@@ -8,7 +9,8 @@ config :timeclock, Timeclock.Repo,
   database: "timeclock_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 10,
+  port: 55432
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -68,7 +70,7 @@ config :timeclock, TimeclockWeb.Endpoint,
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :timeclock, dev_routes: true
+config :timeclock, dev_routes: true, token_signing_secret: "FwN7M6GqKGq1iiSTTHP4TKVTCRYwDmin"
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :default_formatter, format: "[$level] $message\n"
@@ -90,3 +92,9 @@ config :phoenix_live_view,
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
+
+config :spark, :formatter,
+  remove_parens?: true,
+  "Ash.Resource": [
+    section_order: []
+  ]

@@ -7,9 +7,56 @@
 # General application configuration
 import Config
 
+config :cinder, default_theme: "modern"
+
+config :ash,
+  allow_forbidden_field_for_relationships_by_default?: true,
+  include_embedded_source_by_default?: false,
+  show_keysets_for_all_actions?: false,
+  default_page_type: :keyset,
+  policies: [no_filter_static_forbidden_reads?: false],
+  keep_read_action_loads_when_loading?: false,
+  default_actions_require_atomic?: true,
+  read_action_after_action_hooks_in_order?: true,
+  bulk_actions_default_to_errors?: true,
+  transaction_rollback_on_error?: true
+
+config :spark,
+  formatter: [
+    remove_parens?: true,
+    "Ash.Resource": [
+      section_order: [
+        :admin,
+        :authentication,
+        :token,
+        :user_identity,
+        :postgres,
+        :resource,
+        :code_interface,
+        :actions,
+        :policies,
+        :pub_sub,
+        :preparations,
+        :changes,
+        :validations,
+        :multitenancy,
+        :attributes,
+        :relationships,
+        :calculations,
+        :aggregates,
+        :identities
+      ]
+    ],
+    "Ash.Domain": [
+      section_order: [:admin, :resources, :policies, :authorization, :domain, :execution]
+    ]
+  ]
+
 config :timeclock,
   ecto_repos: [Timeclock.Repo],
-  generators: [timestamp_type: :utc_datetime]
+  generators: [timestamp_type: :utc_datetime],
+  ash_domains: [Timeclock.Accounts],
+  ash_authentication: [return_error_on_invalid_magic_link_token?: true]
 
 # Configure the endpoint
 config :timeclock, TimeclockWeb.Endpoint,
@@ -59,6 +106,12 @@ config :logger, :default_formatter,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :spark, :formatter,
+  remove_parens?: true,
+  "Ash.Resource": [
+    section_order: []
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

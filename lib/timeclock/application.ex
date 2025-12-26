@@ -15,7 +15,8 @@ defmodule Timeclock.Application do
       # Start a worker by calling: Timeclock.Worker.start_link(arg)
       # {Timeclock.Worker, arg},
       # Start to serve requests, typically the last entry
-      TimeclockWeb.Endpoint
+      TimeclockWeb.Endpoint,
+      {AshAuthentication.Supervisor, [otp_app: :timeclock]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
