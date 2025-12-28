@@ -4,7 +4,7 @@ defmodule Timeclock.Accounts.Account do
     domain: Timeclock.Accounts,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: []
+    extensions: [AshCommanded.Commanded.Dsl]
 
   postgres do
     table "accounts"
@@ -170,5 +170,6 @@ defmodule Timeclock.Accounts.Account do
 
   relationships do
     belongs_to :user, Timeclock.Accounts.User
+    has_many :logs, Timeclock.Audit.Log
   end
 end

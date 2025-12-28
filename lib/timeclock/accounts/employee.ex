@@ -21,7 +21,7 @@ defmodule Timeclock.Accounts.Employee do
 
   relationships do
     belongs_to :user, Timeclock.Accounts.User
-    #    belongs_to :department, Timeclock.Company.Dept
+    belongs_to :department, Timeclock.Organizations.Department
   end
 
   postgres do

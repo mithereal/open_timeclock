@@ -81,7 +81,8 @@ defmodule Timeclock.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
-      {:ash_sqids, "~> 0.1.0"}
+      {:ash_sqids, "~> 0.1.0"},
+      {:phoenix_live_favicon, "~> 1.0.0"}
     ]
   end
 
@@ -93,7 +94,15 @@ defmodule Timeclock.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ash.setup", "assets.setup", "assets.build", "run priv/repo/seeds.exs"],
+      migrations: ["ash_postgres.generate_migrations resources"],
+      setup: [
+        "deps.get",
+        "ash.setup",
+        "ash_postgres.generate_migrations resources",
+        "assets.setup",
+        "assets.build",
+        "run priv/repo/seeds.exs"
+      ],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ash.setup --quiet", "test"],

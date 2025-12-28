@@ -64,7 +64,26 @@ config :spark,
 config :timeclock,
   ecto_repos: [Timeclock.Repo],
   generators: [timestamp_type: :utc_datetime],
-  ash_domains: [Timeclock.Accounts],
+  ash_domains: [
+    Timeclock.Accounts,
+    Timeclock.Organizations,
+    Timeclock.Absences,
+    Timeclock.Adjustments,
+    Timeclock.Approvals,
+    Timeclock.Audit,
+    Timeclock.Calendar,
+    Timeclock.Clocking,
+    Timeclock.Organizations,
+    Timeclock.Projects,
+    Timeclock.System,
+    Timeclock.Analytics,
+    Timeclock.Calculations,
+    Timeclock.Categories,
+    Timeclock.Scheduling,
+    Timeclock.Payments,
+    Timeclock.Requests,
+    Timeclock.TimeTracking
+  ],
   ash_authentication: [return_error_on_invalid_magic_link_token?: true]
 
 # Configure the endpoint

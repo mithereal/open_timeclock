@@ -14,7 +14,7 @@ defmodule Timeclock.Accounts.Role do
       allow_nil? false
     end
 
-    attribute :permissions, :array do
+    attribute :permissions, {:array, :string} do
       public? true
       allow_nil? false
     end
@@ -30,5 +30,9 @@ defmodule Timeclock.Accounts.Role do
   postgres do
     table "roles"
     repo Timeclock.Repo
+  end
+
+  relationships do
+    belongs_to :user, Timeclock.Accounts.User
   end
 end

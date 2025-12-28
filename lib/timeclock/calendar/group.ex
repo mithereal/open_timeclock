@@ -1,0 +1,42 @@
+defmodule Timeclock.Calendar.Group do
+  use Ash.Resource,
+    otp_app: :timeclock,
+    domain: Timeclock.Calendar,
+    data_layer: AshPostgres.DataLayer,
+    authorizers: [],
+    extensions: [AshCommanded.Commanded.Dsl]
+
+  attributes do
+    uuid_primary_key :id
+
+    attribute :name, :string
+    attribute :workdays, :map
+    attribute :time_zone, :string
+
+    create_timestamp :created_at
+    update_timestamp :updated_at
+  end
+
+  identities do
+    identity :unique_id, [:id]
+  end
+
+  postgres do
+    table "calendar_groups"
+    repo Timeclock.Repo
+  end
+
+  validations do
+    validate present(:name), on: [:create, :update]
+    validate present(:workdays), on: [:create, :update]
+    validate present(:time_zone), on: [:create, :update]
+  end
+
+  actions do
+    defaults [:read, :destroy, create: :*]
+  end
+
+  #  relationships do
+  #    has_many :events, Timeclock.Calendar.Event
+  #  end
+end

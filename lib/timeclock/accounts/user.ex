@@ -102,9 +102,29 @@ defmodule Timeclock.Accounts.User do
       allow_nil? false
       public? true
     end
+
+    attribute :user_name, :ci_string do
+      allow_nil? false
+      public? true
+    end
   end
 
   identities do
     identity :unique_email, [:email]
+  end
+
+  relationships do
+    has_one :account, Timeclock.Accounts.Account
+    has_many :clockings, Timeclock.Clocking.Clocking
+    has_many :audit_logs, Timeclock.Audit.Log
+    has_many :request_logs, Timeclock.Approvals.RequestLog
+    has_many :employees, Timeclock.Accounts.Employee
+    has_many :managers, Timeclock.Accounts.Manager
+    has_many :roles, Timeclock.Accounts.Role
+  end
+
+  validations do
+    validate present([:delegated_user_id, :user_id]), on: [:create, :update]
+    validate string_length(:user_name, min: 1, max: 255), on: [:create, :update]
   end
 end

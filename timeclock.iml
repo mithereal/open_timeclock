@@ -95,6 +95,8 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ash_sqids" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/oban" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/sqids" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/phoenix_live_favicon" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/phoenix_live_head" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="picosat_elixir" level="project" />
@@ -266,5 +268,7 @@
     <orderEntry type="library" name="oban" level="project" />
     <orderEntry type="library" name="ash_commanded" level="project" />
     <orderEntry type="library" name="mock" level="project" />
+    <orderEntry type="library" name="phoenix_live_favicon" level="project" />
+    <orderEntry type="library" name="phoenix_live_head" level="project" />
   </component>
 </module>
