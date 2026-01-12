@@ -5,6 +5,8 @@ defmodule TimeclockWeb.Router do
 
   import AshAuthentication.Plug.Helpers
 
+  alias TimeclockWeb.LiveUserAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -49,16 +51,16 @@ defmodule TimeclockWeb.Router do
     sign_in_route register_path: "/register",
                   reset_path: "/reset",
                   auth_routes_prefix: "/auth",
-                  on_mount: [{TimeclockWeb.LiveUserAuth, :live_no_user}],
+                  on_mount: [{LiveUserAuth, :live_no_user}],
                   overrides: [
-                    TimeclockWeb.AuthOverrides,
+                    AuthOverrides,
                     Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI
                   ]
 
     # Remove this if you do not want to use the reset password feature
     reset_route auth_routes_prefix: "/auth",
                 overrides: [
-                  TimeclockWeb.AuthOverrides,
+                  AuthOverrides,
                   Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI
                 ]
 
@@ -70,7 +72,7 @@ defmodule TimeclockWeb.Router do
     # Remove this if you do not use the magic link strategy.
     magic_sign_in_route(Timeclock.Accounts.User, :magic_link,
       auth_routes_prefix: "/auth",
-      overrides: [TimeclockWeb.AuthOverrides, Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI]
+      overrides: [AuthOverrides, Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI]
     )
   end
 
@@ -81,7 +83,11 @@ defmodule TimeclockWeb.Router do
 
   scope "/admin", TimeclockWeb do
     pipe_through :browser
-    live "/online/:name", OnlineLive, :index
+
+    ash_authentication_live_session :authentication_required,
+      on_mount: {LiveUserAuth, :live_user_required} do
+      live "/online/:name", OnlineLive, :index
+    end
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

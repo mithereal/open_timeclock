@@ -27,7 +27,7 @@ defmodule Timeclock.Absences.Absence do
   end
 
   postgres do
-    table "absence"
+    table "absences"
     repo Timeclock.Repo
   end
 end

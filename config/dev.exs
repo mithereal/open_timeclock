@@ -3,10 +3,10 @@ config :ash, policies: [show_policy_breakdowns?: true]
 
 # Configure your database
 config :timeclock, Timeclock.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "framework",
+  password: "framework",
   hostname: "localhost",
-  database: "timeclock_dev",
+  database: "framework",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10,

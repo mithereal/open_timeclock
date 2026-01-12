@@ -1,4 +1,4 @@
-defmodule Timeclock.Absences.Restrictions do
+defmodule Timeclock.Absences.Restriction do
   use Ash.Resource,
     otp_app: :timeclock,
     domain: Timeclock.Accounts,

@@ -16,6 +16,8 @@ defmodule Timeclock.Absences.Definition do
     attribute :fraction, :integer
     attribute :is_active, :boolean
     attribute :is_available_for_admins_only, :boolean
+    attribute :description, :string
+    attribute :requires_approval, :boolean
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -32,7 +34,7 @@ defmodule Timeclock.Absences.Definition do
   end
 
   postgres do
-    table "absence_definition"
+    table "absence_definitions"
     repo Timeclock.Repo
   end
 end
