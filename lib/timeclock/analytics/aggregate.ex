@@ -9,8 +9,15 @@ defmodule Timeclock.Analytics.AggregateFunction do
   attributes do
     uuid_primary_key :id
 
-    attribute :type, :string
-    attribute :is_enabled, :boolean, default: true
+    attribute :type, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :is_enabled, :boolean do
+      public? true
+      default true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

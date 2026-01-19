@@ -8,8 +8,16 @@ defmodule Timeclock.Accounts.Employee do
 
   attributes do
     uuid_primary_key :id
-    attribute :position, :string
-    attribute :hired_at, :string
+
+    attribute :position, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :hired_at, :string do
+      public? true
+      allow_nil? false
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

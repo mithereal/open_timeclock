@@ -13,7 +13,11 @@ defmodule Timeclock.Clocking.Definition do
     attribute :type, :string
     attribute :code, :string
 
-    attribute :is_active, :boolean, default: true
+    attribute :is_active, :boolean do
+      public? true
+      default true
+    end
+
     attribute :restriction_type, :string
 
     create_timestamp :created_at

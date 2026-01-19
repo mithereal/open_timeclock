@@ -8,16 +8,51 @@ defmodule Timeclock.Absences.Definition do
 
   attributes do
     uuid_primary_key :id
-    attribute :name, :string
-    attribute :code, :string
-    attribute :type, :string
-    attribute :restriction_type, :string
-    attribute :max_days_per_year, :integer
-    attribute :fraction, :integer
-    attribute :is_active, :boolean
-    attribute :is_available_for_admins_only, :boolean
-    attribute :description, :string
-    attribute :requires_approval, :boolean
+
+    attribute :name, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :code, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :type, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :max_days_per_year, :integer do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :fraction, :integer do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :active, :boolean do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :available_for_admins_only, :boolean do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :description, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :requires_approval, :boolean do
+      public? true
+      allow_nil? false
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -29,7 +64,6 @@ defmodule Timeclock.Absences.Definition do
 
   relationships do
     belongs_to :tag, Timeclock.System.Tag
-    belongs_to :integration, Timeclock.Absences.Integration
     belongs_to :icon, Timeclock.System.Icon
   end
 

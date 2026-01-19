@@ -3,7 +3,7 @@ defmodule Timeclock.Checks.PasswordChangeInteraction do
 
   @impl Ash.Policy.Check
   def describe(_) do
-    "MyApp is performing a password change for this interaction"
+    "Timeclock is performing a password change for this interaction"
   end
 
   @impl Ash.Policy.SimpleCheck

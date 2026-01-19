@@ -11,7 +11,11 @@ defmodule Timeclock.Clocking.InterfaceDetail do
 
     attribute :button_index, :integer
     attribute :event_index, :integer
-    attribute :is_default, :boolean, default: false
+
+    attribute :is_default, :boolean do
+      public? true
+      default false
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

@@ -13,7 +13,7 @@
 #   - Ex: hexpm/elixir:1.13.3-erlang-25.0.3-debian-bullseye-20210902-slim
 #
 
-ARG APP_NAME=framework
+ARG APP_NAME=timeclock
 ARG ORGANIZATION="hexpm/elixir"
 
 ARG ELIXIR_VERSION=1.18.3
@@ -79,7 +79,7 @@ COPY assets assets
 # Compile the release
 RUN mix compile
 # compile assets
-RUN mix bun install
+#RUN mix bun install
 RUN mix assets.deploy
 
 

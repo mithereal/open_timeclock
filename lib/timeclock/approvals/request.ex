@@ -10,20 +10,44 @@ defmodule Timeclock.Approvals.Request do
     uuid_primary_key :id
 
     # Period info
-    attribute :period_start, :utc_datetime
-    attribute :period_end, :utc_datetime
-    attribute :period_options, :map
+    attribute :period_start, :utc_datetime do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :period_end, :utc_datetime do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :period_options, :map do
+      public? true
+      allow_nil? false
+    end
 
     # Status info
-    attribute :status, :string
-    attribute :status_set_by_user, :string
-    attribute :is_dirty, :boolean, default: false
+    attribute :status, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :is_dirty, :boolean do
+      public? true
+      default false
+    end
 
     # Additional data
-    attribute :additional_data, :map
+    attribute :additional_data, :map do
+      public? true
+      allow_nil? false
+    end
 
     # Partial time
-    attribute :is_partial, :boolean, default: false
+    attribute :is_partial, :boolean do
+      public? true
+      default false
+    end
+
     attribute :partial_time_from, :time
     attribute :partial_time_to, :time
 
@@ -44,11 +68,11 @@ defmodule Timeclock.Approvals.Request do
   end
 
   relationships do
-    belongs_to :status_set_by_user_id, Timeclock.Accounts.User
+    belongs_to :status_set_by_user, Timeclock.Accounts.User
     belongs_to :user, Timeclock.Accounts.User
     belongs_to :icon, Timeclock.System.Icon
     belongs_to :request_definition, Timeclock.Approvals.RequestDefinition
-    belongs_to :request_additiona_data, Timeclock.Approvals.RequestAdditionalData
+    belongs_to :request_additional_data, Timeclock.Approvals.RequestAdditionalData
     belongs_to :request_log, Timeclock.Approvals.RequestLog
   end
 

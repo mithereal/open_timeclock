@@ -8,10 +8,27 @@ defmodule Timeclock.Absences.Absence do
 
   attributes do
     uuid_primary_key :id
-    attribute :start_date, :utc_datetime
-    attribute :end_date, :utc_datetime
-    attribute :status, :string
-    attribute :reason, :string
+
+    attribute :start_date, :utc_datetime do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :end_date, :utc_datetime do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :status, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :reason, :string do
+      public? true
+      allow_nil? false
+    end
+
     create_timestamp :created_at
     update_timestamp :updated_at
   end

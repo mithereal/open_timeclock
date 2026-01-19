@@ -24,7 +24,10 @@ defmodule Timeclock.Calculations.Calculation do
     attribute :work_free_days_sum_value, :decimal
     attribute :work_days_sum_value, :decimal
 
-    attribute :is_calculation_valid, :boolean, default: false
+    attribute :is_calculation_valid, :boolean do
+      public? true
+      default false
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

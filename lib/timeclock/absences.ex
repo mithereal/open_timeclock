@@ -8,6 +8,5 @@ defmodule Timeclock.Absences do
   resources do
     resource Timeclock.Absences.Absence
     resource Timeclock.Absences.Definition
-    resource Timeclock.Absences.Restriction
   end
 end

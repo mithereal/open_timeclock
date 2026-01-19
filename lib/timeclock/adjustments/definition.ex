@@ -8,24 +8,37 @@ defmodule Timeclock.Adjustments.Definition do
 
   attributes do
     uuid_primary_key :id
-    attribute :first_name, :string
 
-    attribute :name, :string
-    attribute :type, :string
-    attribute :code, :string
+    attribute :first_name, :string do
+      public? true
+      allow_nil? false
+    end
 
-    # Calculation result type
-    attribute :calculation_result_type_id, :uuid
-    attribute :calculation_result_type_name, :string
-    attribute :calculation_result_type_value_type, :string
+    attribute :name, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :type, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :code, :string do
+      public? true
+      allow_nil? false
+    end
 
     # Flags
-    attribute :is_available_for_admins_only, :boolean, default: false
-    attribute :is_active, :boolean, default: true
+    attribute :is_available_for_admins_only, :boolean do
+      public? true
+      default false
+    end
 
-    # Restrictions
-    attribute :restriction_type, :string
-    attribute :tag_id, :uuid
+    attribute :is_active, :boolean do
+      public? true
+      default true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -42,6 +55,9 @@ defmodule Timeclock.Adjustments.Definition do
 
   relationships do
     has_many :adjustments, Timeclock.Adjustments.Adjustment
+    belongs_to :tags, Timeclock.System.Tag
+    belongs_to :restriction, Timeclock.Absences.Restriction
+    belongs_to :caculation_result, Timeclock.Calculation.CalculationDetail
   end
 
   validations do

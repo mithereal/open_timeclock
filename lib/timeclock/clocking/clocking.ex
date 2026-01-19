@@ -11,11 +11,21 @@ defmodule Timeclock.Clocking.Clocking do
 
     attribute :timestamp, :utc_datetime
     attribute :original_timestamp, :utc_datetime
-    attribute :is_authentic, :boolean, default: false
+
+    attribute :is_authentic, :boolean do
+      public? true
+      default false
+    end
+
     attribute :comment, :string
     attribute :status, :string
     attribute :geo_location_timestamp, :utc_datetime
-    attribute :has_geo_location, :boolean, default: false
+
+    attribute :has_geo_location, :boolean do
+      public? true
+      default false
+    end
+
     attribute :accuracy, :float
 
     create_timestamp :created_at

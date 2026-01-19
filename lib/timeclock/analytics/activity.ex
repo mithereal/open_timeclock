@@ -9,8 +9,15 @@ defmodule Timeclock.Analytics.Activity do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :properties, :map, default: %{}
+    attribute :name, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :properties, :map do
+      public? true
+      default %{}
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

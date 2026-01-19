@@ -144,12 +144,7 @@ defmodule Timeclock.Accounts.Account do
       allow_nil? false
     end
 
-    attribute :has_user_account, :boolean do
-      public? true
-      allow_nil? false
-    end
-
-    attribute :has_assigned_pin, :boolean do
+    attribute :assigned_pin, :integer do
       public? true
       allow_nil? false
     end
@@ -171,5 +166,19 @@ defmodule Timeclock.Accounts.Account do
   relationships do
     belongs_to :user, Timeclock.Accounts.User
     has_many :logs, Timeclock.Audit.Log
+  end
+
+  actions do
+    defaults [:read]
+
+    read :has_user_account do
+      description "Checks of theres an assigned user."
+      argument :id, :uuid, allow_nil?: false
+    end
+
+    read :has_assigned_pin do
+      description "Checks of theres an assigned pin."
+      argument :id, :uuid, allow_nil?: false
+    end
   end
 end

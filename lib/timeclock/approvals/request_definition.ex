@@ -11,10 +11,26 @@ defmodule Timeclock.Approvals.RequestDefinition do
 
     attribute :name, :string
     attribute :request_type, :integer
-    attribute :start_time_parameter_required, :boolean, default: false
-    attribute :end_time_parameter_required, :boolean, default: false
-    attribute :numeric_value_required, :boolean, default: false
-    attribute :time_value_required, :boolean, default: false
+
+    attribute :start_time_parameter_required, :boolean do
+      public? true
+      default false
+    end
+
+    attribute :end_time_parameter_required, :boolean do
+      public? true
+      default false
+    end
+
+    attribute :numeric_value_required, :boolean do
+      public? true
+      default false
+    end
+
+    attribute :time_value_required, :boolean do
+      public? true
+      default false
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
