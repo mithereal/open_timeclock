@@ -33,6 +33,12 @@ defmodule Timeclock.Accounts.Role do
   end
 
   relationships do
-    belongs_to :user, Timeclock.Accounts.User
+    belongs_to :user, Timeclock.Accounts.User do
+      public? true
+    end
+  end
+
+  actions do
+    defaults [:read, :destroy, create: :*]
   end
 end

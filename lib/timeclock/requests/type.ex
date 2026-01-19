@@ -11,7 +11,9 @@ defmodule Timeclock.Requests.Type do
   attributes do
     uuid_primary_key :id
 
-    attribute :request_type, :integer
+    attribute :request_type, :integer do
+      public? true
+    end
   end
 
   identities do

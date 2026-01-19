@@ -9,9 +9,17 @@ defmodule Timeclock.TimeTracking.TimeEntry do
   attributes do
     uuid_primary_key :id
 
-    attribute :clock_in, :utc_datetime
-    attribute :clock_out, :utc_datetime
-    attribute :total_hours, :float
+    attribute :clock_in, :utc_datetime do
+      public? true
+    end
+
+    attribute :clock_out, :utc_datetime do
+      public? true
+    end
+
+    attribute :total_hours, :float do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -27,8 +35,13 @@ defmodule Timeclock.TimeTracking.TimeEntry do
   end
 
   relationships do
-    belongs_to :user, Timeclock.Accounts.User
-    belongs_to :task, Timeclock.Projects.Task
+    belongs_to :user, Timeclock.Accounts.User do
+      public? true
+    end
+
+    belongs_to :task, Timeclock.Projects.Task do
+      public? true
+    end
   end
 
   validations do

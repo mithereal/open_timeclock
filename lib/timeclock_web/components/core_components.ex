@@ -8,14 +8,14 @@ defmodule TimeclockWeb.CoreComponents do
   with doc strings and declarative assigns. You may customize and style
   them in any way you want, based on your application growth and needs.
 
-  The foundation for styling is Tailwind CSS, a utility-first CSS framework,
+  The foundation for styling is Tailwind CSS, a utility-first CSS Timeclock,
   augmented with daisyUI, a Tailwind CSS plugin that provides UI components
   and themes. Here are useful references:
 
     * [daisyUI](https://daisyui.com/docs/intro/) - a good place to get
       started and see the available components.
 
-    * [Tailwind CSS](https://tailwindcss.com) - the foundational framework
+    * [Tailwind CSS](https://tailwindcss.com) - the foundational Timeclock
       we build on. You will use it for layout, sizing, flexbox, grid, and
       spacing.
 

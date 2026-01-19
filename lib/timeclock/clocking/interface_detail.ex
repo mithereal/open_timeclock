@@ -9,8 +9,13 @@ defmodule Timeclock.Clocking.InterfaceDetail do
   attributes do
     uuid_primary_key :id
 
-    attribute :button_index, :integer
-    attribute :event_index, :integer
+    attribute :button_index, :integer do
+      public? true
+    end
+
+    attribute :event_index, :integer do
+      public? true
+    end
 
     attribute :is_default, :boolean do
       public? true
@@ -31,9 +36,18 @@ defmodule Timeclock.Clocking.InterfaceDetail do
   end
 
   relationships do
-    belongs_to :definition, Timeclock.Clocking.Definition
-    belongs_to :icon, Timeclock.System.Icon
-    belongs_to :tag, Timeclock.System.Tag
+    belongs_to :definition, Timeclock.Clocking.Definition do
+      public? true
+    end
+
+    belongs_to :icon, Timeclock.System.Icon do
+      public? true
+    end
+
+    belongs_to :tag, Timeclock.System.Tag do
+      public? true
+    end
+
     has_many :clockings, Timeclock.Clocking.Clocking
   end
 

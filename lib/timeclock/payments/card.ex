@@ -9,10 +9,21 @@ defmodule Timeclock.Payments.Card do
   attributes do
     uuid_primary_key :id
 
-    attribute :brand, :string
-    attribute :exp_month, :integer
-    attribute :exp_year, :integer
-    attribute :last4, :string
+    attribute :brand, :string do
+      public? true
+    end
+
+    attribute :exp_month, :integer do
+      public? true
+    end
+
+    attribute :exp_year, :integer do
+      public? true
+    end
+
+    attribute :last4, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

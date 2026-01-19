@@ -9,9 +9,17 @@ defmodule Timeclock.Calendar.Group do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :workdays, :map
-    attribute :time_zone, :string
+    attribute :name, :string do
+      public? true
+    end
+
+    attribute :workdays, :map do
+      public? true
+    end
+
+    attribute :time_zone, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

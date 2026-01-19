@@ -9,21 +9,6 @@ defmodule Timeclock.Adjustments.Adjustment do
   attributes do
     uuid_primary_key :id
 
-    attribute :first_name, :string do
-      public? true
-      allow_nil? false
-    end
-
-    attribute :middle_name, :string do
-      public? true
-      allow_nil? false
-    end
-
-    attribute :last_name, :string do
-      public? true
-      allow_nil? false
-    end
-
     attribute :value, :float do
       public? true
       allow_nil? false
@@ -84,13 +69,29 @@ defmodule Timeclock.Adjustments.Adjustment do
   end
 
   relationships do
-    belongs_to :definition, Timeclock.Adjustments.Definition
-    belongs_to :calculation_result, Timeclock.Calculations.CalculationDetail
-    belongs_to :icon, Timeclock.System.Icon
+    belongs_to :account, Timeclock.Accounts.Account do
+      public? true
+    end
+
+    belongs_to :definition, Timeclock.Adjustments.Definition do
+      public? true
+    end
+
+    belongs_to :calculation_result, Timeclock.Calculations.CalculationDetail do
+      public? true
+    end
+
+    belongs_to :icon, Timeclock.System.Icon do
+      public? true
+    end
   end
 
   postgres do
     table "adjustments"
     repo Timeclock.Repo
+  end
+
+  actions do
+    defaults [:read, :destroy, create: :*]
   end
 end

@@ -9,9 +9,17 @@ defmodule Timeclock.TimeTracking.Geolocation do
   attributes do
     uuid_primary_key :id
 
-    attribute :latitude, :float
-    attribute :longitude, :float
-    attribute :recorded_at, :utc_datetime
+    attribute :latitude, :float do
+      public? true
+    end
+
+    attribute :longitude, :float do
+      public? true
+    end
+
+    attribute :recorded_at, :utc_datetime do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

@@ -9,8 +9,13 @@ defmodule Timeclock.Audit.LogType do
   attributes do
     uuid_primary_key :id
 
-    attribute :display_name, :string
-    attribute :value, :integer
+    attribute :display_name, :string do
+      public? true
+    end
+
+    attribute :value, :integer do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

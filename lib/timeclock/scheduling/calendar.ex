@@ -9,9 +9,17 @@ defmodule Timeclock.Scheduling.Calendar do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :timezone, :string
-    attribute :work_days, {:array, :string}
+    attribute :name, :string do
+      public? true
+    end
+
+    attribute :timezone, :string do
+      public? true
+    end
+
+    attribute :work_days, {:array, :string} do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

@@ -9,10 +9,21 @@ defmodule Timeclock.Calculations.CalculationDetail do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :value, :string
-    attribute :value_type, :string
-    attribute :color, :string
+    attribute :name, :string do
+      public? true
+    end
+
+    attribute :value, :string do
+      public? true
+    end
+
+    attribute :value_type, :string do
+      public? true
+    end
+
+    attribute :color, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

@@ -48,11 +48,18 @@ defmodule Timeclock.Approvals.Request do
       default false
     end
 
-    attribute :partial_time_from, :time
-    attribute :partial_time_to, :time
+    attribute :partial_time_from, :time do
+      public? true
+    end
+
+    attribute :partial_time_to, :time do
+      public? true
+    end
 
     # Current approvers
-    attribute :current_approver_names, :map
+    attribute :current_approver_names, :map do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -68,12 +75,29 @@ defmodule Timeclock.Approvals.Request do
   end
 
   relationships do
-    belongs_to :status_set_by_user, Timeclock.Accounts.User
-    belongs_to :user, Timeclock.Accounts.User
-    belongs_to :icon, Timeclock.System.Icon
-    belongs_to :request_definition, Timeclock.Approvals.RequestDefinition
-    belongs_to :request_additional_data, Timeclock.Approvals.RequestAdditionalData
-    belongs_to :request_log, Timeclock.Approvals.RequestLog
+    belongs_to :status_set_by_user, Timeclock.Accounts.User do
+      public? true
+    end
+
+    belongs_to :user, Timeclock.Accounts.User do
+      public? true
+    end
+
+    belongs_to :icon, Timeclock.System.Icon do
+      public? true
+    end
+
+    belongs_to :request_definition, Timeclock.Approvals.RequestDefinition do
+      public? true
+    end
+
+    belongs_to :request_additional_data, Timeclock.Approvals.RequestAdditionalData do
+      public? true
+    end
+
+    belongs_to :request_log, Timeclock.Approvals.RequestLog do
+      public? true
+    end
   end
 
   validations do

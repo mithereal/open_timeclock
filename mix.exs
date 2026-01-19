@@ -82,7 +82,9 @@ defmodule Timeclock.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
       {:ash_sqids, "~> 0.1.0"},
-      {:phoenix_live_favicon, "~> 1.0.0"}
+      {:phoenix_live_favicon, "~> 1.0.0"},
+      {:premailex, "~> 0.3.0"},
+      {:phoenix_swoosh, "~> 1.2"}
     ]
   end
 

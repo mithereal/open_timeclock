@@ -9,11 +9,21 @@ defmodule Timeclock.Calendar.Event do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :date, :date
-    attribute :valid_to, :date
+    attribute :name, :string do
+      public? true
+    end
 
-    attribute :recurring_mode, :string
+    attribute :date, :date do
+      public? true
+    end
+
+    attribute :valid_to, :date do
+      public? true
+    end
+
+    attribute :recurring_mode, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -29,8 +39,13 @@ defmodule Timeclock.Calendar.Event do
   end
 
   relationships do
-    belongs_to :group, Timeclock.Calendar.Group
-    belongs_to :event_type, Timeclock.Calendar.EventType
+    belongs_to :group, Timeclock.Calendar.Group do
+      public? true
+    end
+
+    belongs_to :event_type, Timeclock.Calendar.EventType do
+      public? true
+    end
   end
 
   validations do

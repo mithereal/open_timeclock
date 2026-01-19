@@ -9,10 +9,21 @@ defmodule Timeclock.Approvals.RequestAdditionalData do
   attributes do
     uuid_primary_key :id
 
-    attribute :integer_value, :string
-    attribute :time_value, :time
-    attribute :appliers_comment, :string
-    attribute :approvers_comment, :string
+    attribute :integer_value, :string do
+      public? true
+    end
+
+    attribute :time_value, :time do
+      public? true
+    end
+
+    attribute :appliers_comment, :string do
+      public? true
+    end
+
+    attribute :approvers_comment, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

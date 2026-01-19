@@ -23,7 +23,12 @@ defmodule Timeclock.Accounts.Manager do
   end
 
   relationships do
-    belongs_to :user, Timeclock.Accounts.User
-    belongs_to :department, Timeclock.Organizations.Department
+    belongs_to :user, Timeclock.Accounts.User do
+      public? true
+    end
+
+    belongs_to :department, Timeclock.Organizations.Department do
+      public? true
+    end
   end
 end

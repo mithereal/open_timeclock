@@ -9,16 +9,22 @@ defmodule Timeclock.Clocking.Definition do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :type, :string
-    attribute :code, :string
+    attribute :name, :string do
+      public? true
+    end
+
+    attribute :type, :string do
+      public? true
+    end
 
     attribute :is_active, :boolean do
       public? true
       default true
     end
 
-    attribute :restriction_type, :string
+    attribute :restriction_type, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -26,7 +32,6 @@ defmodule Timeclock.Clocking.Definition do
 
   identities do
     identity :unique_id, [:id]
-    identity :unique_code, [:code]
   end
 
   postgres do
@@ -36,11 +41,30 @@ defmodule Timeclock.Clocking.Definition do
 
   relationships do
     has_many :clocking, Timeclock.Clocking.Clocking
-    belongs_to :starting_category_definition, Timeclock.Categories.Definition
-    belongs_to :absence_category_definition, Timeclock.Categories.Definition
-    belongs_to :in_clocking_definition, Timeclock.Clocking.Definition
-    belongs_to :out_clocking_definition, Timeclock.Clocking.Definition
-    belongs_to :tag, Timeclock.System.Tag
+
+    belongs_to :code, Timeclock.System.Code do
+      public? true
+    end
+
+    belongs_to :starting_category_definition, Timeclock.Categories.Definition do
+      public? true
+    end
+
+    belongs_to :absence_category_definition, Timeclock.Categories.Definition do
+      public? true
+    end
+
+    belongs_to :in_clocking_definition, Timeclock.Clocking.Definition do
+      public? true
+    end
+
+    belongs_to :out_clocking_definition, Timeclock.Clocking.Definition do
+      public? true
+    end
+
+    belongs_to :tag, Timeclock.System.Tag do
+      public? true
+    end
   end
 
   validations do

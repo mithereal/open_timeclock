@@ -9,7 +9,9 @@ defmodule Timeclock.Organizations.Department do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
+    attribute :name, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -25,12 +27,25 @@ defmodule Timeclock.Organizations.Department do
   end
 
   relationships do
-    belongs_to :starting_category_definition, Timeclock.Categories.Definition
-    belongs_to :absence_category_definition, Timeclock.Categories.Definition
-    belongs_to :in_clocking_definition, Timeclock.Clocking.Definition
-    belongs_to :out_clocking_definition, Timeclock.Clocking.Definition
+    belongs_to :starting_category_definition, Timeclock.Categories.Definition do
+      public? true
+    end
 
-    belongs_to :company, Timeclock.Organizations.Company
+    belongs_to :absence_category_definition, Timeclock.Categories.Definition do
+      public? true
+    end
+
+    belongs_to :in_clocking_definition, Timeclock.Clocking.Definition do
+      public? true
+    end
+
+    belongs_to :out_clocking_definition, Timeclock.Clocking.Definition do
+      public? true
+    end
+
+    belongs_to :company, Timeclock.Organizations.Company do
+      public? true
+    end
   end
 
   validations do

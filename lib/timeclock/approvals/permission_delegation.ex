@@ -23,8 +23,13 @@ defmodule Timeclock.Approvals.PermissionDelegation do
   end
 
   relationships do
-    belongs_to :delegated_user, Timeclock.Accounts.User
-    belongs_to :user, Timeclock.Accounts.User
+    belongs_to :delegated_user, Timeclock.Accounts.User do
+      public? true
+    end
+
+    belongs_to :user, Timeclock.Accounts.User do
+      public? true
+    end
   end
 
   validations do

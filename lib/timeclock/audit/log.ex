@@ -9,12 +9,29 @@ defmodule Timeclock.Audit.Log do
   attributes do
     uuid_primary_key :id
 
-    attribute :table_name, :string
-    attribute :ip_address, :string
-    attribute :action, :string
-    attribute :date_time, :utc_datetime
-    attribute :old_value, :map
-    attribute :new_value, :map
+    attribute :table_name, :string do
+      public? true
+    end
+
+    attribute :ip_address, :string do
+      public? true
+    end
+
+    attribute :action, :string do
+      public? true
+    end
+
+    attribute :date_time, :utc_datetime do
+      public? true
+    end
+
+    attribute :old_value, :map do
+      public? true
+    end
+
+    attribute :new_value, :map do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -30,9 +47,17 @@ defmodule Timeclock.Audit.Log do
   end
 
   relationships do
-    belongs_to :account, Timeclock.Accounts.Account
-    belongs_to :user, Timeclock.Accounts.User
-    belongs_to :log_type, Timeclock.Audit.LogType
+    belongs_to :account, Timeclock.Accounts.Account do
+      public? true
+    end
+
+    belongs_to :user, Timeclock.Accounts.User do
+      public? true
+    end
+
+    belongs_to :log_type, Timeclock.Audit.LogType do
+      public? true
+    end
   end
 
   validations do

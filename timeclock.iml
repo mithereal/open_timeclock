@@ -97,6 +97,9 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/sqids" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/phoenix_live_favicon" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/phoenix_live_head" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/floki" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/phoenix_swoosh" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/premailex" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="picosat_elixir" level="project" />
@@ -270,5 +273,10 @@
     <orderEntry type="library" name="mock" level="project" />
     <orderEntry type="library" name="phoenix_live_favicon" level="project" />
     <orderEntry type="library" name="phoenix_live_head" level="project" />
+    <orderEntry type="library" name="premailex" level="project" />
+    <orderEntry type="library" name="meeseeks" level="project" />
+    <orderEntry type="library" name="html5ever" level="project" />
+    <orderEntry type="library" name="fast_html" level="project" />
+    <orderEntry type="library" name="phoenix_swoosh" level="project" />
   </component>
 </module>

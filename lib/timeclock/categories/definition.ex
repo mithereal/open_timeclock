@@ -9,11 +9,25 @@ defmodule Timeclock.Categories.Definition do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :presence_status, :string
-    attribute :paid_time_status, :string
-    attribute :color, :string
-    attribute :code, :string
+    attribute :name, :string do
+      public? true
+    end
+
+    attribute :presence_status, :string do
+      public? true
+    end
+
+    attribute :paid_time_status, :string do
+      public? true
+    end
+
+    attribute :color, :string do
+      public? true
+    end
+
+    attribute :code, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -30,7 +44,9 @@ defmodule Timeclock.Categories.Definition do
   end
 
   relationships do
-    belongs_to :icon, Timeclock.System.Icon
+    belongs_to :icon, Timeclock.System.Icon do
+      public? true
+    end
   end
 
   validations do

@@ -9,8 +9,13 @@ defmodule Timeclock.Scheduling.Schedule do
   attributes do
     uuid_primary_key :id
 
-    attribute :start_time, :utc_datetime
-    attribute :end_time, :utc_datetime
+    attribute :start_time, :utc_datetime do
+      public? true
+    end
+
+    attribute :end_time, :utc_datetime do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -34,7 +39,12 @@ defmodule Timeclock.Scheduling.Schedule do
   end
 
   relationships do
-    belongs_to :user, Timeclock.Accounts.User
-    belongs_to :shift, Timeclock.Scheduling.Shift
+    belongs_to :user, Timeclock.Accounts.User do
+      public? true
+    end
+
+    belongs_to :shift, Timeclock.Scheduling.Shift do
+      public? true
+    end
   end
 end

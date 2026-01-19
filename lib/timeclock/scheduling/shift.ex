@@ -9,9 +9,17 @@ defmodule Timeclock.Scheduling.Shift do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :start_time, :time
-    attribute :end_time, :time
+    attribute :name, :string do
+      public? true
+    end
+
+    attribute :start_time, :time do
+      public? true
+    end
+
+    attribute :end_time, :time do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

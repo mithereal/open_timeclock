@@ -29,11 +29,6 @@ defmodule Timeclock.Accounts.Account do
       allow_nil? false
     end
 
-    attribute :full_name, :string do
-      public? true
-      allow_nil? false
-    end
-
     attribute :birth_date, :date do
       public? true
       allow_nil? false
@@ -164,8 +159,13 @@ defmodule Timeclock.Accounts.Account do
   end
 
   relationships do
-    belongs_to :user, Timeclock.Accounts.User
-    has_many :logs, Timeclock.Audit.Log
+    belongs_to :user, Timeclock.Accounts.User do
+      public? true
+    end
+
+    has_many :logs, Timeclock.Audit.Log do
+      public? true
+    end
   end
 
   actions do
@@ -178,7 +178,26 @@ defmodule Timeclock.Accounts.Account do
 
     read :has_assigned_pin do
       description "Checks of theres an assigned pin."
-      argument :id, :uuid, allow_nil?: false
+      argument :assigned_pin, :integer, allow_nil?: false
     end
+  end
+
+  code_interface do
+    # the action open can be omitted because it matches the function name
+    define :has_user_account, args: [:id]
+    define :has_assigned_pin, args: [:assigned_pin]
+  end
+
+  calculations do
+    calculate :full_name, :string, expr(first_name <> ^arg(:separator) <> last_name) do
+      argument :separator, :string do
+        allow_nil? false
+        default " "
+      end
+    end
+  end
+
+  actions do
+    defaults [:read, :destroy, create: :*]
   end
 end

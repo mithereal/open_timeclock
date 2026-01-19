@@ -9,7 +9,9 @@ defmodule Timeclock.Organizations.Organization do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
+    attribute :name, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

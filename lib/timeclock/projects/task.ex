@@ -9,9 +9,17 @@ defmodule Timeclock.Projects.Task do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :description, :string
-    attribute :due_date, :utc_datetime
+    attribute :name, :string do
+      public? true
+    end
+
+    attribute :description, :string do
+      public? true
+    end
+
+    attribute :due_date, :utc_datetime do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -27,9 +35,17 @@ defmodule Timeclock.Projects.Task do
   end
 
   relationships do
-    belongs_to :assignment, Timeclock.Projects.Assignment
-    belongs_to :project, Timeclock.Projects.Project
-    belongs_to :task, Timeclock.Projects.Task
+    belongs_to :assignment, Timeclock.Projects.Assignment do
+      public? true
+    end
+
+    belongs_to :project, Timeclock.Projects.Project do
+      public? true
+    end
+
+    belongs_to :task, Timeclock.Projects.Task do
+      public? true
+    end
   end
 
   validations do

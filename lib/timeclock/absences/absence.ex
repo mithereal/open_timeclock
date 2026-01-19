@@ -38,13 +38,25 @@ defmodule Timeclock.Absences.Absence do
   end
 
   relationships do
-    belongs_to :user, Timeclock.Accounts.User
-    belongs_to :approved_by, Timeclock.Accounts.User
-    belongs_to :absence_definition, Timeclock.Absences.Definition
+    belongs_to :user, Timeclock.Accounts.User do
+      public? true
+    end
+
+    belongs_to :approved_by, Timeclock.Accounts.User do
+      public? true
+    end
+
+    belongs_to :absence_definition, Timeclock.Absences.Definition do
+      public? true
+    end
   end
 
   postgres do
     table "absences"
     repo Timeclock.Repo
+  end
+
+  actions do
+    defaults [:read, :destroy, create: :*]
   end
 end

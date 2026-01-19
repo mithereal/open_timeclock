@@ -9,8 +9,13 @@ defmodule Timeclock.Organizations.Company do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :registration_number, :string
+    attribute :name, :string do
+      public? true
+    end
+
+    attribute :registration_number, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -26,8 +31,13 @@ defmodule Timeclock.Organizations.Company do
   end
 
   relationships do
-    has_one :address, Timeclock.Organizations.Address
-    belongs_to :organization, Timeclock.Organizations.Organization
+    has_one :address, Timeclock.Organizations.Address do
+      public? true
+    end
+
+    belongs_to :organization, Timeclock.Organizations.Organization do
+      public? true
+    end
   end
 
   validations do

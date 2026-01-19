@@ -9,8 +9,13 @@ defmodule Timeclock.Clocking.Device do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :value, :integer
+    attribute :name, :string do
+      public? true
+    end
+
+    attribute :value, :integer do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

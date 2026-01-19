@@ -9,20 +9,57 @@ defmodule Timeclock.Calculations.Calculation do
   attributes do
     uuid_primary_key :id
 
-    attribute :date_from, :date
-    attribute :date_to, :date
-    attribute :users_count, :integer
-    attribute :users_calculations, :map
-    attribute :calculation_details_summaries, :map
+    attribute :date_from, :date do
+      public? true
+    end
 
-    attribute :plan_sum_value, :decimal
-    attribute :difference_sum_value, :decimal
-    attribute :paid_presence_sum_value, :decimal
-    attribute :paid_all_day_absence_sum_value, :decimal
-    attribute :missing_presence_sum_value, :decimal
-    attribute :unpaid_presence_sum_value, :decimal
-    attribute :work_free_days_sum_value, :decimal
-    attribute :work_days_sum_value, :decimal
+    attribute :date_to, :date do
+      public? true
+    end
+
+    attribute :users_count, :integer do
+      public? true
+    end
+
+    attribute :users_calculations, :map do
+      public? true
+    end
+
+    attribute :calculation_details_summaries, :map do
+      public? true
+    end
+
+    attribute :plan_sum_value, :decimal do
+      public? true
+    end
+
+    attribute :difference_sum_value, :decimal do
+      public? true
+    end
+
+    attribute :paid_presence_sum_value, :decimal do
+      public? true
+    end
+
+    attribute :paid_all_day_absence_sum_value, :decimal do
+      public? true
+    end
+
+    attribute :missing_presence_sum_value, :decimal do
+      public? true
+    end
+
+    attribute :unpaid_presence_sum_value, :decimal do
+      public? true
+    end
+
+    attribute :work_free_days_sum_value, :decimal do
+      public? true
+    end
+
+    attribute :work_days_sum_value, :decimal do
+      public? true
+    end
 
     attribute :is_calculation_valid, :boolean do
       public? true

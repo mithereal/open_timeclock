@@ -9,9 +9,17 @@ defmodule Timeclock.Calculations.CalculationCategory do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :color, :string
-    attribute :value, :string
+    attribute :name, :string do
+      public? true
+    end
+
+    attribute :color, :string do
+      public? true
+    end
+
+    attribute :value, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

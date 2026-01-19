@@ -9,8 +9,13 @@ defmodule Timeclock.Approvals.RequestLog do
   attributes do
     uuid_primary_key :id
 
-    attribute :action, :string
-    attribute :date_time, :utc_datetime
+    attribute :action, :string do
+      public? true
+    end
+
+    attribute :date_time, :utc_datetime do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -26,7 +31,10 @@ defmodule Timeclock.Approvals.RequestLog do
   end
 
   relationships do
-    belongs_to :user, Timeclock.Accounts.User
+    belongs_to :user, Timeclock.Accounts.User do
+      public? true
+    end
+
     has_many :requests, Timeclock.Approvals.Request
   end
 

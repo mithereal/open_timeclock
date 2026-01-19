@@ -9,9 +9,17 @@ defmodule Timeclock.Scheduling.BreakRule do
   attributes do
     uuid_primary_key :id
 
-    attribute :name, :string
-    attribute :duration_minutes, :integer
-    attribute :applies_after_hours, :integer
+    attribute :name, :string do
+      public? true
+    end
+
+    attribute :duration_minutes, :integer do
+      public? true
+    end
+
+    attribute :applies_after_hours, :integer do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

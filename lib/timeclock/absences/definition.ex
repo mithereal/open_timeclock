@@ -14,11 +14,6 @@ defmodule Timeclock.Absences.Definition do
       allow_nil? false
     end
 
-    attribute :code, :string do
-      public? true
-      allow_nil? false
-    end
-
     attribute :type, :string do
       public? true
       allow_nil? false
@@ -63,12 +58,25 @@ defmodule Timeclock.Absences.Definition do
   end
 
   relationships do
-    belongs_to :tag, Timeclock.System.Tag
-    belongs_to :icon, Timeclock.System.Icon
+    belongs_to :code, Timeclock.System.Code do
+      public? true
+    end
+
+    belongs_to :tag, Timeclock.System.Tag do
+      public? true
+    end
+
+    belongs_to :icon, Timeclock.System.Icon do
+      public? true
+    end
   end
 
   postgres do
     table "absence_definitions"
     repo Timeclock.Repo
+  end
+
+  actions do
+    defaults [:read, :destroy, create: :*]
   end
 end

@@ -9,24 +9,39 @@ defmodule Timeclock.Clocking.Clocking do
   attributes do
     uuid_primary_key :id
 
-    attribute :timestamp, :utc_datetime
-    attribute :original_timestamp, :utc_datetime
+    attribute :timestamp, :utc_datetime do
+      public? true
+    end
+
+    attribute :original_timestamp, :utc_datetime do
+      public? true
+    end
 
     attribute :is_authentic, :boolean do
       public? true
       default false
     end
 
-    attribute :comment, :string
-    attribute :status, :string
-    attribute :geo_location_timestamp, :utc_datetime
+    attribute :comment, :string do
+      public? true
+    end
+
+    attribute :status, :string do
+      public? true
+    end
+
+    attribute :geo_location_timestamp, :utc_datetime do
+      public? true
+    end
 
     attribute :has_geo_location, :boolean do
       public? true
       default false
     end
 
-    attribute :accuracy, :float
+    attribute :accuracy, :float do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -42,16 +57,45 @@ defmodule Timeclock.Clocking.Clocking do
   end
 
   relationships do
-    belongs_to :user, Timeclock.Accounts.User
-    belongs_to :modified_by_user, Timeclock.Accounts.User
-    belongs_to :device, Timeclock.Clocking.Device
-    belongs_to :beacon, Timeclock.Clocking.Beacon
-    belongs_to :point, Timeclock.Clocking.Point
-    belongs_to :definition, Timeclock.Clocking.Definition
-    belongs_to :interface_detail, Timeclock.Clocking.InterfaceDetail
-    belongs_to :origin, Timeclock.Clocking.Origin
-    belongs_to :original_clocking_definition, Timeclock.Clocking.Definition
-    belongs_to :approval_request, Timeclock.Approvals.Request
+    belongs_to :user, Timeclock.Accounts.User do
+      public? true
+    end
+
+    belongs_to :modified_by_user, Timeclock.Accounts.User do
+      public? true
+    end
+
+    belongs_to :device, Timeclock.Clocking.Device do
+      public? true
+    end
+
+    belongs_to :beacon, Timeclock.Clocking.Beacon do
+      public? true
+    end
+
+    belongs_to :point, Timeclock.Clocking.Point do
+      public? true
+    end
+
+    belongs_to :definition, Timeclock.Clocking.Definition do
+      public? true
+    end
+
+    belongs_to :interface_detail, Timeclock.Clocking.InterfaceDetail do
+      public? true
+    end
+
+    belongs_to :origin, Timeclock.Clocking.Origin do
+      public? true
+    end
+
+    belongs_to :original_clocking_definition, Timeclock.Clocking.Definition do
+      public? true
+    end
+
+    belongs_to :approval_request, Timeclock.Approvals.Request do
+      public? true
+    end
   end
 
   validations do

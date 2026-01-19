@@ -8,7 +8,11 @@ defmodule Timeclock.Accounts do
   resources do
     resource Timeclock.Accounts.Token
     resource Timeclock.Accounts.User
-    resource Timeclock.Accounts.Account
+
+    resource Timeclock.Accounts.Account do
+      define_calculation :full_name, args: [:_record]
+    end
+
     resource Timeclock.Accounts.Employee
     resource Timeclock.Accounts.Manager
     resource Timeclock.Accounts.Role

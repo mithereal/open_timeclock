@@ -9,12 +9,29 @@ defmodule Timeclock.Locations.Address do
   attributes do
     uuid_primary_key :id
 
-    attribute :line, :string
-    attribute :city, :string
-    attribute :country, :string
-    attribute :postal_code, :string
-    attribute :state, :string
-    attribute :ip_address, :string
+    attribute :line, :string do
+      public? true
+    end
+
+    attribute :city, :string do
+      public? true
+    end
+
+    attribute :country, :string do
+      public? true
+    end
+
+    attribute :postal_code, :string do
+      public? true
+    end
+
+    attribute :state, :string do
+      public? true
+    end
+
+    attribute :ip_address, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

@@ -13,5 +13,6 @@ defmodule Timeclock.Clocking do
     resource Timeclock.Clocking.InterfaceDetail
     resource Timeclock.Clocking.Origin
     resource Timeclock.Clocking.Point
+    resource Timeclock.System.Code
   end
 end

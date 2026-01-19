@@ -91,6 +91,13 @@ defmodule TimeclockWeb do
       alias Phoenix.LiveView.JS
       alias TimeclockWeb.Layouts
 
+      def get_user_email(scope) do
+        case scope do
+          nil -> ""
+          scope -> scope.user.email
+        end
+      end
+
       # Routes generation with the ~p sigil
       unquote(verified_routes())
     end

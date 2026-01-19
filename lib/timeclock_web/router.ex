@@ -17,6 +17,16 @@ defmodule TimeclockWeb.Router do
     plug :load_from_session
   end
 
+  pipeline :user do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, html: {TimeclockWeb.Layouts, :user}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    plug :load_from_session
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
     plug :load_from_bearer
@@ -82,7 +92,7 @@ defmodule TimeclockWeb.Router do
   # end
 
   scope "/admin", TimeclockWeb do
-    pipe_through :browser
+    pipe_through :user
 
     ash_authentication_live_session :authentication_required,
       on_mount: {LiveUserAuth, :live_user_required} do

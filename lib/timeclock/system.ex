@@ -8,5 +8,6 @@ defmodule Timeclock.System do
   resources do
     resource Timeclock.System.Icon
     resource Timeclock.System.Tag
+    resource Timeclock.System.Code
   end
 end

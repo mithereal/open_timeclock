@@ -9,11 +9,25 @@ defmodule Timeclock.Organizations.Address do
   attributes do
     uuid_primary_key :id
 
-    attribute :street, :string
-    attribute :city, :string
-    attribute :state, :string
-    attribute :postal_code, :string
-    attribute :country, :string
+    attribute :street, :string do
+      public? true
+    end
+
+    attribute :city, :string do
+      public? true
+    end
+
+    attribute :state, :string do
+      public? true
+    end
+
+    attribute :postal_code, :string do
+      public? true
+    end
+
+    attribute :country, :string do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at

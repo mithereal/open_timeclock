@@ -90,12 +90,12 @@ defmodule Timeclock.Accounts.User do
 
     create :register do
       accept [:user_name, :email]
-      # change {Ash.Changeset, :set_attribute, [:status, :pending]}
+      change set_attribute(:status, :pending)
     end
 
     update :confirm_email do
       accept []
-      # change {Ash.Changeset, :set_attribute, [:status, :active]}
+      change set_attribute(:status, :active)
     end
   end
 
@@ -139,7 +139,10 @@ defmodule Timeclock.Accounts.User do
   end
 
   relationships do
-    has_one :account, Timeclock.Accounts.Account
+    has_one :account, Timeclock.Accounts.Account do
+      public? true
+    end
+
     has_many :clockings, Timeclock.Clocking.Clocking
     has_many :audit_logs, Timeclock.Audit.Log
     has_many :request_logs, Timeclock.Approvals.RequestLog
