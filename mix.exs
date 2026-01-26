@@ -45,7 +45,7 @@ defmodule Timeclock.MixProject do
       {:ash_oban, "~> 0.7"},
       {:cinder, "~> 0.8"},
       {:picosat_elixir, "~> 0.2"},
-      {:sourceror, "~> 1.8", only: [:dev, :test]},
+      {:sourceror, "~> 1.8"},
       {:live_debugger, "~> 0.5", only: [:dev]},
       {:ash_admin, "~> 0.13"},
       {:ash_authentication_phoenix, "~> 2.0"},
@@ -54,7 +54,7 @@ defmodule Timeclock.MixProject do
       {:ash_phoenix, "~> 2.0"},
       {:ash_commanded, "~> 0.2.0"},
       {:ash, "~> 3.0"},
-      {:igniter, "~> 0.6", only: [:dev, :test]},
+      {:igniter, ">= 0.0.0"},
       {:phoenix, "~> 1.8.3"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.13"},
@@ -84,7 +84,8 @@ defmodule Timeclock.MixProject do
       {:ash_sqids, "~> 0.1.0"},
       {:phoenix_live_favicon, "~> 1.0.0"},
       {:premailex, "~> 0.3.0"},
-      {:phoenix_swoosh, "~> 1.2"}
+      {:phoenix_swoosh, "~> 1.2"},
+      {:mishka_chelekom, "~> 0.0.8", only: :dev}
     ]
   end
 

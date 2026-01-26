@@ -278,5 +278,16 @@
     <orderEntry type="library" name="html5ever" level="project" />
     <orderEntry type="library" name="fast_html" level="project" />
     <orderEntry type="library" name="phoenix_swoosh" level="project" />
+    <orderEntry type="library" name="mishka_chelekom" level="project" />
+    <orderEntry type="library" name="guarded_struct" level="project" />
+    <orderEntry type="library" name="igniter_js" level="project" />
+    <orderEntry type="library" name="html_sanitize_ex" level="project" />
+    <orderEntry type="library" name="email_checker" level="project" />
+    <orderEntry type="library" name="ex_url" level="project" />
+    <orderEntry type="library" name="ex_phone_number" level="project" />
+    <orderEntry type="library" name="sweet_xml" level="project" />
+    <orderEntry type="library" name="rustler" level="project" />
+    <orderEntry type="library" name="rustler_precompiled" level="project" />
+    <orderEntry type="library" name="mochiweb" level="project" />
   </component>
 </module>
