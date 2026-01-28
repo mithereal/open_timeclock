@@ -73,7 +73,7 @@ defmodule Timeclock.MixProject do
        app: false,
        compile: false,
        depth: 1},
-      {:swoosh, "~> 1.16"},
+      {:swoosh, "~> 1.21"},
       {:req, "~> 0.5"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
@@ -85,7 +85,10 @@ defmodule Timeclock.MixProject do
       {:phoenix_live_favicon, "~> 1.0.0"},
       {:premailex, "~> 0.3.0"},
       {:phoenix_swoosh, "~> 1.2"},
-      {:mishka_chelekom, "~> 0.0.8", only: :dev}
+      {:mishka_chelekom, "~> 0.0.8", only: :dev},
+      {:plug_health, "~> 0.1.0"},
+      {:observer_cli, "~> 1.8"},
+      {:maybe, "~> 1.0"}
     ]
   end
 

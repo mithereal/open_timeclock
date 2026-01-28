@@ -145,22 +145,6 @@ defmodule Timeclock.Repo.Migrations.AddResources do
 
     create unique_index(:origins, [:id], name: "origins_unique_id_index")
 
-    create table(:tokens, primary_key: false) do
-      add :jti, :text, null: false, primary_key: true
-      add :subject, :text, null: false
-      add :expires_at, :utc_datetime, null: false
-      add :purpose, :text, null: false
-      add :extra_data, :map
-
-      add :created_at, :utc_datetime_usec,
-        null: false,
-        default: fragment("(now() AT TIME ZONE 'utc')")
-
-      add :updated_at, :utc_datetime_usec,
-        null: false,
-        default: fragment("(now() AT TIME ZONE 'utc')")
-    end
-
     create table(:assignments, primary_key: false) do
       add :id, :uuid, null: false, default: fragment("gen_random_uuid()"), primary_key: true
       add :start_date, :utc_datetime
@@ -1073,10 +1057,6 @@ defmodule Timeclock.Repo.Migrations.AddResources do
 
     create unique_index(:calendar_events, [:id], name: "calendar_events_unique_id_index")
 
-    create table(:users, primary_key: false) do
-      add :id, :uuid, null: false, default: fragment("gen_random_uuid()"), primary_key: true
-    end
-
     alter table(:absences) do
       modify :user_id,
              references(:users,
@@ -1344,14 +1324,6 @@ defmodule Timeclock.Repo.Migrations.AddResources do
     end
 
     create unique_index(:approval_requests, [:id], name: "approval_requests_unique_id_index")
-
-    alter table(:users) do
-      add :email, :citext, null: false
-      add :user_name, :citext, null: false
-      add :status, :citext, null: false
-    end
-
-    create unique_index(:users, [:email], name: "users_unique_email_index")
 
     create table(:analytics_activities, primary_key: false) do
       add :id, :uuid, null: false, default: fragment("gen_random_uuid()"), primary_key: true

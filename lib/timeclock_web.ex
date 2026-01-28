@@ -91,6 +91,37 @@ defmodule TimeclockWeb do
       alias Phoenix.LiveView.JS
       alias TimeclockWeb.Layouts
 
+      import TimeclockWeb.ScheduleGanttComponent
+      import TimeclockWeb.Components.Alert
+      import TimeclockWeb.Components.Avatar
+      import TimeclockWeb.Components.Badge
+      import TimeclockWeb.Components.Dropdown
+      import TimeclockWeb.Components.EmailField
+      import TimeclockWeb.Components.TelField
+      import TimeclockWeb.Components.Button
+      import TimeclockWeb.Components.Combobox
+      import TimeclockWeb.Components.Markdown
+      import TimeclockWeb.Components.Modal
+      import TimeclockWeb.Components.Card
+      import TimeclockWeb.Components.Gallery
+      import TimeclockWeb.Components.FormWrapper
+      import TimeclockWeb.Components.Divider
+      import TimeclockWeb.Components.Progress
+      import TimeclockWeb.Components.CheckboxField
+      import TimeclockWeb.Components.TextareaField
+      # import TimeclockWeb.Components.Icon
+      import TimeclockWeb.Components.Image
+      import TimeclockWeb.Components.TextField
+      import TimeclockWeb.Components.InputField
+      import TimeclockWeb.Components.NativeSelect
+      import TimeclockWeb.Components.Navbar
+      import TimeclockWeb.Components.PasswordField
+      import TimeclockWeb.Components.ScrollArea
+      import TimeclockWeb.Components.Sidebar
+      import TimeclockWeb.Components.ToggleField
+      import TimeclockWeb.Components.Tabs
+      import TimeclockWeb.Components.Stepper
+
       def get_user_email(scope) do
         case scope do
           nil -> ""

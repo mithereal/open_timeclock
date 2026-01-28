@@ -6,6 +6,7 @@ defmodule TimeclockWeb.Router do
   import AshAuthentication.Plug.Helpers
 
   alias TimeclockWeb.LiveUserAuth
+  alias TimeclockWeb.AuthOverrides
 
   pipeline :browser do
     plug :accepts, ["html"]

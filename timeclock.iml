@@ -100,6 +100,16 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/floki" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/phoenix_swoosh" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/premailex" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/guarded_struct" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/html_sanitize_ex" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/igniter_js" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/maybe" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/mishka_chelekom" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/mochiweb" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/observer_cli" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/plug_health" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/recon" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/rustler_precompiled" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="picosat_elixir" level="project" />
@@ -289,5 +299,8 @@
     <orderEntry type="library" name="rustler" level="project" />
     <orderEntry type="library" name="rustler_precompiled" level="project" />
     <orderEntry type="library" name="mochiweb" level="project" />
+    <orderEntry type="library" name="plug_health" level="project" />
+    <orderEntry type="library" name="observer_cli" level="project" />
+    <orderEntry type="library" name="maybe" level="project" />
   </component>
 </module>
