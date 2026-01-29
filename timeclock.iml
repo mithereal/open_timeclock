@@ -119,6 +119,9 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/parse_trans" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/phoenix_copy" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ssl_verify_fun" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/gen_smtp" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ranch" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/recase" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="picosat_elixir" level="project" />
@@ -313,5 +316,7 @@
     <orderEntry type="library" name="maybe" level="project" />
     <orderEntry type="library" name="phoenix_copy" level="project" />
     <orderEntry type="library" name="meeseeks_html5ever" level="project" />
+    <orderEntry type="library" name="solid" level="project" />
+    <orderEntry type="library" name="recase" level="project" />
   </component>
 </module>

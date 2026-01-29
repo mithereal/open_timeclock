@@ -144,33 +144,32 @@ defmodule TimeclockWeb.Layouts do
           <:item
             icon="hero-user-group"
             icon_class="text-gray-500"
-            label="Customers"
+            label="Timelines"
             label_class="text-lg text-gray-700"
             link="/home/customers"
           />
           <:item
             icon="hero-chat-bubble-left"
             icon_class="text-gray-500"
-            label="Quotes"
+            label="Calendars"
             label_class="text-lg text-gray-700"
             link="/home/quotes"
           />
           <:item
             icon="hero-banknotes"
             icon_class="text-gray-500"
-            label="Sales"
+            label="Approvals"
             label_class="text-lg text-gray-700"
             link="/home/sales"
           />
           <:item
             icon="hero-banknotes"
             icon_class="text-gray-500"
-            label="Orders"
+            label="Presence"
             label_class="text-lg text-gray-700"
             link="/home/orders"
           />
           <div class="grow"></div>
-          <.user_menu_avatar class="flex-none" current_scope={@current_scope} />
           <div class="size-10 flex-none"></div>
         </.sidebar>
       </aside>

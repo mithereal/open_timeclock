@@ -1,4 +1,4 @@
-defmodule TimeclockWeb.Dashboard.Index do
+defmodule TimeclockWeb.Dashboard.IndexLive do
   use TimeclockWeb, :live_view
 
   alias Framework.Accounts
@@ -13,7 +13,7 @@ defmodule TimeclockWeb.Dashboard.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, dashboard} = Menu.dashboard()
+    {:ok, dashboard} = {:ok, []}
 
     socket =
       socket
@@ -32,7 +32,6 @@ defmodule TimeclockWeb.Dashboard.Index do
       flash={@flash}
       page_title={@page_title}
       menu={@menu}
-      current_scope={@current_scope}
     >
       <div class="mx-4 dark:bg-black"></div>
     </Layouts.user_app>

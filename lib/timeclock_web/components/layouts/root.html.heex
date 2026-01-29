@@ -33,6 +33,16 @@
     </script>
   </head>
   <body>
+    <.header>
+      <div class="pl-10 bg-indigo-300 min-h-5">
+        <div class="flex mx-20 gap-8">
+          <div>support@example.com</div>
+          <div class="grow"></div>
+          <.link navigate="/sign-in">Sign-in</.link>
+          <.link navigate="/register">Register</.link>
+        </div>
+      </div>
+    </.header>
     {@inner_content}
   </body>
 </html>

@@ -1,7 +1,7 @@
 defmodule TimeclockWeb.PageController do
   use TimeclockWeb, :controller
 
-  def home(conn, _params) do
-    render(conn, :home)
+  def landing(conn, _params) do
+    render(conn, :landing)
   end
 end

@@ -54,7 +54,7 @@ defmodule TimeclockWeb.Router do
   scope "/", TimeclockWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", PageController, :landing
     auth_routes AuthController, Timeclock.Accounts.User, path: "/auth"
     sign_out_route AuthController
 
@@ -114,17 +114,20 @@ defmodule TimeclockWeb.Router do
       pipe_through :browser
 
       live_dashboard "/dashboard", metrics: TimeclockWeb.Telemetry
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
+
+      forward "/mailbox", Plug.Swoosh.MailboxPreview,
+        csp_nonce_assign_key: %{script: :script_csp_nonce, style: :style_csp_nonce}
     end
   end
 
   if Application.compile_env(:timeclock, :dev_routes) do
     import AshAdmin.Router
 
-    scope "/admin" do
-      pipe_through :browser
-
-      ash_admin "/"
+    scope "/home" do
+      pipe_through [:browser, :user]
+      live "/online/:name", TimeclockWeb.OnlineLive, :index
+      live "/", TimeclockWeb.Dashboard.IndexLive, :index
+      # ash_admin "/"
     end
   end
 end

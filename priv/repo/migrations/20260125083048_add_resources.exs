@@ -1330,7 +1330,6 @@ defmodule Timeclock.Repo.Migrations.AddResources do
       add :status, :citext, null: false
     end
 
-
     create table(:analytics_activities, primary_key: false) do
       add :id, :uuid, null: false, default: fragment("gen_random_uuid()"), primary_key: true
       add :name, :text, null: false

@@ -91,6 +91,17 @@ config :phoenix_live_view,
   # Enable helpful, but potentially expensive runtime checks
   enable_expensive_runtime_checks: true
 
+# config :timeclock, Timeclock.Mailer,
+#       adapter: Swoosh.Adapters.SMTP,
+#       relay: "localhost",
+#       port: 25,
+#       username: "timeclock",
+#       password: "timeclock",
+#       tls: :never,
+#       ssl: false,
+#       auth: :never,
+#       retries: 1,
+#       no_mx_lookups: true
 config :timeclock, Timeclock.Mailer, adapter: Swoosh.Adapters.Local
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false

@@ -89,7 +89,10 @@ defmodule Timeclock.MixProject do
       {:plug_health, "~> 0.1.0"},
       {:observer_cli, "~> 1.8"},
       {:maybe, "~> 1.0"},
-      {:phoenix_copy, ">= 0.0.0"}
+      {:phoenix_copy, ">= 0.0.0"},
+      {:gen_smtp, "~> 1.2"},
+      {:hackney, ">= 0.0.0"},
+      {:recase, "~> 0.5"}
     ]
   end
 
