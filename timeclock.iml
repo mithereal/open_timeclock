@@ -110,6 +110,15 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/plug_health" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/recon" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/rustler_precompiled" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/certifi" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/hackney" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/meeseeks" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/meeseeks_html5ever" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/metrics" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/mimerl" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/parse_trans" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/phoenix_copy" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ssl_verify_fun" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="picosat_elixir" level="project" />
@@ -302,5 +311,7 @@
     <orderEntry type="library" name="plug_health" level="project" />
     <orderEntry type="library" name="observer_cli" level="project" />
     <orderEntry type="library" name="maybe" level="project" />
+    <orderEntry type="library" name="phoenix_copy" level="project" />
+    <orderEntry type="library" name="meeseeks_html5ever" level="project" />
   </component>
 </module>

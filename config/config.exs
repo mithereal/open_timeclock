@@ -140,6 +140,13 @@ config :spark, :formatter,
     section_order: []
   ]
 
+config :phoenix_copy,
+  images: [
+    debounce: 100,
+    source: Path.expand("../assets/static/images/", __DIR__),
+    destination: Path.expand("../priv/static/images/", __DIR__)
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

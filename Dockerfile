@@ -23,14 +23,6 @@ ARG OS_VERSION=bullseye
 ARG OS_RELEASE="20250224-slim"
 ARG BUILDER_IMAGE="${ORGANIZATION}:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-${OS}-${OS_VERSION}-${OS_RELEASE}"
 ARG RUNNER_IMAGE="${OS}:${OS_VERSION}-${OS_RELEASE}"
-ARG RUST_VERSION=1.81
-
-
-#FROM rust:${RUST_VERSION} as martin_builder
-#WORKDIR /usr/src/martin
-#COPY . .
-#RUN cargo install cargo-binstall && cargo binstall martin --no-confirm
-
 
 FROM ${BUILDER_IMAGE} as builder
 ENV TZ=US \
@@ -95,7 +87,7 @@ FROM ${RUNNER_IMAGE}
 ENV TZ=US \
     DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update -y && apt-get install -y  clamav zstd tini curl nano tzdata bash libstdc++6 curl gifsicle libcairo2 libjpeg-turbo-progs openssl libncurses5 locales webp git libvips-dev npm\
+RUN apt-get update -y && apt-get install -y  zstd tini curl nano tzdata bash libstdc++6 curl gifsicle libcairo2 libjpeg-turbo-progs openssl libncurses5 locales webp git libvips-dev npm\
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # Set the locale
@@ -131,7 +123,7 @@ RUN chown nobody /app
 ENV MIX_ENV="prod"
 
 # Only copy the final release from the build stage
-COPY --from=builder --chown=nobody:root /app/_build/prod/rel/framework ./
+COPY --from=builder --chown=nobody:root /app/_build/prod/rel/timeclock ./
 #HEALTHCHECK --timeout=15s CMD curl --silent --fail http://127.0.0.1:${PORT}/healthcheck
 
 USER nobody

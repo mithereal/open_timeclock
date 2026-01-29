@@ -28,7 +28,8 @@ config :timeclock, TimeclockWeb.Endpoint,
   secret_key_base: "oWH2yhRPog82SFE2MKho4H1tvZLS82inPiYoRo2auALgI8/LlDRoThMKBp4Id+OW",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:timeclock, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:timeclock, ~w(--watch)]}
+    tailwind: {Tailwind, :install_and_run, [:timeclock, ~w(--watch)]},
+    asset_copy_images: {Phoenix.Copy, :watch, [:images]}
   ]
 
 # ## SSL Support

@@ -88,7 +88,8 @@ defmodule Timeclock.MixProject do
       {:mishka_chelekom, "~> 0.0.8", only: :dev},
       {:plug_health, "~> 0.1.0"},
       {:observer_cli, "~> 1.8"},
-      {:maybe, "~> 1.0"}
+      {:maybe, "~> 1.0"},
+      {:phoenix_copy, ">= 0.0.0"}
     ]
   end
 

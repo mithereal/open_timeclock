@@ -1325,6 +1325,12 @@ defmodule Timeclock.Repo.Migrations.AddResources do
 
     create unique_index(:approval_requests, [:id], name: "approval_requests_unique_id_index")
 
+    alter table(:users) do
+      add :user_name, :citext, null: false
+      add :status, :citext, null: false
+    end
+
+
     create table(:analytics_activities, primary_key: false) do
       add :id, :uuid, null: false, default: fragment("gen_random_uuid()"), primary_key: true
       add :name, :text, null: false
