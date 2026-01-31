@@ -6,6 +6,6 @@ defmodule Timeclock.Locations do
   end
 
   resources do
-    resource Timeclock.Locations.Address
+    resource Timeclock.System.Address
   end
 end

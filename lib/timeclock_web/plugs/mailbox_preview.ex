@@ -1,5 +1,5 @@
 if Code.ensure_loaded?(Plug) do
-  defmodule FrameworkWeb.Plug.Swoosh.MailboxPreview do
+  defmodule TimeclockWeb.Plug.Swoosh.MailboxPreview do
     @moduledoc """
     Plug that serves pages useful for previewing emails in development.
 

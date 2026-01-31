@@ -16,7 +16,9 @@ config :timeclock, Oban,
   repo: Timeclock.Repo,
   plugins: [{Oban.Plugins.Cron, []}]
 
-config :cinder, default_theme: "modern"
+config :cinder,
+  default_page_size: [default: 25, options: [10, 25, 50, 100]],
+  default_theme: "modern"
 
 config :ash,
   allow_forbidden_field_for_relationships_by_default?: true,
@@ -76,11 +78,8 @@ config :timeclock,
     Timeclock.Projects,
     Timeclock.System,
     Timeclock.Analytics,
-    Timeclock.Calculations,
     Timeclock.Categories,
     Timeclock.Scheduling,
-    Timeclock.Payments,
-    Timeclock.Requests,
     Timeclock.TimeTracking
   ],
   ash_authentication: [return_error_on_invalid_magic_link_token?: true]
@@ -146,6 +145,12 @@ config :phoenix_copy,
     source: Path.expand("../assets/static/images/", __DIR__),
     destination: Path.expand("../priv/static/images/", __DIR__)
   ]
+
+config :live_charts,
+  adapter: LiveCharts.Adapter.ApexCharts,
+  json_library: Jason
+
+config :elixir, :time_zone_database, Tz.TimeZoneDatabase
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

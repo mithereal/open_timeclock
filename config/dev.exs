@@ -111,3 +111,10 @@ config :spark, :formatter,
   "Ash.Resource": [
     section_order: []
   ]
+
+config :timeclock, Timeclock.Vault,
+  ciphers: [
+    default:
+      {Cloak.Ciphers.AES.GCM,
+       tag: "AES.GCM.V1", key: Base.decode64!("dVBPc3k5cExja3A2aGR6bmFiY2RlZjAxMjM0NTY3ODk=")}
+  ]

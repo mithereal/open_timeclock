@@ -10,5 +10,6 @@ defmodule Timeclock.Adjustments do
     resource Timeclock.Adjustments.Definition
     resource Timeclock.System.Code
     resource Timeclock.Accounts.Account
+    resource Timeclock.System.Status
   end
 end

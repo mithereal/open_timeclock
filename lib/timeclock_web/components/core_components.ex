@@ -29,7 +29,142 @@ defmodule TimeclockWeb.CoreComponents do
   use Phoenix.Component
   use Gettext, backend: TimeclockWeb.Gettext
 
+  import TimeclockWeb.Components.Card
+  import TimeclockWeb.Components.Button
+  import TimeclockWeb.Components.Breadcrumb
+  import TimeclockWeb.Components.Avatar
+  import TimeclockWeb.Components.Badge
+  import TimeclockWeb.Components.Indicator
+
   alias Phoenix.LiveView.JS
+
+  attr :title, :string, required: false, default: "Web Clock"
+  attr :timezone, :string, required: false, default: "en-US"
+  attr :presence, :string, required: false, default: "Not Logged In"
+  attr :balance, :string, required: false, default: "0"
+  attr :buttons, :list, required: false, default: []
+  attr :class, :string, required: false, default: ""
+  attr :current_user, :map, required: true
+
+  def web_clock(assigns) do
+    ~H"""
+    <.card class="rounded-lg">
+      <.card_title class="mx-4 my-2">
+        <div class="mx-auto flex justify-between">
+          <div class="w-1/2">
+            {@title}
+          </div>
+          <div class="w-1/2 text-right" phx-hook=".CurrentTime" id="current-time"></div>
+
+          <script :type={Phoenix.LiveView.ColocatedHook} name=".CurrentTime">
+                          export default {
+                            mounted() {
+                            let formatter = new Intl.DateTimeFormat(window.navigator.language, {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          second: "2-digit",
+                          hour12: true,
+                          });
+            let date = new Date()
+              this.el.innerHTML = formatter.format(date);
+              setInterval(() => {
+             let date = new Date()
+              this.el.innerHTML = formatter.format(date);
+            }, 1000);
+
+                            }
+                          }
+          </script>
+        </div>
+      </.card_title>
+      <.card_content padding="medium" class={@class}>
+        <div class="flex mx-auto px-4 justify-between mt-4">
+          <div class="w-1/2 text-sm">
+            Presence: {@current_user.status.name}
+          </div>
+          <div class="w-1/2 text-sm text-right">
+            Balance: {@current_user.balance}
+          </div>
+        </div>
+        <div class="flex justify-center mt-5 px-10 mx-auto gap-2 pb-8">
+          <div :for={b <- @buttons}>
+            <%= if(@current_user.status.name == b.name) do %>
+              <.button icon="hero-{b.icon}" color="transparent">{b.name}</.button>
+            <% else %>
+              <.button icon="hero-{b.icon}" color="primary">{b.name}</.button>
+            <% end %>
+          </div>
+        </div>
+      </.card_content>
+    </.card>
+    """
+  end
+
+  attr :title, :string, required: false, default: "Presence"
+  attr :class, :string, required: false, default: ""
+  attr :presence_status, :list, required: false, default: []
+  attr :current_user, :map, required: true
+
+  def presence(assigns) do
+    ~H"""
+    <.card class="rounded-lg">
+      <.card_title class="mx-4 my-2">
+        {@title}
+      </.card_title>
+      <.card_content padding="medium" class={@class}>
+        <div :for={status <- @presence_status}>
+          <.badge icon={status.icon} icon_class="size-4" variant="shadow" color={status.color}>
+            {status.name}
+          </.badge>
+        </div>
+
+        <Cinder.collection
+          resource={Timeclock.Accounts.User}
+          actor={@current_user}
+          pagination={:keyset}
+        >
+          <:col :let={user} field="account.picture_uri">
+            <.avatar border="small" src={user.account.picture_uri}>
+              <.indicator size={user.status.color} color="misc" bottom_left />
+            </.avatar>
+          </:col>
+          <:col :let={user} field="status.name" filter>{user.status.name}</:col>
+          <:col :let={user} field="user.message">{user.message}</:col>
+        </Cinder.collection>
+      </.card_content>
+    </.card>
+    """
+  end
+
+  attr :title, :string, required: false, default: "Presence"
+  attr :class, :string, required: false, default: ""
+  attr :current_user, :map, required: true
+
+  def user_day(assigns) do
+    ~H"""
+    <.card class="rounded-lg">
+      <.card_title class="mx-4 my-2">
+        {@title}
+      </.card_title>
+      <.card_content padding="medium" class={@class}></.card_content>
+    </.card>
+    """
+  end
+
+  attr :title, :string, required: false, default: "Presence"
+  attr :class, :string, required: false, default: ""
+  attr :current_user, :map, required: true
+
+  def user_absence_requests(assigns) do
+    ~H"""
+    <.card class="rounded-lg">
+      <.card_title class="mx-4 my-2">
+        {@title}
+      </.card_title>
+      <.card_content padding="medium" class={@class}></.card_content>
+    </.card>
+    """
+  end
 
   #  @doc """
   #  Renders flash notices.
@@ -509,5 +644,33 @@ defmodule TimeclockWeb.CoreComponents do
   """
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
+  end
+
+  def breadcrumbs(assigns) when is_list(assigns.breadcrumbs) do
+    ~H"""
+    <.breadcrumb :for={b <- @breadcrumbs}>
+      <:item icon={b.icon} title={b.name} link={b.link}>{b.name}</:item>
+    </.breadcrumb>
+    """
+  end
+
+  def breadcrumbs(assigns) when is_map(assigns.breadcrumbs) do
+    ~H"""
+    <.breadcrumb>
+      <:item icon={@breadcrumbs.icon} title={@breadcrumbs.name} link={@breadcrumbs.link}>
+        {@breadcrumbs.name}
+      </:item>
+    </.breadcrumb>
+    """
+  end
+
+  def breadcrumbs(assigns) do
+    ~H"""
+    <.breadcrumb>
+      <:item title={@breadcrumbs}>
+        {@breadcrumbs}
+      </:item>
+    </.breadcrumb>
+    """
   end
 end

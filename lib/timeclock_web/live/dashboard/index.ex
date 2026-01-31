@@ -1,24 +1,12 @@
 defmodule TimeclockWeb.Dashboard.IndexLive do
   use TimeclockWeb, :live_view
 
-  alias Framework.Accounts
-  alias Framework.Accounts.Account
-
-  alias TimeclockWeb.Presence
-  alias Framework.Presence, as: Server
-
-  @presence "admin:presence"
-
-  alias Framework.Menu
-
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, dashboard} = {:ok, []}
-
     socket =
       socket
-      |> assign(:category, :dashboard)
-      |> assign(:dashboard, dashboard)
+      |> assign(:presence_status, [])
+      |> assign(:category, "dashboard")
       |> assign(:menu, [])
       |> assign(:page_title, "Home")
 
@@ -33,20 +21,20 @@ defmodule TimeclockWeb.Dashboard.IndexLive do
       page_title={@page_title}
       menu={@menu}
     >
-      <div class="mx-4 dark:bg-black"></div>
+      <div class="dark:bg-black">
+        <div class="flex mx-auto gap-4 px-4">
+          <div class="flex-col w-1/2 mt-4">
+            <.web_clock current_user={@current_user} />
+            <.user_day current_user={@current_user} />
+            <.user_absence_requests presence_status={@presence_status} current_user={@current_user} />
+          </div>
+
+          <div class="flex-col w-1/2 mt-4">
+            <.presence current_user={@current_user} />
+          </div>
+        </div>
+      </div>
     </Layouts.user_app>
     """
-  end
-
-  def handle_info(
-        {_requesting_module, [:data, :updated], :refresh_users} =
-          data,
-        socket
-      ) do
-    socket =
-      assign(socket, :active_users, Framework.Accounts.list_users())
-      |> assign(:total_users, Framework.Accounts.count_users())
-
-    {:noreply, socket}
   end
 end

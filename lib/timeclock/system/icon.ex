@@ -31,11 +31,11 @@ defmodule Timeclock.System.Icon do
   end
 
   postgres do
-    table "tags"
+    table "icons"
     repo Timeclock.Repo
   end
 
   relationships do
-    has_many :category_definitions, Timeclock.Categories.Definition
+    has_many :categories, Timeclock.System.Category
   end
 end

@@ -1,6 +1,7 @@
 # Timeclock
 
-This is an opensource TimeClock app inspired by allhours
+This is an opensource TimeClock app
+It can be used either standalone or included in your elixir project
 
 To start your Phoenix server:
 

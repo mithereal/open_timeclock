@@ -1,7 +1,7 @@
 defmodule Timeclock.Absences.Absence do
   use Ash.Resource,
     otp_app: :timeclock,
-    domain: Timeclock.Accounts,
+    domain: Timeclock.Absences,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
     extensions: [AshCommanded.Commanded.Dsl]
@@ -15,11 +15,6 @@ defmodule Timeclock.Absences.Absence do
     end
 
     attribute :end_date, :utc_datetime do
-      public? true
-      allow_nil? false
-    end
-
-    attribute :status, :string do
       public? true
       allow_nil? false
     end
@@ -42,6 +37,10 @@ defmodule Timeclock.Absences.Absence do
       public? true
     end
 
+    belongs_to :status, Timeclock.System.Status do
+      public? true
+    end
+
     belongs_to :approved_by, Timeclock.Accounts.User do
       public? true
     end
@@ -58,5 +57,9 @@ defmodule Timeclock.Absences.Absence do
 
   actions do
     defaults [:read, :destroy, create: :*]
+  end
+
+  preparations do
+    prepare build(load: [:status, :user, :approved_by, :absence_definition])
   end
 end

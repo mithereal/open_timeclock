@@ -1,7 +1,7 @@
 defmodule Timeclock.Clocking.Point do
   use Ash.Resource,
     otp_app: :timeclock,
-    domain: Timeclock.Audit,
+    domain: Timeclock.Clocking,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
     extensions: [AshCommanded.Commanded.Dsl]

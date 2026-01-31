@@ -9,5 +9,6 @@ defmodule Timeclock.Absences do
     resource Timeclock.Absences.Absence
     resource Timeclock.Absences.Definition
     resource Timeclock.System.Code
+    resource Timeclock.System.Status
   end
 end

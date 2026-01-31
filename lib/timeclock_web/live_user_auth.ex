@@ -54,18 +54,13 @@ defmodule TimeclockWeb.LiveUserAuth do
     end
   end
 
-  defp maybe_load_setup(conn) do
-    conn
-  end
-
   def on_mount(:user_setup, _params, session, socket) do
-    ## pull setup data from the genserver and compare
-    if socket.assigns.current_scope && socket.assigns.current_scope.account.default_company_id do
+    if socket.assigns.current_scope do
       {:cont, socket}
     else
       socket =
         socket
-        |> Phoenix.LiveView.redirect(to: ~p"/setup")
+        |> Phoenix.LiveView.redirect(to: ~p"/home/setup")
 
       {:halt, socket}
     end

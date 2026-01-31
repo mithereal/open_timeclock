@@ -1,7 +1,7 @@
 defmodule Timeclock.Calendar.EventType do
   use Ash.Resource,
     otp_app: :timeclock,
-    domain: Timeclock.Audit,
+    domain: Timeclock.Calendar,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
     extensions: [AshCommanded.Commanded.Dsl]

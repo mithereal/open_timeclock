@@ -60,4 +60,8 @@ defmodule Timeclock.Approvals.RequestDefinition do
   relationships do
     has_many :requests, Timeclock.Approvals.Request
   end
+
+  preparations do
+    prepare build(load: [:requests])
+  end
 end

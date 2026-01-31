@@ -39,4 +39,8 @@ defmodule Timeclock.Approvals.PermissionDelegation do
   actions do
     defaults [:read, :destroy, create: :*]
   end
+
+  preparations do
+    prepare build(load: [:user, :delegated_user])
+  end
 end

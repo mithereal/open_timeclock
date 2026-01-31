@@ -24,11 +24,6 @@ defmodule Timeclock.Adjustments.Adjustment do
       allow_nil? true
     end
 
-    attribute :status, :string do
-      public? true
-      allow_nil? true
-    end
-
     attribute :origin, :string do
       public? true
       allow_nil? true
@@ -73,11 +68,11 @@ defmodule Timeclock.Adjustments.Adjustment do
       public? true
     end
 
-    belongs_to :definition, Timeclock.Adjustments.Definition do
+    belongs_to :status, Timeclock.System.Status do
       public? true
     end
 
-    belongs_to :calculation_result, Timeclock.Calculations.CalculationDetail do
+    belongs_to :definition, Timeclock.Adjustments.Definition do
       public? true
     end
 
@@ -93,5 +88,9 @@ defmodule Timeclock.Adjustments.Adjustment do
 
   actions do
     defaults [:read, :destroy, create: :*]
+  end
+
+  preparations do
+    prepare build(load: [:status, :account, :icon, :definition])
   end
 end

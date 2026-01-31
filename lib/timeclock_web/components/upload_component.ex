@@ -1,6 +1,6 @@
 defmodule TimeclockWeb.UploadComponent do
   use TimeclockWeb, :live_component
-  alias Framework.Images
+  alias Timeclock.Images
 
   @impl true
   def mount(socket) do
@@ -89,7 +89,7 @@ defmodule TimeclockWeb.UploadComponent do
     type =
       socket.assigns.type || "main"
 
-    thumbnail_sizes = Framework.config([:thumbnail_sizes])
+    thumbnail_sizes = Timeclock.config([:thumbnail_sizes])
 
     image =
       consume_uploaded_entries(socket, :upload_component_file, fn %{path: path}, _entry ->
@@ -97,7 +97,7 @@ defmodule TimeclockWeb.UploadComponent do
 
         dest =
           Path.join([
-            :code.priv_dir(:framework),
+            :code.priv_dir(Timeclock),
             "static",
             "images",
             "uploads",
@@ -155,7 +155,7 @@ defmodule TimeclockWeb.UploadComponent do
 
     bucket =
       case maybe(socket.bucket) do
-        nil -> Application.get_env(:framework, :custom_bucket, default_bucket)
+        nil -> Application.get_env(Timeclock, :custom_bucket, default_bucket)
         bucket -> bucket
       end
 

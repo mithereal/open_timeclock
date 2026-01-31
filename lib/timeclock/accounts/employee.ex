@@ -41,4 +41,8 @@ defmodule Timeclock.Accounts.Employee do
     table "employees"
     repo Timeclock.Repo
   end
+
+  preparations do
+    prepare build(load: [:user, :department])
+  end
 end

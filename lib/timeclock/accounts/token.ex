@@ -79,6 +79,11 @@ defmodule Timeclock.Accounts.Token do
       description "AshAuthentication can interact with the token resource"
       authorize_if always()
     end
+
+    policy always() do
+      description "No one aside from AshAuthentication can interact with the tokens resource."
+      forbid_if always()
+    end
   end
 
   attributes do

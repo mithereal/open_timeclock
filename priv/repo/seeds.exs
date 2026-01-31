@@ -1,11 +1,17 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Timeclock.Repo.insert!(%Timeclock.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+seed_user = fn email ->
+  {:ok, user} =
+    Timeclock.Accounts.User
+    |> Ash.Changeset.for_create(:register_with_password, %{
+      email: email,
+      password: "Aa123123123123",
+      password_confirmation: "Aa123123123123"
+    })
+    |> Ash.create(
+      context: %{
+        strategy: AshAuthentication.Strategy.Password,
+        private: %{ash_authentication?: true}
+      }
+    )
+
+  user
+end

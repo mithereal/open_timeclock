@@ -31,4 +31,8 @@ defmodule Timeclock.Accounts.Manager do
       public? true
     end
   end
+
+  preparations do
+    prepare build(load: [:user, :department])
+  end
 end

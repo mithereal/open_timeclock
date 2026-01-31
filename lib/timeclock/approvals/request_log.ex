@@ -46,4 +46,8 @@ defmodule Timeclock.Approvals.RequestLog do
   actions do
     defaults [:read, :destroy, create: :*]
   end
+
+  preparations do
+    prepare build(load: [:user, :requests])
+  end
 end

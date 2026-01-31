@@ -271,7 +271,7 @@ defmodule TimeclockWeb.Layouts do
       </:end_content>
       <:list>
         <div class="text-green-900 font-semibold">
-          {Recase.to_title(to_string(@category))}
+          <.breadcrumbs breadcrumbs={Recase.to_title(to_string(@category))} />
         </div>
         <%= for link <- @menu do %>
           <.link
@@ -344,8 +344,6 @@ defmodule TimeclockWeb.Layouts do
     </nav>
     """
   end
-
-  attr :mobile_title, :string, required: false, default: "Timeclock"
 
   def mobile_nav(assigns) do
     ~H"""

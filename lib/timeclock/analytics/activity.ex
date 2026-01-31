@@ -35,7 +35,7 @@ defmodule Timeclock.Analytics.Activity do
   validations do
     validate present([:name]), on: [:create, :update]
     validate string_length(:name, min: 1, max: 255), on: [:create, :update]
-    validate {Timeclock.Validations.Properties, [:properties]}, on: :create
+    # validate {Timeclock.Validations.Properties, [:properties]}, on: :create
   end
 
   actions do

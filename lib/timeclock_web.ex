@@ -95,6 +95,7 @@ defmodule TimeclockWeb do
       import TimeclockWeb.Components.Alert
       import TimeclockWeb.Components.Avatar
       import TimeclockWeb.Components.Badge
+      import TimeclockWeb.Components.Breadcrumb
       import TimeclockWeb.Components.Dropdown
       import TimeclockWeb.Components.EmailField
       import TimeclockWeb.Components.TelField

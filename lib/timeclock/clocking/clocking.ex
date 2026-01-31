@@ -26,10 +26,6 @@ defmodule Timeclock.Clocking.Clocking do
       public? true
     end
 
-    attribute :status, :string do
-      public? true
-    end
-
     attribute :geo_location_timestamp, :utc_datetime do
       public? true
     end
@@ -66,6 +62,10 @@ defmodule Timeclock.Clocking.Clocking do
     end
 
     belongs_to :device, Timeclock.Clocking.Device do
+      public? true
+    end
+
+    belongs_to :status, Timeclock.System.Status do
       public? true
     end
 

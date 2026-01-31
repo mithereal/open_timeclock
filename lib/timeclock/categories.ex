@@ -6,6 +6,6 @@ defmodule Timeclock.Categories do
   end
 
   resources do
-    resource Timeclock.Categories.Definition
+    resource Timeclock.System.Category
   end
 end

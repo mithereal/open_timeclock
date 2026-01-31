@@ -1,12 +1,6 @@
 defmodule TimeclockWeb.UserLive.Setup do
   use TimeclockWeb, :live_view
 
-  alias Framework.Accounts
-
-  alias Accounts.Account
-  alias Framework.Companys.Company
-  alias Framework.Companys.Location
-
   @impl true
   def render(assigns) do
     ~H"""
@@ -123,42 +117,15 @@ defmodule TimeclockWeb.UserLive.Setup do
 
   def handle_event("submit", location, socket) do
     socket = socket |> assign(:location, location)
-    #    if Membership.has_role?(:admin) do
+
     write(socket.assigns)
 
     {:noreply,
      socket
      |> push_navigate(to: ~p"/home")}
-
-    #    else
-    #      {:noreply, socket |> put_flash(:warn, "You don't have permissions to do that action")}
-    #    end
-
-    # {:noreply, socket |> put_flash(:info, "Success")}
   end
 
   defp write(assigns) do
-    user = Framework.Accounts.get_user!(assigns.current_scope.user.id)
-
-    admin_user_id =
-      case user.account.admin_user_id do
-        nil -> user.id
-        data -> data
-      end
-
-    {:ok, updated_account} =
-      Framework.Accounts.update_account(user.account, %{
-        type: assigns.type,
-        admin_user_id: admin_user_id
-      })
-
-    data = Map.put(assigns.company, "account_id", updated_account.id)
-    {:ok, data} = Framework.Companys.create_company(data)
-    location = Map.put(assigns.location, "company_id", data.company.id)
-    Framework.Locations.create_location(location)
-
-    Framework.Accounts.update_account(updated_account, %{
-      default_company_id: data.company.id
-    })
+    :ok
   end
 end

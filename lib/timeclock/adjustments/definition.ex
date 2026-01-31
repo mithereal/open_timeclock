@@ -54,22 +54,22 @@ defmodule Timeclock.Adjustments.Definition do
       public? true
     end
 
-    belongs_to :tags, Timeclock.System.Tag do
+    belongs_to :tag, Timeclock.System.Tag do
       public? true
     end
 
-    belongs_to :caculation_result, Timeclock.Calculations.CalculationDetail do
-      public? true
+    validations do
+      validate present([:name, :type]), on: [:create, :update]
+      validate string_length(:name, min: 1, max: 255), on: [:create, :update]
+      validate string_length(:type, min: 1, max: 100), on: [:create, :update]
+    end
+
+    actions do
+      defaults [:read, :destroy, create: :*]
     end
   end
 
-  validations do
-    validate present([:name, :type]), on: [:create, :update]
-    validate string_length(:name, min: 1, max: 255), on: [:create, :update]
-    validate string_length(:type, min: 1, max: 100), on: [:create, :update]
-  end
-
-  actions do
-    defaults [:read, :destroy, create: :*]
+  preparations do
+    prepare build(load: [:code, :tag, :account])
   end
 end

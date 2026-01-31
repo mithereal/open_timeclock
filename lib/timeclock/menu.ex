@@ -176,7 +176,7 @@ defmodule Timeclock.Menu do
     }
   ]
 
-  alias Framework.Utils
+  alias Timeclock.Utils
 
   def sidebar() do
     menu = @menu

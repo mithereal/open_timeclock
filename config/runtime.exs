@@ -73,6 +73,78 @@ if config_env() == :prod do
       System.get_env("TOKEN_SIGNING_SECRET") ||
         raise("Missing environment variable `TOKEN_SIGNING_SECRET`!")
 
+  if cors_origins = System.get_env("CORS_ORIGINS") do
+    config :cors_plug,
+      origin: String.split(cors_origins, ",", trim: true),
+      methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"]
+  end
+
+  cloak_key =
+    System.get_env("CLOAK_KEY") ||
+      raise "Missing environment variable CLOAK_KEY (32-byte key, base64-encoded)"
+
+  email_provider = System.get_env("EMAIL_PROVIDER")
+
+  config :timeclock, Timeclock.Vault,
+    ciphers: [
+      default: {Cloak.Ciphers.AES.GCM, tag: "AES.GCM.V1", key: Base.decode64!(cloak_key)}
+    ]
+
+  cond do
+    email_provider in ~w(sendgrid postmark brevo) ->
+      adapter =
+        case email_provider do
+          "sendgrid" -> Swoosh.Adapters.SendGrid
+          "postmark" -> Swoosh.Adapters.Postmark
+          "brevo" -> Swoosh.Adapters.Brevo
+        end
+
+      config :timeclock, Timeclock.Mailer,
+        adapter: adapter,
+        api_key: System.get_env("EMAIL_API_KEY")
+
+      config :swoosh, :api_client, Finch
+      config :swoosh, :finch_name, Timeclock.Finch
+
+    email_provider == "mailgun" ->
+      config :timeclock, Timeclock.Mailer,
+        adapter: Swoosh.Adapters.Mailgun,
+        api_key: System.get_env("EMAIL_API_KEY"),
+        domain: System.get_env("EMAIL_API_DOMAIN")
+
+      config :swoosh, :api_client, Finch
+      config :swoosh, :finch_name, Timeclock.Finch
+
+    email_provider == "amazon_ses" ->
+      config :timeclock, Timeclock.Mailer,
+        adapter: Swoosh.Adapters.AmazonSES,
+        access_key: System.get_env("EMAIL_API_KEY"),
+        secret: System.get_env("EMAIL_API_SECRET"),
+        region: System.get_env("EMAIL_API_REGION") || "us-east-1"
+
+      config :swoosh, :api_client, Finch
+      config :swoosh, :finch_name, Timeclock.Finch
+
+    System.get_env("SMTP_HOST") != nil ->
+      config :timeclock, Timeclock.Mailer,
+        adapter: Swoosh.Adapters.SMTP,
+        relay: System.get_env("SMTP_HOST"),
+        port: String.to_integer(System.get_env("SMTP_PORT") || "587"),
+        username: System.get_env("SMTP_USERNAME"),
+        password: System.get_env("SMTP_PASSWORD"),
+        tls: :always,
+        auth: :always
+
+      config :swoosh, :api_client, Finch
+      config :swoosh, :finch_name, Timeclock.Finch
+
+    true ->
+      # No email provider configured — use Logger adapter so emails are
+      # logged instead of crashing (Local adapter's memory store is
+      # disabled in prod).
+      config :timeclock, Timeclock.Mailer, adapter: Swoosh.Adapters.Logger
+  end
+
   # ## SSL Support
   #
   # To get SSL working, you will need to add the `https` key

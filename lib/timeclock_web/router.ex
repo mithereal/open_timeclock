@@ -7,6 +7,26 @@ defmodule TimeclockWeb.Router do
 
   alias TimeclockWeb.LiveUserAuth
   alias TimeclockWeb.AuthOverrides
+  alias AshAuthentication.Phoenix.Overrides.Default
+
+  @csp Enum.join(
+         [
+           "default-src 'self'",
+           "base-uri 'self'",
+           "frame-ancestors 'self'",
+           "img-src 'self' data: blob:",
+           "style-src 'self' 'unsafe-inline'",
+           "font-src 'self' data:",
+           "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+           "connect-src 'self' ws: wss:"
+         ],
+         "; "
+       )
+
+  def put_session_timezone(conn, _opts) do
+    timezone = conn.cookies["timezone"]
+    put_session(conn, "timezone", timezone)
+  end
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -15,7 +35,9 @@ defmodule TimeclockWeb.Router do
     plug :put_root_layout, html: {TimeclockWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :put_csp
     plug :load_from_session
+    plug :put_session_timezone
   end
 
   pipeline :user do
@@ -25,7 +47,9 @@ defmodule TimeclockWeb.Router do
     plug :put_root_layout, html: {TimeclockWeb.Layouts, :user}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :put_csp
     plug :load_from_session
+    plug :put_session_timezone
   end
 
   pipeline :api do
@@ -65,6 +89,7 @@ defmodule TimeclockWeb.Router do
                   on_mount: [{LiveUserAuth, :live_no_user}],
                   overrides: [
                     AuthOverrides,
+                    Default,
                     Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI
                   ]
 
@@ -72,6 +97,7 @@ defmodule TimeclockWeb.Router do
     reset_route auth_routes_prefix: "/auth",
                 overrides: [
                   AuthOverrides,
+                  Default,
                   Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI
                 ]
 
@@ -125,9 +151,17 @@ defmodule TimeclockWeb.Router do
 
     scope "/home" do
       pipe_through [:browser, :user]
+
+      ash_authentication_live_session :authenticated_user,
+        on_mount: {LiveUserAuth, :live_user_required} do
+        live "/", TimeclockWeb.Dashboard.IndexLive, :index
+        live "/setup", TimeclockWeb.System.SetupLive, :index
+      end
+
       live "/online/:name", TimeclockWeb.OnlineLive, :index
-      live "/", TimeclockWeb.Dashboard.IndexLive, :index
       # ash_admin "/"
     end
   end
+
+  defp put_csp(conn, _opts), do: Plug.Conn.put_resp_header(conn, "content-security-policy", @csp)
 end

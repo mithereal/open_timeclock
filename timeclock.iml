@@ -122,6 +122,16 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/gen_smtp" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ranch" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/recase" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/live_charts" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/cinder" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/cldr_utils" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/cloak" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/cloak_ecto" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/cors_plug" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ex_cldr" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/tz" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ash_archival" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ash_paper_trail" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="picosat_elixir" level="project" />
@@ -318,5 +328,14 @@
     <orderEntry type="library" name="meeseeks_html5ever" level="project" />
     <orderEntry type="library" name="solid" level="project" />
     <orderEntry type="library" name="recase" level="project" />
+    <orderEntry type="library" name="live_charts" level="project" />
+    <orderEntry type="library" name="inch_ex" level="project" />
+    <orderEntry type="library" name="cors_plug" level="project" />
+    <orderEntry type="library" name="ex_cldr" level="project" />
+    <orderEntry type="library" name="cloak_ecto" level="project" />
+    <orderEntry type="library" name="cloak" level="project" />
+    <orderEntry type="library" name="pbkdf2" level="project" />
+    <orderEntry type="library" name="ash_paper_trail" level="project" />
+    <orderEntry type="library" name="ash_archival" level="project" />
   </component>
 </module>

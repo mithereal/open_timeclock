@@ -109,4 +109,17 @@ defmodule Timeclock.Approvals.Request do
   actions do
     defaults [:read, :destroy, create: :*]
   end
+
+  preparations do
+    prepare build(
+              load: [
+                :user,
+                :status_set_by_user,
+                :icon,
+                :request_log,
+                :request_additional_data,
+                :request_definition
+              ]
+            )
+  end
 end

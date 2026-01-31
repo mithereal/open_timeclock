@@ -200,4 +200,8 @@ defmodule Timeclock.Accounts.Account do
   actions do
     defaults [:read, :destroy, create: :*]
   end
+
+  preparations do
+    prepare build(load: [:user])
+  end
 end

@@ -61,7 +61,7 @@ defmodule Timeclock.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 1.1.0"},
+      {:phoenix_live_view, "~> 1.1.0", override: true},
       {:lazy_html, ">= 0.1.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
@@ -92,7 +92,14 @@ defmodule Timeclock.MixProject do
       {:phoenix_copy, ">= 0.0.0"},
       {:gen_smtp, "~> 1.2"},
       {:hackney, ">= 0.0.0"},
-      {:recase, "~> 0.5"}
+      {:recase, "~> 0.5"},
+      {:live_charts, "~> 0.4.0"},
+      {:cors_plug, "~> 3.0"},
+      {:ex_cldr, "~> 2.46"},
+      {:cloak_ecto, "~> 1.3"},
+      {:tz, "~> 0.28"},
+      {:ash_paper_trail, "~> 0.5.7"},
+      {:ash_archival, "~> 2.0.3"}
     ]
   end
 

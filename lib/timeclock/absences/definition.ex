@@ -1,7 +1,7 @@
 defmodule Timeclock.Absences.Definition do
   use Ash.Resource,
     otp_app: :timeclock,
-    domain: Timeclock.Accounts,
+    domain: Timeclock.Absences,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
     extensions: [AshCommanded.Commanded.Dsl]
@@ -78,5 +78,9 @@ defmodule Timeclock.Absences.Definition do
 
   actions do
     defaults [:read, :destroy, create: :*]
+  end
+
+  preparations do
+    prepare build(load: [:code, :tag, :icon])
   end
 end

@@ -12,23 +12,21 @@ defmodule Timeclock.System.Code do
     attribute :code, :string do
       public? true
     end
+
+    create_timestamp :created_at
+    update_timestamp :updated_at
   end
 
   identities do
     identity :unique_id, [:id]
-    identity :unique_code, [:code]
-  end
-
-  validations do
-    validate present([:code]), on: [:create, :update]
-  end
-
-  actions do
-    defaults [:read, :destroy, create: :*]
   end
 
   postgres do
     table "codes"
     repo Timeclock.Repo
+  end
+
+  actions do
+    defaults [:read, :destroy, create: :*]
   end
 end
