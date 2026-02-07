@@ -27,11 +27,11 @@ defmodule Timeclock.Organizations.Department do
   end
 
   relationships do
-    belongs_to :starting_category_definition, Timeclock.Categories.Definition do
+    belongs_to :starting_category_definition, Timeclock.System.Status do
       public? true
     end
 
-    belongs_to :absence_category_definition, Timeclock.Categories.Definition do
+    belongs_to :absence_category_definition, Timeclock.System.Status do
       public? true
     end
 

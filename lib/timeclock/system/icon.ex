@@ -36,6 +36,6 @@ defmodule Timeclock.System.Icon do
   end
 
   relationships do
-    has_many :categories, Timeclock.System.Category
+    has_many :status, Timeclock.System.Status
   end
 end

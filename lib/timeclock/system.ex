@@ -8,7 +8,6 @@ defmodule Timeclock.System do
   resources do
     resource Timeclock.System.Address
     resource Timeclock.System.Card
-    resource Timeclock.System.Category
     resource Timeclock.System.Icon
     resource Timeclock.System.Tag
     resource Timeclock.System.Code
