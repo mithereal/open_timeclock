@@ -22,7 +22,7 @@ defmodule Timeclock.MixProject do
   def application do
     [
       mod: {Timeclock.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :glific_phil_columns]
     ]
   end
 
@@ -99,7 +99,8 @@ defmodule Timeclock.MixProject do
       {:cloak_ecto, "~> 1.3"},
       {:tz, "~> 0.28"},
       {:ash_paper_trail, "~> 0.5.7"},
-      {:ash_archival, "~> 2.0.3"}
+      {:ash_archival, "~> 2.0.3"},
+      {:glific_phil_columns, "~> 3.2"}
     ]
   end
 
@@ -111,6 +112,7 @@ defmodule Timeclock.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
+      seed: ["phil_columns.seed"],
       migrations: ["ash_postgres.generate_migrations resources"],
       setup: [
         "deps.get",

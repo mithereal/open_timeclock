@@ -4,7 +4,7 @@ defmodule Timeclock.Accounts.User do
     domain: Timeclock.Accounts,
     data_layer: AshPostgres.DataLayer,
     authorizers: [Ash.Policy.Authorizer],
-    extensions: [AshAuthentication]
+    extensions: [AshAuthentication, AshArchival.Resource]
 
   alias AshAuthentication.Strategy.Password.HashPasswordChange
   alias AshAuthentication.Strategy.Password.PasswordConfirmationValidation
@@ -54,9 +54,22 @@ defmodule Timeclock.Accounts.User do
     end
   end
 
+  resource do
+    base_filter expr(is_nil(archived_at))
+  end
+
   postgres do
     table "users"
     repo Timeclock.Repo
+    base_filter_sql "(archived_at IS NULL)"
+  end
+
+  archive do
+    exclude_read_actions(:archived)
+    archive_related([:account])
+
+    # Recommended: bypass authorization for related records
+    archive_related_authorize?(false)
   end
 
   actions do
@@ -65,6 +78,17 @@ defmodule Timeclock.Accounts.User do
     #      read :list_admins do
     #        filter expr(role == :admin)
     #      end
+
+    read :archived do
+      filter expr(not is_nil(archived_at))
+    end
+
+    update :unarchive do
+      change set_attribute(:archived_at, nil)
+      # if an individual record is used to unarchive
+      # it must use the `archived` read action for its atomic upgrade
+      atomic_upgrade_with :archived
+    end
 
     read :get_by_subject do
       description "Get a user by the subject claim in a JWT"
@@ -169,10 +193,6 @@ defmodule Timeclock.Accounts.User do
         allow_nil? false
       end
 
-      #      argument :role, :atom do
-      #        default :customer
-      #      end
-
       argument :password, :string do
         description "The proposed password for the user, in plain text."
         allow_nil? false
@@ -189,7 +209,6 @@ defmodule Timeclock.Accounts.User do
       # Sets the email from the argument
       change set_attribute(:email, arg(:email))
       change set_attribute(:status, :pending)
-      # change set_attribute(:role, arg(:role))
 
       # Hashes the provided password
       change HashPasswordChange
@@ -309,6 +328,7 @@ defmodule Timeclock.Accounts.User do
   end
 
   identities do
+    identity :unique_email, [:email], where: expr(is_nil(archived_at))
     identity :unique_email, [:email]
   end
 

@@ -44,7 +44,7 @@ defmodule Timeclock.Calendar.Group do
     defaults [:read, :destroy, create: :*]
   end
 
-  #  relationships do
-  #    has_many :events, Timeclock.Calendar.Event
-  #  end
+  relationships do
+    has_many :events, Timeclock.Calendar.Event
+  end
 end

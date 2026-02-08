@@ -1,5 +1,5 @@
 @status [{"Work From Home", "blue"}, {"Depart", "red"}]
-@users ["test@example.com"]
+@users ["admin@example.com"]
 
 seed_user = fn email ->
   {:ok, reply} =
@@ -19,17 +19,5 @@ seed_user = fn email ->
   reply
 end
 
-seed_status = fn name, color ->
-  {:ok, reply} =
-    Timeclock.System.Status
-    |> Ash.Changeset.for_create(:create, %{
-      name: name,
-      color: color
-    })
-    |> Ash.create()
-
-  reply
-end
-
-_admin_user = seed_user.("test@example.com")
+_admin_user = seed_user.("admin@example.com")
 _status = seed_status.("Work from Home", "blue")

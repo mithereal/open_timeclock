@@ -132,6 +132,8 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/tz" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ash_archival" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ash_paper_trail" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/glific_phil_columns" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/inflex" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="picosat_elixir" level="project" />
@@ -337,5 +339,7 @@
     <orderEntry type="library" name="pbkdf2" level="project" />
     <orderEntry type="library" name="ash_paper_trail" level="project" />
     <orderEntry type="library" name="ash_archival" level="project" />
+    <orderEntry type="library" name="glific_phil_columns" level="project" />
+    <orderEntry type="library" name="inflex" level="project" />
   </component>
 </module>

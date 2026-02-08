@@ -153,7 +153,7 @@ defmodule TimeclockWeb.Router do
       pipe_through [:browser, :user]
 
       ash_authentication_live_session :authenticated_user,
-        on_mount: {LiveUserAuth, :live_user_required} do
+        on_mount: [{LiveUserAuth, :live_user_required}, {AshScope, :current_scope}] do
         live "/", TimeclockWeb.Dashboard.IndexLive, :index
         live "/setup", TimeclockWeb.System.SetupLive, :index
       end

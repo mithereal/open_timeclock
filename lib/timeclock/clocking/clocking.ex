@@ -13,20 +13,7 @@ defmodule Timeclock.Clocking.Clocking do
       public? true
     end
 
-    attribute :original_timestamp, :utc_datetime do
-      public? true
-    end
-
-    attribute :is_authentic, :boolean do
-      public? true
-      default false
-    end
-
     attribute :comment, :string do
-      public? true
-    end
-
-    attribute :geo_location_timestamp, :utc_datetime do
       public? true
     end
 

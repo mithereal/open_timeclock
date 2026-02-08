@@ -15,7 +15,7 @@
     :phoenix,
     :ash_paper_trail
   ],
-  subdirectories: ["priv/*/migrations"],
+  subdirectories: ["priv/*/migrations", "priv/*/seeds"],
   plugins: [Spark.Formatter, Phoenix.LiveView.HTMLFormatter],
   inputs: ["*.{heex,ex,exs}", "{config,lib,test}/**/*.{heex,ex,exs}", "priv/*/seeds.exs"]
 ]

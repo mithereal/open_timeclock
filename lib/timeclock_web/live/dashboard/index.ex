@@ -26,11 +26,11 @@ defmodule TimeclockWeb.Dashboard.IndexLive do
           <div class="flex-col w-1/2 mt-4">
             <.web_clock current_user={@current_user} />
             <.user_day current_user={@current_user} />
-            <.user_absence_requests presence_status={@presence_status} current_user={@current_user} />
+            <.user_absence_requests current_user={@current_user} />
           </div>
 
           <div class="flex-col w-1/2 mt-4">
-            <.presence current_user={@current_user} />
+            <.presence presence_status={@presence_status} current_user={@current_user} />
           </div>
         </div>
       </div>
