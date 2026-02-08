@@ -37,4 +37,19 @@ defmodule TimeclockWeb.Dashboard.IndexLive do
     </Layouts.user_app>
     """
   end
+
+  @impl true
+  def handle_info({:chart_datapoint, {x, y}}, socket) do
+    %{chart: chart, chart_data: data} = socket.assigns
+
+    data = [%{x: x, y: y} | data]
+    series = [%{data: Enum.reverse(data)}]
+
+    socket =
+      socket
+      |> assign(:chart_data, data)
+      |> LiveCharts.push_update(chart, series)
+
+    {:noreply, socket}
+  end
 end

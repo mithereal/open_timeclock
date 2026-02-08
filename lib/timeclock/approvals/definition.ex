@@ -1,16 +1,19 @@
-defmodule Timeclock.Approvals.RequestDefinition do
+defmodule Timeclock.Approvals.Definition do
   use Ash.Resource,
     otp_app: :timeclock,
     domain: Timeclock.Approvals,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   attributes do
     uuid_primary_key :id
 
     attribute :name, :string
-    attribute :request_type, :integer
+
+    attribute :type, Timeclock.Types.Definition do
+      public? true
+    end
 
     attribute :start_time_parameter_required, :boolean do
       public? true
@@ -50,7 +53,6 @@ defmodule Timeclock.Approvals.RequestDefinition do
   validations do
     validate present([:name, :request_type]), on: [:create, :update]
     validate string_length(:name, min: 1, max: 255), on: [:create, :update]
-    validate one_of(:request_type, @allowed_values), on: [:create, :update]
   end
 
   actions do
@@ -58,7 +60,7 @@ defmodule Timeclock.Approvals.RequestDefinition do
   end
 
   relationships do
-    has_many :requests, Timeclock.Approvals.Request
+    has_many :approvals, Timeclock.Approvals.Approval
   end
 
   preparations do

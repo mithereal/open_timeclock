@@ -1,4 +1,4 @@
-defmodule Timeclock.TimeTracking.Geolocation do
+defmodule Timeclock.Type.Event do
   @moduledoc false
   use Ash.Resource,
     data_layer: :embedded,
@@ -7,17 +7,18 @@ defmodule Timeclock.TimeTracking.Geolocation do
   attributes do
     uuid_primary_key :id
 
-    attribute :latitude, :float do
+    attribute :name, :string do
       public? true
     end
 
-    attribute :longitude, :float do
+    attribute :value, :integer do
       public? true
     end
   end
 
   validations do
-    validate present([:latitude, :longitude]), on: [:create, :update]
+    validate present([:name, :value]), on: [:create, :update]
+    validate string_length(:name, min: 1, max: 255), on: [:create, :update]
   end
 
   actions do

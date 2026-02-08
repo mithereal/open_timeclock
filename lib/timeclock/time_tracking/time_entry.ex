@@ -1,28 +1,27 @@
 defmodule Timeclock.TimeTracking.TimeEntry do
+  use Timex
+
   use Ash.Resource,
     otp_app: :timeclock,
     domain: Timeclock.TimeTracking,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   attributes do
     uuid_primary_key :id
 
-    attribute :clock_in, :utc_datetime do
+    attribute :timestamp, :utc_datetime do
       public? true
     end
 
-    attribute :clock_out, :utc_datetime do
+    attribute :direction, Timeclock.Types.Direction do
       public? true
     end
 
-    attribute :total_hours, :float do
+    attribute :geolocation, Timeclock.TimeTracking.Geolocation do
       public? true
     end
-
-    create_timestamp :created_at
-    update_timestamp :updated_at
   end
 
   identities do
@@ -42,10 +41,14 @@ defmodule Timeclock.TimeTracking.TimeEntry do
     belongs_to :task, Timeclock.Projects.Task do
       public? true
     end
+
+    belongs_to :clocking, Timeclock.Clocking.Clocking do
+      public? true
+    end
   end
 
   validations do
-    validate present([:clock_in, :clock_out, :total_hours]), on: [:create, :update]
+    validate present([:timestamp]), on: [:create, :update]
   end
 
   actions do
@@ -55,4 +58,32 @@ defmodule Timeclock.TimeTracking.TimeEntry do
   preparations do
     prepare build(load: [:user, :task])
   end
+
+  actions do
+    defaults [:read]
+
+    read :today do
+      # Default sort - overridden if user provides any sort
+      prepare build(default_sort: [timestamp: :desc])
+      prepare load(:user)
+
+      argument :actor, :map, allow_nil?: false
+
+      # Always applied filter - cannot be overridden
+      filter expr(timestamp >= Datetime.today() |> beginning_of_day())
+      filter expr(user.id = arg.actor.id)
+
+      # Default pagination
+      pagination offset: true, default_limit: 20
+    end
+  end
+
+  #  calculations do
+  #    calculate :total_hours, :string, expr(first_name <> ^arg(:separator) <> last_name) do
+  #      argument :separator, :string do
+  #        allow_nil? false
+  #        default " "
+  #      end
+  #    end
+  #  end
 end

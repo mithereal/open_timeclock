@@ -6,10 +6,9 @@ defmodule Timeclock.Approvals do
   end
 
   resources do
-    resource Timeclock.Approvals.Request
-    resource Timeclock.Approvals.RequestDefinition
+    resource Timeclock.Approvals.Approval
+    resource Timeclock.Approvals.Definition
     resource Timeclock.Approvals.PermissionDelegation
-    resource Timeclock.Approvals.RequestAdditionalData
-    resource Timeclock.Approvals.RequestLog
+    resource Timeclock.Approvals.AdditionalData
   end
 end

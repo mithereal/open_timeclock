@@ -4,7 +4,7 @@ defmodule Timeclock.System.Tag do
     domain: Timeclock.System,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   attributes do
     uuid_primary_key :id

@@ -77,7 +77,7 @@ defmodule Timeclock.MixProject do
       {:req, "~> 0.5"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 1.0"},
+      {:gettext, "~> 1.0", override: true},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
@@ -100,7 +100,9 @@ defmodule Timeclock.MixProject do
       {:tz, "~> 0.28"},
       {:ash_paper_trail, "~> 0.5.7"},
       {:ash_archival, "~> 2.0.3"},
-      {:glific_phil_columns, "~> 3.2"}
+      {:glific_phil_columns, "~> 3.2"},
+      {:timex, "~> 3.7", override: true},
+      {:faker, "~> 0.18.0"}
     ]
   end
 
@@ -122,7 +124,13 @@ defmodule Timeclock.MixProject do
         "assets.build",
         "run priv/repo/seeds.exs"
       ],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      reset: ["deps.get", "ecto.drop --force-drop", "ecto.setup", "assets.setup", "assets.build"],
+      "ecto.setup": [
+        "ecto.create",
+        "ecto.migrate",
+        "run priv/repo/seeds.exs",
+        "phil_columns.seed"
+      ],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ash.setup --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],

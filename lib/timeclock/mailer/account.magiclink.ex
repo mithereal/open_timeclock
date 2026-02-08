@@ -5,8 +5,8 @@ defmodule Timeclock.Mailer.Account.MagicLink do
         user,
         url,
         subject \\ "Account Login!",
-        sender \\ @sender,
-        email \\ @noreply_email
+        sender \\ Timeclock.config([:timeclock, __MODULE__, :email_from_name]),
+        email \\ Timeclock.config([:timeclock, __MODULE__, :email_from_address])
       ) do
     new()
     |> to(user.email)

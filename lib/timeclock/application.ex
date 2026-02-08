@@ -5,6 +5,8 @@ defmodule Timeclock.Application do
 
   use Application
 
+  alias Timeclock.System.Setup
+
   @impl true
   def start(_type, _args) do
     children = [
@@ -28,7 +30,9 @@ defmodule Timeclock.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Timeclock.Supervisor]
+
     Supervisor.start_link(children, opts)
+    |> Setup.run()
   end
 
   # Tell Phoenix to update the endpoint configuration

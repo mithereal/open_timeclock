@@ -7,7 +7,11 @@ defmodule Timeclock.Accounts do
 
   resources do
     resource Timeclock.Accounts.Token
-    resource Timeclock.Accounts.User
+
+    resource Timeclock.Accounts.User do
+      define :get_user_by_email, args: [:email], action: :get_by_email
+      define :list_users, action: :list
+    end
 
     resource Timeclock.Accounts.Account do
       define_calculation :full_name, args: [:_record]

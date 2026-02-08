@@ -122,6 +122,7 @@ defmodule TimeclockWeb do
       import TimeclockWeb.Components.ToggleField
       import TimeclockWeb.Components.Tabs
       import TimeclockWeb.Components.Stepper
+      import TimeclockWeb.Components.Timeline
 
       def get_user_email(scope) do
         case scope do

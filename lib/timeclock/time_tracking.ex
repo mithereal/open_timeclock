@@ -6,7 +6,8 @@ defmodule Timeclock.TimeTracking do
   end
 
   resources do
-    resource Timeclock.TimeTracking.Geolocation
-    resource Timeclock.TimeTracking.TimeEntry
+    resource Timeclock.TimeTracking.TimeEntry do
+      define :today, args: [:email], action: :today
+    end
   end
 end

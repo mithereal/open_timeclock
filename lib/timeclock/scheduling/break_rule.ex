@@ -4,7 +4,7 @@ defmodule Timeclock.Scheduling.BreakRule do
     domain: Timeclock.Scheduling,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   attributes do
     uuid_primary_key :id
@@ -17,7 +17,7 @@ defmodule Timeclock.Scheduling.BreakRule do
       public? true
     end
 
-    attribute :applies_after_hours, :integer do
+    attribute :applies_after_hours, :boolean do
       public? true
     end
 

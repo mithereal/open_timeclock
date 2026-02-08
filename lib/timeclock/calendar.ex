@@ -6,8 +6,8 @@ defmodule Timeclock.Calendar do
   end
 
   resources do
+    resource Timeclock.Calendar.Calendar
     resource Timeclock.Calendar.Event
-    resource Timeclock.Calendar.EventType
     resource Timeclock.Calendar.Group
   end
 end

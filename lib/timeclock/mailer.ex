@@ -24,17 +24,19 @@ defmodule Timeclock.Mailer do
       use Phoenix.VerifiedRoutes,
         endpoint: TimeclockWeb.Endpoint,
         router: TimeclockWeb.Router
-
-      @sender Application.compile_env(:timeclock, :sender)
-      @noreply_email Application.compile_env(:timeclock, :noreply_email)
     end
   end
 
   def apply_settings(settings) do
     case provider_config(settings) do
       nil -> :ok
-      config -> apply_config(config)
+      config -> apply_config(config, settings)
     end
+  end
+
+  defp sender_config(s) do
+    if present?(s.email_from_address && s.email_from_name),
+      do: [email_from_address: s.email_from_address, email_from_name: s.email_from_name]
   end
 
   defp provider_config(%{email_provider: :sendgrid} = s) do
@@ -86,7 +88,8 @@ defmodule Timeclock.Mailer do
 
   defp provider_config(_), do: nil
 
-  defp apply_config(config) do
+  defp apply_config(config, params) do
+    config = sender_config(params) ++ config
     Application.put_env(:timeclock, __MODULE__, config)
     Application.put_env(:swoosh, :api_client, Swoosh.ApiClient.Finch)
     Application.put_env(:swoosh, :finch_name, Timeclock.Finch)

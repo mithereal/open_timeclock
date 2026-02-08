@@ -1,10 +1,8 @@
-defmodule Timeclock.Approvals.RequestAdditionalData do
+defmodule Timeclock.Approvals.AdditionalData do
+  @moduledoc false
   use Ash.Resource,
-    otp_app: :timeclock,
-    domain: Timeclock.Approvals,
-    data_layer: AshPostgres.DataLayer,
-    authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    data_layer: :embedded,
+    embed_nil_values?: false
 
   attributes do
     uuid_primary_key :id
@@ -31,11 +29,6 @@ defmodule Timeclock.Approvals.RequestAdditionalData do
 
   identities do
     identity :unique_id, [:id]
-  end
-
-  postgres do
-    table "approval_request_additional_data"
-    repo Timeclock.Repo
   end
 
   validations do

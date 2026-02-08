@@ -4,7 +4,7 @@ defmodule Timeclock.System.Type do
     domain: Timeclock.System,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   @allowed_values [0, 1, 2, 3, 4, 5]
 

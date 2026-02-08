@@ -4,7 +4,7 @@ defmodule Timeclock.Projects.Task do
     domain: Timeclock.Projects,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   attributes do
     uuid_primary_key :id

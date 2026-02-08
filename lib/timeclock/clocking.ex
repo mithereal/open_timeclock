@@ -6,13 +6,9 @@ defmodule Timeclock.Clocking do
   end
 
   resources do
-    resource Timeclock.Clocking.Beacon
     resource Timeclock.Clocking.Clocking
     resource Timeclock.Clocking.Definition
-    resource Timeclock.Clocking.Device
     resource Timeclock.Clocking.InterfaceDetail
-    resource Timeclock.Clocking.Origin
-    resource Timeclock.Clocking.Point
     resource Timeclock.System.Code
   end
 end

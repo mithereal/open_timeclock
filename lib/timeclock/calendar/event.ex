@@ -4,7 +4,7 @@ defmodule Timeclock.Calendar.Event do
     domain: Timeclock.Calendar,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   attributes do
     uuid_primary_key :id
@@ -25,6 +25,10 @@ defmodule Timeclock.Calendar.Event do
       public? true
     end
 
+    attribute :type, Timeclock.Type.Event do
+      public? true
+    end
+
     create_timestamp :created_at
     update_timestamp :updated_at
   end
@@ -42,10 +46,6 @@ defmodule Timeclock.Calendar.Event do
     belongs_to :group, Timeclock.Calendar.Group do
       public? true
     end
-
-    belongs_to :event_type, Timeclock.Calendar.EventType do
-      public? true
-    end
   end
 
   validations do
@@ -54,5 +54,9 @@ defmodule Timeclock.Calendar.Event do
 
   actions do
     defaults [:read, :destroy, create: :*]
+  end
+
+  preparations do
+    prepare build(load: [:group, :event_type])
   end
 end

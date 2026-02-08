@@ -35,6 +35,7 @@ defmodule TimeclockWeb.CoreComponents do
   import TimeclockWeb.Components.Avatar
   import TimeclockWeb.Components.Badge
   import TimeclockWeb.Components.Indicator
+  import TimeclockWeb.Components.Timeline
 
   alias Phoenix.LiveView.JS
 
@@ -146,7 +147,9 @@ defmodule TimeclockWeb.CoreComponents do
       <.card_title class="mx-4 my-2">
         {@title}
       </.card_title>
-      <.card_content padding="medium" class={@class}></.card_content>
+      <.card_content padding="medium" class={@class}>
+        <.timeline points={[]} />
+      </.card_content>
     </.card>
     """
   end
@@ -166,146 +169,6 @@ defmodule TimeclockWeb.CoreComponents do
     """
   end
 
-  #  @doc """
-  #  Renders flash notices.
-  #
-  #  ## Examples
-  #
-  #      <.flash kind={:info} flash={@flash} />
-  #      <.flash kind={:info} phx-mounted={show("#flash")}>Welcome Back!</.flash>
-  #  """
-  #  attr :id, :string, doc: "the optional id of flash container"
-  #  attr :flash, :map, default: %{}, doc: "the map of flash messages to display"
-  #  attr :title, :string, default: nil
-  #  attr :kind, :atom, values: [:info, :error], doc: "used for styling and flash lookup"
-  #  attr :rest, :global, doc: "the arbitrary HTML attributes to add to the flash container"
-  #
-  #  slot :inner_block, doc: "the optional inner block that renders the flash message"
-  #
-  #  def flash(assigns) do
-  #    assigns = assign_new(assigns, :id, fn -> "flash-#{assigns.kind}" end)
-  #
-  #    ~H"""
-  #    <div
-  #      :if={msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind)}
-  #      id={@id}
-  #      phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")}
-  #      role="alert"
-  #      class="toast toast-top toast-end z-50"
-  #      {@rest}
-  #    >
-  #      <div class={[
-  #        "alert w-80 sm:w-96 max-w-80 sm:max-w-96 text-wrap",
-  #        @kind == :info && "alert-info",
-  #        @kind == :error && "alert-error"
-  #      ]}>
-  #        <.icon :if={@kind == :info} name="hero-information-circle" class="size-5 shrink-0" />
-  #        <.icon :if={@kind == :error} name="hero-exclamation-circle" class="size-5 shrink-0" />
-  #        <div>
-  #          <p :if={@title} class="font-semibold">{@title}</p>
-  #          <p>{msg}</p>
-  #        </div>
-  #        <div class="flex-1" />
-  #        <button type="button" class="group self-start cursor-pointer" aria-label={gettext("close")}>
-  #          <.icon name="hero-x-mark" class="size-5 opacity-40 group-hover:opacity-70" />
-  #        </button>
-  #      </div>
-  #    </div>
-  #    """
-  #  end
-
-  @doc """
-  Renders a button with navigation support.
-
-  #  ## Examples
-  #
-  #      <.button>Send!</.button>
-  #      <.button phx-click="go" variant="primary">Send!</.button>
-  #      <.button navigate={~p"/"}>Home</.button>
-  #  \"""
-  #  attr :rest, :global, include: ~w(href navigate patch method download name value disabled)
-  #  attr :class, :string
-  #  attr :variant, :string, values: ~w(primary)
-  #  slot :inner_block, required: true
-  #
-  #  def button(%{rest: rest} = assigns) do
-  #    variants = %{"primary" => "btn-primary", nil => "btn-primary btn-soft"}
-  #
-  #    assigns =
-  #      assign_new(assigns, :class, fn ->
-  #        ["btn", Map.fetch!(variants, assigns[:variant])]
-  #      end)
-  #
-  #    if rest[:href] || rest[:navigate] || rest[:patch] do
-  #      ~H\"""
-  #      <.link class={@class} {@rest}>
-  #        {render_slot(@inner_block)}
-  #      </.link>
-  #      \"""
-  #    else
-  #      ~H\"""
-  #      <button class={@class} {@rest}>
-  #        {render_slot(@inner_block)}
-  #      </button>
-  #      \"""
-  #    end
-  #  end
-
-  #    if rest[:href] || rest[:navigate] || rest[:patch] do
-  #      ~H\"""
-  #      <.link class={@class} {@rest}>
-  #        {render_slot(@inner_block)}
-  #      </.link>
-  #      \"""
-  #    else
-  #      ~H\"""
-  #      <button class={@class} {@rest}>
-  #        {render_slot(@inner_block)}
-  #      </button>
-  #      \"""
-  #    end
-  #  end
-
-  @doc \"""
-  Renders an input with label and error messages.
-
-  A `Phoenix.HTML.FormField` may be passed as argument,
-  which is used to retrieve the input name, id, and values.
-  Otherwise all attributes may be passed explicitly.
-
-  ## Types
-
-  This function accepts all HTML input types, considering that:
-
-    * You may also set `type="select"` to render a `<select>` tag
-
-    * `type="checkbox"` is used exclusively to render boolean values
-
-    * For live file uploads, see `Phoenix.Component.live_file_input/1`
-
-  See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
-  for more information. Unsupported types, such as radio, are best
-  written directly in your templates.
-
-  ## Examples
-
-  ```heex
-  <.input field={@form[:email]} type="email" />
-  <.input name="my-input" errors={["oh no!"]} />
-  ```
-
-  ## Select type
-
-  When using `type="select"`, you must pass the `options` and optionally
-  a `value` to mark which option should be preselected.
-
-  ```heex
-  <.input field={@form[:user_type]} type="select" options={["Admin": "admin", "User": "user"]} />
-  ```
-
-  For more information on what kind of data can be passed to `options` see
-  [`options_for_select`](https://hexdocs.pm/phoenix_html/Phoenix.HTML.Form.html#options_for_select/2).
-  """
   attr :id, :any, default: nil
   attr :name, :any
   attr :label, :string, default: nil
@@ -455,29 +318,6 @@ defmodule TimeclockWeb.CoreComponents do
     """
   end
 
-  #  @doc """
-  #  Renders a header with title.
-  #  """
-  #  slot :inner_block, required: true
-  #  slot :subtitle
-  #  slot :actions
-
-  #  def header(assigns) do
-  #    ~H"""
-  #    <header class={[@actions != [] && "flex items-center justify-between gap-6", "pb-4"]}>
-  #      <div>
-  #        <h1 class="text-lg font-semibold leading-8">
-  #          {render_slot(@inner_block)}
-  #        </h1>
-  #        <p :if={@subtitle != []} class="text-sm text-base-content/70">
-  #          {render_slot(@subtitle)}
-  #        </p>
-  #      </div>
-  #      <div class="flex-none">{render_slot(@actions)}</div>
-  #    </header>
-  #    """
-  #  end
-
   @doc """
   Renders a table with generic styling.
 
@@ -595,43 +435,10 @@ defmodule TimeclockWeb.CoreComponents do
     """
   end
 
-  ## JS Commands
-
-  #  def show(js \\ %JS{}, selector) do
-  #    JS.show(js,
-  #      to: selector,
-  #      time: 300,
-  #      transition:
-  #        {"transition-all ease-out duration-300",
-  #         "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95",
-  #         "opacity-100 translate-y-0 sm:scale-100"}
-  #    )
-  #  end
-
-  #  def hide(js \\ %JS{}, selector) do
-  #    JS.hide(js,
-  #      to: selector,
-  #      time: 200,
-  #      transition:
-  #        {"transition-all ease-in duration-200", "opacity-100 translate-y-0 sm:scale-100",
-  #         "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"}
-  #    )
-  #  end
-
   @doc """
   Translates an error message using gettext.
   """
   def translate_error({msg, opts}) do
-    # When using gettext, we typically pass the strings we want
-    # to translate as a static argument:
-    #
-    #     # Translate the number of files with plural rules
-    #     dngettext("errors", "1 file", "%{count} files", count)
-    #
-    # However the error messages in our forms and APIs are generated
-    # dynamically, so we need to translate them by calling Gettext
-    # with our gettext backend as first argument. Translations are
-    # available in the errors.po file (as we use the "errors" domain).
     if count = opts[:count] do
       Gettext.dngettext(TimeclockWeb.Gettext, "errors", msg, msg, count, opts)
     else

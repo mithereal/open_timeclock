@@ -4,14 +4,37 @@ defmodule Timeclock.Clocking.Clocking do
     domain: Timeclock.Clocking,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
+
+  actions do
+    defaults [:read]
+
+    create :insert_from_web do
+      description "Insert a Clocking for a User."
+
+      argument :user, :map do
+        allow_nil? false
+      end
+
+      argument :timestamp, :utc_datetime do
+        allow_nil? false
+      end
+
+      argument :status, :utc_datetime do
+        allow_nil? false
+      end
+
+      argument :definition, :utc_datetime do
+        allow_nil? false
+      end
+
+      change set_attribute(:timestamp, arg(:timestamp))
+      change set_attribute(:user, arg(:user))
+    end
+  end
 
   attributes do
     uuid_primary_key :id
-
-    attribute :timestamp, :utc_datetime do
-      public? true
-    end
 
     attribute :comment, :string do
       public? true
@@ -20,10 +43,6 @@ defmodule Timeclock.Clocking.Clocking do
     attribute :has_geo_location, :boolean do
       public? true
       default false
-    end
-
-    attribute :accuracy, :float do
-      public? true
     end
 
     create_timestamp :created_at
@@ -48,22 +67,6 @@ defmodule Timeclock.Clocking.Clocking do
       public? true
     end
 
-    belongs_to :device, Timeclock.Clocking.Device do
-      public? true
-    end
-
-    belongs_to :status, Timeclock.System.Status do
-      public? true
-    end
-
-    belongs_to :beacon, Timeclock.Clocking.Beacon do
-      public? true
-    end
-
-    belongs_to :point, Timeclock.Clocking.Point do
-      public? true
-    end
-
     belongs_to :definition, Timeclock.Clocking.Definition do
       public? true
     end
@@ -72,20 +75,15 @@ defmodule Timeclock.Clocking.Clocking do
       public? true
     end
 
-    belongs_to :origin, Timeclock.Clocking.Origin do
+    belongs_to :approval_request, Timeclock.Approvals.Approval do
       public? true
     end
 
-    belongs_to :original_clocking_definition, Timeclock.Clocking.Definition do
-      public? true
-    end
-
-    belongs_to :approval_request, Timeclock.Approvals.Request do
-      public? true
-    end
+    has_many :entries, Timeclock.TimeTracking.TimeEntry
   end
 
-  validations do
+  preparations do
+    prepare build(load: [:definition, :status])
   end
 
   actions do

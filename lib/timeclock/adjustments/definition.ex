@@ -4,7 +4,7 @@ defmodule Timeclock.Adjustments.Definition do
     domain: Timeclock.Adjustments,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   attributes do
     uuid_primary_key :id
@@ -14,9 +14,8 @@ defmodule Timeclock.Adjustments.Definition do
       allow_nil? false
     end
 
-    attribute :type, :string do
+    attribute :type, Timeclock.Types.Definition do
       public? true
-      allow_nil? false
     end
 
     # Flags
@@ -61,7 +60,6 @@ defmodule Timeclock.Adjustments.Definition do
     validations do
       validate present([:name, :type]), on: [:create, :update]
       validate string_length(:name, min: 1, max: 255), on: [:create, :update]
-      validate string_length(:type, min: 1, max: 100), on: [:create, :update]
     end
 
     actions do

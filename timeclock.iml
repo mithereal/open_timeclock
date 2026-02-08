@@ -134,6 +134,10 @@
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/ash_paper_trail" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/glific_phil_columns" />
       <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/inflex" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/combine" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/faker" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/timex" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/dev/lib/tzdata" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="picosat_elixir" level="project" />
@@ -341,5 +345,8 @@
     <orderEntry type="library" name="ash_archival" level="project" />
     <orderEntry type="library" name="glific_phil_columns" level="project" />
     <orderEntry type="library" name="inflex" level="project" />
+    <orderEntry type="library" name="timex" level="project" />
+    <orderEntry type="library" name="tzdata" level="project" />
+    <orderEntry type="library" name="combine" level="project" />
   </component>
 </module>

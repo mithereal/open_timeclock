@@ -75,9 +75,18 @@ defmodule Timeclock.Accounts.User do
   actions do
     defaults [:read]
 
-    #      read :list_admins do
-    #        filter expr(role == :admin)
-    #      end
+    read :list do
+      pagination do
+        required? false
+        offset? true
+        keyset? true
+        countable true
+      end
+    end
+
+    #          read :list_admins do
+    #      filter expr(:admin not_in(roles))
+    #          end
 
     read :archived do
       filter expr(not is_nil(archived_at))
@@ -288,10 +297,10 @@ defmodule Timeclock.Accounts.User do
       authorize_if expr(id == ^actor(:id))
     end
 
-    #    field_policy_bypass :* do
-    #      description "Users can access all fields for password change"
-    #      authorize_if Timeclock.Checks.PasswordChangeInteraction
-    #    end
+    field_policy_bypass :* do
+      description "Users can access all fields for password change"
+      authorize_if Timeclock.Checks.PasswordChangeInteraction
+    end
 
     bypass AshAuthentication.Checks.AshAuthenticationInteraction do
       authorize_if always()
@@ -328,7 +337,7 @@ defmodule Timeclock.Accounts.User do
   end
 
   identities do
-    identity :unique_email, [:email], where: expr(is_nil(archived_at))
+    # identity :unique_email, [:email], where: expr(is_nil(archived_at))
     identity :unique_email, [:email]
   end
 
@@ -338,8 +347,6 @@ defmodule Timeclock.Accounts.User do
     end
 
     has_many :clockings, Timeclock.Clocking.Clocking
-    has_many :audit_logs, Timeclock.Audit.Log
-    has_many :request_logs, Timeclock.Approvals.RequestLog
     has_many :employees, Timeclock.Accounts.Employee
     has_many :managers, Timeclock.Accounts.Manager
     has_many :roles, Timeclock.Accounts.Role
@@ -347,5 +354,12 @@ defmodule Timeclock.Accounts.User do
 
   preparations do
     prepare build(load: [:account])
+  end
+
+  aggregates do
+    count :total_clockings, :clockings
+
+    #    sum :clockings_value, [:clockings, :items], :cost do
+    #    end
   end
 end

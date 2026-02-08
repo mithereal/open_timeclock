@@ -4,7 +4,7 @@ defmodule Timeclock.Organizations.Company do
     domain: Timeclock.Organizations,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   attributes do
     uuid_primary_key :id

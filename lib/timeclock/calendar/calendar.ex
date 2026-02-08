@@ -1,10 +1,10 @@
-defmodule Timeclock.Clocking.Device do
+defmodule Timeclock.Calendar.Calendar do
   use Ash.Resource,
     otp_app: :timeclock,
-    domain: Timeclock.Clocking,
+    domain: Timeclock.Calendar,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   attributes do
     uuid_primary_key :id
@@ -13,7 +13,11 @@ defmodule Timeclock.Clocking.Device do
       public? true
     end
 
-    attribute :value, :integer do
+    attribute :timezone, :string do
+      public? true
+    end
+
+    attribute :work_days, {:array, :string} do
       public? true
     end
 
@@ -26,20 +30,29 @@ defmodule Timeclock.Clocking.Device do
   end
 
   postgres do
-    table "devices"
+    table "calendars"
     repo Timeclock.Repo
   end
 
   validations do
-    validate present([:name, :value]), on: [:create, :update]
-    validate string_length(:name, min: 1, max: 255), on: [:create, :update]
+    validate present([:name, :timezone, :work_days]), on: [:create, :update]
   end
 
   actions do
     defaults [:read, :destroy, create: :*]
   end
 
-  relationships do
-    has_many :clockings, Timeclock.Clocking.Clocking
+  actions do
+    default_accept :*
+
+    defaults [:read, :update]
+
+    create :init do
+      accept []
+    end
+
+    read :get do
+      get? true
+    end
   end
 end

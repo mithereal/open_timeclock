@@ -4,7 +4,7 @@ defmodule Timeclock.Accounts.Account do
     domain: Timeclock.Accounts,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   postgres do
     table "accounts"
@@ -163,45 +163,41 @@ defmodule Timeclock.Accounts.Account do
       public? true
     end
 
-    has_many :logs, Timeclock.Audit.Log do
-      public? true
-    end
-  end
+    actions do
+      defaults [:read]
 
-  actions do
-    defaults [:read]
+      read :has_user_account do
+        description "Checks of theres an assigned user."
+        argument :id, :uuid, allow_nil?: false
+      end
 
-    read :has_user_account do
-      description "Checks of theres an assigned user."
-      argument :id, :uuid, allow_nil?: false
-    end
-
-    read :has_assigned_pin do
-      description "Checks of theres an assigned pin."
-      argument :assigned_pin, :integer, allow_nil?: false
-    end
-  end
-
-  code_interface do
-    # the action open can be omitted because it matches the function name
-    define :has_user_account, args: [:id]
-    define :has_assigned_pin, args: [:assigned_pin]
-  end
-
-  calculations do
-    calculate :full_name, :string, expr(first_name <> ^arg(:separator) <> last_name) do
-      argument :separator, :string do
-        allow_nil? false
-        default " "
+      read :has_assigned_pin do
+        description "Checks of theres an assigned pin."
+        argument :assigned_pin, :integer, allow_nil?: false
       end
     end
-  end
 
-  actions do
-    defaults [:read, :destroy, create: :*]
-  end
+    code_interface do
+      # the action open can be omitted because it matches the function name
+      define :has_user_account, args: [:id]
+      define :has_assigned_pin, args: [:assigned_pin]
+    end
 
-  preparations do
-    prepare build(load: [:user])
+    calculations do
+      calculate :full_name, :string, expr(first_name <> ^arg(:separator) <> last_name) do
+        argument :separator, :string do
+          allow_nil? false
+          default " "
+        end
+      end
+    end
+
+    actions do
+      defaults [:read, :destroy, create: :*]
+    end
+
+    preparations do
+      prepare build(load: [:user])
+    end
   end
 end

@@ -1,10 +1,10 @@
-defmodule Timeclock.Approvals.Request do
+defmodule Timeclock.Approvals.Approval do
   use Ash.Resource,
     otp_app: :timeclock,
     domain: Timeclock.Approvals,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   attributes do
     uuid_primary_key :id
@@ -37,7 +37,7 @@ defmodule Timeclock.Approvals.Request do
     end
 
     # Additional data
-    attribute :additional_data, :map do
+    attribute :additional_data, Timeclock.Approvals.AdditionalData do
       public? true
       allow_nil? false
     end
@@ -87,15 +87,7 @@ defmodule Timeclock.Approvals.Request do
       public? true
     end
 
-    belongs_to :request_definition, Timeclock.Approvals.RequestDefinition do
-      public? true
-    end
-
-    belongs_to :request_additional_data, Timeclock.Approvals.RequestAdditionalData do
-      public? true
-    end
-
-    belongs_to :request_log, Timeclock.Approvals.RequestLog do
+    belongs_to :request_definition, Timeclock.Approvals.Definition do
       public? true
     end
   end
@@ -103,7 +95,6 @@ defmodule Timeclock.Approvals.Request do
   validations do
     validate present([:user_id, :period_start]), on: [:create, :update]
     validate one_of(:is_partial, [true, false]), on: [:create, :update]
-    validate one_of(:is_dirty, [true, false]), on: [:create, :update]
   end
 
   actions do
@@ -116,9 +107,7 @@ defmodule Timeclock.Approvals.Request do
                 :user,
                 :status_set_by_user,
                 :icon,
-                :request_log,
-                :request_additional_data,
-                :request_definition
+                :definition
               ]
             )
   end

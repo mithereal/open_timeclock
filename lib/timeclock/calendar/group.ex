@@ -4,7 +4,7 @@ defmodule Timeclock.Calendar.Group do
     domain: Timeclock.Calendar,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   attributes do
     uuid_primary_key :id

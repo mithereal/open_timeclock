@@ -4,7 +4,7 @@ defmodule Timeclock.Clocking.Definition do
     domain: Timeclock.Clocking,
     data_layer: AshPostgres.DataLayer,
     authorizers: [],
-    extensions: [AshCommanded.Commanded.Dsl]
+    extensions: []
 
   attributes do
     uuid_primary_key :id
@@ -13,7 +13,7 @@ defmodule Timeclock.Clocking.Definition do
       public? true
     end
 
-    attribute :type, :string do
+    attribute :type, Timeclock.Types.Definition do
       public? true
     end
 
@@ -40,7 +40,7 @@ defmodule Timeclock.Clocking.Definition do
   end
 
   relationships do
-    has_many :clocking, Timeclock.Clocking.Clocking
+    has_one :clocking, Timeclock.Clocking.Clocking
 
     belongs_to :code, Timeclock.System.Code do
       public? true
@@ -73,5 +73,9 @@ defmodule Timeclock.Clocking.Definition do
 
   actions do
     defaults [:read, :destroy, create: :*]
+  end
+
+  preparations do
+    prepare build(load: [:code])
   end
 end
