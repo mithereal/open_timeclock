@@ -55,6 +55,11 @@ defmodule Timeclock.Adjustments.Adjustment do
       allow_nil? true
     end
 
+    attribute :icon, Timeclock.Types.Icon do
+      public? true
+      allow_nil? false
+    end
+
     create_timestamp :created_at
     update_timestamp :updated_at
   end
@@ -73,10 +78,6 @@ defmodule Timeclock.Adjustments.Adjustment do
     end
 
     belongs_to :definition, Timeclock.Adjustments.Definition do
-      public? true
-    end
-
-    belongs_to :icon, Timeclock.System.Icon do
       public? true
     end
   end

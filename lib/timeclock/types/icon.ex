@@ -1,10 +1,7 @@
-defmodule Timeclock.System.Icon do
+defmodule Timeclock.Types.Icon do
   use Ash.Resource,
-    otp_app: :timeclock,
-    domain: Timeclock.System,
-    data_layer: AshPostgres.DataLayer,
-    authorizers: [],
-    extensions: []
+    data_layer: :embedded,
+    embed_nil_values?: false
 
   attributes do
     uuid_primary_key :id
@@ -28,14 +25,5 @@ defmodule Timeclock.System.Icon do
 
   actions do
     defaults [:read, :destroy, create: :*]
-  end
-
-  postgres do
-    table "icons"
-    repo Timeclock.Repo
-  end
-
-  relationships do
-    has_many :status, Timeclock.System.Status
   end
 end

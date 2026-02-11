@@ -65,25 +65,21 @@ defmodule Timeclock.TimeTracking.TimeEntry do
     read :today do
       # Default sort - overridden if user provides any sort
       prepare build(default_sort: [timestamp: :desc])
-      prepare load(:user)
+      # prepare load(:user)
 
       argument :actor, :map, allow_nil?: false
 
       # Always applied filter - cannot be overridden
       filter expr(timestamp >= Datetime.today() |> beginning_of_day())
-      filter expr(user.id = arg.actor.id)
+      filter expr(user.id = arg(actor.id))
 
       # Default pagination
-      pagination offset: true, default_limit: 20
+      pagination offset?: true, default_limit: 20
     end
   end
 
-  #  calculations do
-  #    calculate :total_hours, :string, expr(first_name <> ^arg(:separator) <> last_name) do
-  #      argument :separator, :string do
-  #        allow_nil? false
-  #        default " "
-  #      end
-  #    end
-  #  end
+  calculations do
+    calculate :paired_directions, :list, expr(^arg(:entries)) do
+    end
+  end
 end

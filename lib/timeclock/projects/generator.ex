@@ -4,8 +4,8 @@ defmodule Timeclock.Projects.Generator do
   def project(opts \\ []) do
     seed_generator(
       %Timeclock.Projects.Project{
-        start_date: DateTime.now(),
-        end_date: DateTime.now(),
+        start_date: Timex.now(),
+        end_date: Timex.now(),
         name: sequence(:title, &"Project #{&1}")
       },
       overrides: opts
@@ -18,7 +18,7 @@ defmodule Timeclock.Projects.Generator do
       :create,
       defaults: [
         description: StreamData.repeatedly(fn -> Faker.Lorem.paragraph() end),
-        due_date: DateTime.now(),
+        due_date: Timex.now(),
         name: sequence(:title, &"Task #{&1}")
       ],
       overrides: opts

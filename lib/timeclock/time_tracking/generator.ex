@@ -8,7 +8,7 @@ defmodule Timeclock.TimeTracking.Generator do
       defaults: [
         user_id: opts[:user_id],
         direction: :in,
-        timestamp: DateTime.now()
+        timestamp: Timex.now()
       ],
       overrides: opts
     )

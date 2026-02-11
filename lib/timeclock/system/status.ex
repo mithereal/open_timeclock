@@ -25,6 +25,10 @@ defmodule Timeclock.System.Status do
       public? true
     end
 
+    attribute :icon, Timeclock.Types.Icon do
+      public? true
+    end
+
     create_timestamp :created_at
     update_timestamp :updated_at
   end
@@ -39,10 +43,6 @@ defmodule Timeclock.System.Status do
   end
 
   relationships do
-    belongs_to :icon, Timeclock.System.Icon do
-      public? true
-    end
-
     belongs_to :code, Timeclock.System.Code do
       public? true
     end

@@ -1,4 +1,5 @@
 # Timeclock
+[![wakatime](https://wakatime.com/badge/user/8fd2cce9-a3a2-45d1-b846-dc86b1dc3e59/project/3b227d6f-ffb8-415d-8168-11a82640b570.svg)](https://wakatime.com/badge/user/8fd2cce9-a3a2-45d1-b846-dc86b1dc3e59/project/3b227d6f-ffb8-415d-8168-11a82640b570)
 
 This is an opensource TimeClock app
 It can be used either standalone or included in your elixir project

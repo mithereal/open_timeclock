@@ -3,9 +3,9 @@ defmodule Timeclock.Absences.Generator do
 
   def absence(opts \\ []) do
     seed_generator(
-      %Timeclock.Absences.Absences{
-        start_date: DateTime.now(),
-        end_date: DateTime.now(),
+      %Timeclock.Absences.Absence{
+        start_date: Timex.now(),
+        end_date: Timex.now(),
         reason: sequence(:title, &"Absence #{&1}")
       },
       overrides: opts

@@ -22,6 +22,11 @@ defmodule Timeclock.Clocking.InterfaceDetail do
       default false
     end
 
+    attribute :icon, Timeclock.Types.Icon do
+      public? true
+      allow_nil? false
+    end
+
     create_timestamp :created_at
     update_timestamp :updated_at
   end
@@ -37,10 +42,6 @@ defmodule Timeclock.Clocking.InterfaceDetail do
 
   relationships do
     belongs_to :definition, Timeclock.Clocking.Definition do
-      public? true
-    end
-
-    belongs_to :icon, Timeclock.System.Icon do
       public? true
     end
 

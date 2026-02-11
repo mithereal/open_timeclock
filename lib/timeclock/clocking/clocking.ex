@@ -20,16 +20,16 @@ defmodule Timeclock.Clocking.Clocking do
         allow_nil? false
       end
 
-      argument :status, :utc_datetime do
+      argument :status, :map do
         allow_nil? false
       end
 
-      argument :definition, :utc_datetime do
+      argument :definition, :string do
         allow_nil? false
       end
 
-      change set_attribute(:timestamp, arg(:timestamp))
       change set_attribute(:user, arg(:user))
+      change set_attribute(:status, arg(:status))
     end
   end
 
@@ -63,6 +63,10 @@ defmodule Timeclock.Clocking.Clocking do
       public? true
     end
 
+    belongs_to :status, Timeclock.System.Status do
+      public? true
+    end
+
     belongs_to :modified_by_user, Timeclock.Accounts.User do
       public? true
     end
@@ -83,7 +87,7 @@ defmodule Timeclock.Clocking.Clocking do
   end
 
   preparations do
-    prepare build(load: [:definition, :status])
+    prepare build(load: [:definition, :status, :interface_detail])
   end
 
   actions do

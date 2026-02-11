@@ -38,7 +38,7 @@ defmodule TimeclockWeb.LiveUserAuth do
   end
 
   def on_mount({:required_role, role}, _params, _session, socket) do
-    if socket.assigns[:current_user] && socket.assigns[:current_user].role == role do
+    if socket.assigns[:current_user] && Enum.any?(socket.assigns[:current_user].roles, role) do
       {:cont, socket}
     else
       {:halt, Phoenix.LiveView.redirect(socket, to: ~p"/")}
@@ -47,7 +47,7 @@ defmodule TimeclockWeb.LiveUserAuth do
 
   def on_mount({:required_roles, roles}, _params, _session, socket) do
     if socket.assigns[:current_user] &&
-         Enum.any?(roles, &(socket.assigns[:current_user].role == &1)) do
+         contains_all?(roles, socket.assigns[:current_user].roles) do
       {:cont, socket}
     else
       {:halt, Phoenix.LiveView.redirect(socket, to: ~p"/")}
@@ -64,5 +64,9 @@ defmodule TimeclockWeb.LiveUserAuth do
 
       {:halt, socket}
     end
+  end
+
+  defp contains_all?(left, right) do
+    Enum.all?(left, fn element -> element in right end)
   end
 end

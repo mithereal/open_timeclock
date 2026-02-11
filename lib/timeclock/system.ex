@@ -6,12 +6,9 @@ defmodule Timeclock.System do
   end
 
   resources do
-    resource Timeclock.System.Address
-    resource Timeclock.System.Icon
     resource Timeclock.System.Tag
     resource Timeclock.System.Code
     resource Timeclock.System.Status
-    resource Timeclock.System.Type
 
     resource Timeclock.System.Settings do
       define :init, action: :init

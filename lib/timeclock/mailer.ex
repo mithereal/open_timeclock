@@ -90,7 +90,7 @@ defmodule Timeclock.Mailer do
 
   defp apply_config(config, params) do
     config = sender_config(params) ++ config
-    Application.put_env(:timeclock, __MODULE__, config)
+    Application.put_env(:timeclock, Timeclock.Mailer, config)
     Application.put_env(:swoosh, :api_client, Swoosh.ApiClient.Finch)
     Application.put_env(:swoosh, :finch_name, Timeclock.Finch)
     :ok

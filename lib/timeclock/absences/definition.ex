@@ -49,6 +49,11 @@ defmodule Timeclock.Absences.Definition do
       allow_nil? false
     end
 
+    attribute :icon, Timeclock.Types.Icon do
+      public? true
+      allow_nil? false
+    end
+
     create_timestamp :created_at
     update_timestamp :updated_at
   end
@@ -63,10 +68,6 @@ defmodule Timeclock.Absences.Definition do
     end
 
     belongs_to :tag, Timeclock.System.Tag do
-      public? true
-    end
-
-    belongs_to :icon, Timeclock.System.Icon do
       public? true
     end
   end

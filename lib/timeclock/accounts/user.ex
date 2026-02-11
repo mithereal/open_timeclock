@@ -4,10 +4,14 @@ defmodule Timeclock.Accounts.User do
     domain: Timeclock.Accounts,
     data_layer: AshPostgres.DataLayer,
     authorizers: [Ash.Policy.Authorizer],
-    extensions: [AshAuthentication, AshArchival.Resource]
+    extensions: [AshAuthentication, AshArchival.Resource, AshAdmin.Resource]
 
   alias AshAuthentication.Strategy.Password.HashPasswordChange
   alias AshAuthentication.Strategy.Password.PasswordConfirmationValidation
+
+  admin do
+    actor? true
+  end
 
   authentication do
     add_ons do
@@ -297,10 +301,10 @@ defmodule Timeclock.Accounts.User do
       authorize_if expr(id == ^actor(:id))
     end
 
-    field_policy_bypass :* do
-      description "Users can access all fields for password change"
-      authorize_if Timeclock.Checks.PasswordChangeInteraction
-    end
+    #    field_policy_bypass :* do
+    #      description "Users can access all fields for password change"
+    #      authorize_if Timeclock.Checks.PasswordChangeInteraction
+    #    end
 
     bypass AshAuthentication.Checks.AshAuthenticationInteraction do
       authorize_if always()

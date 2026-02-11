@@ -6,7 +6,6 @@ defmodule Timeclock.Organizations do
   end
 
   resources do
-    resource Timeclock.System.Address
     resource Timeclock.Organizations.Company
     resource Timeclock.Organizations.Department
     resource Timeclock.Organizations.Organization

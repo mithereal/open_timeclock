@@ -42,10 +42,6 @@ defmodule Timeclock.Projects.Task do
     belongs_to :project, Timeclock.Projects.Project do
       public? true
     end
-
-    belongs_to :task, Timeclock.Projects.Task do
-      public? true
-    end
   end
 
   validations do

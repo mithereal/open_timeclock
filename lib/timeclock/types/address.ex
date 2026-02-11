@@ -1,14 +1,10 @@
-defmodule Timeclock.System.Address do
+defmodule Timeclock.Types.Address do
+  @moduledoc false
   use Ash.Resource,
-    otp_app: :timeclock,
-    domain: Timeclock.System,
-    data_layer: AshPostgres.DataLayer,
-    authorizers: [],
-    extensions: []
+    data_layer: :embedded,
+    embed_nil_values?: false
 
   attributes do
-    uuid_primary_key :id
-
     attribute :street, :string do
       public? true
     end
@@ -28,18 +24,6 @@ defmodule Timeclock.System.Address do
     attribute :country, :string do
       public? true
     end
-
-    create_timestamp :created_at
-    update_timestamp :updated_at
-  end
-
-  identities do
-    identity :unique_id, [:id]
-  end
-
-  postgres do
-    table "addresses"
-    repo Timeclock.Repo
   end
 
   validations do
@@ -48,9 +32,5 @@ defmodule Timeclock.System.Address do
 
   actions do
     defaults [:read, :destroy, create: :*]
-  end
-
-  relationships do
-    belongs_to :company, Timeclock.Organizations.Company
   end
 end

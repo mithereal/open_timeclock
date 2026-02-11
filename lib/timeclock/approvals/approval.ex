@@ -42,6 +42,11 @@ defmodule Timeclock.Approvals.Approval do
       allow_nil? false
     end
 
+    attribute :icon, Timeclock.Types.Icon do
+      public? true
+      allow_nil? false
+    end
+
     # Partial time
     attribute :is_partial, :boolean do
       public? true
@@ -80,10 +85,6 @@ defmodule Timeclock.Approvals.Approval do
     end
 
     belongs_to :user, Timeclock.Accounts.User do
-      public? true
-    end
-
-    belongs_to :icon, Timeclock.System.Icon do
       public? true
     end
 

@@ -76,7 +76,6 @@ config :timeclock,
     Timeclock.Clocking,
     Timeclock.Projects,
     Timeclock.System,
-    Timeclock.Categories,
     Timeclock.Scheduling,
     Timeclock.TimeTracking
   ],

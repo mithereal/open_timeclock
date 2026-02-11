@@ -13,6 +13,10 @@ defmodule Timeclock.Organizations.Company do
       public? true
     end
 
+    attribute :address, Timeclock.Types.Address do
+      public? true
+    end
+
     attribute :registration_number, :string do
       public? true
     end
@@ -31,10 +35,6 @@ defmodule Timeclock.Organizations.Company do
   end
 
   relationships do
-    has_one :address, Timeclock.Organizations.Address do
-      public? true
-    end
-
     belongs_to :organization, Timeclock.Organizations.Organization do
       public? true
     end

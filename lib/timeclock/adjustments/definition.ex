@@ -14,7 +14,7 @@ defmodule Timeclock.Adjustments.Definition do
       allow_nil? false
     end
 
-    attribute :type, Timeclock.Types.Definition do
+    attribute :type, :integer do
       public? true
     end
 

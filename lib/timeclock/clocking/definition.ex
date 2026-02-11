@@ -13,7 +13,7 @@ defmodule Timeclock.Clocking.Definition do
       public? true
     end
 
-    attribute :type, Timeclock.Types.Definition do
+    attribute :type, :integer do
       public? true
     end
 

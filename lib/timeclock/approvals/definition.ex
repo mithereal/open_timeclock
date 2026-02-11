@@ -11,7 +11,7 @@ defmodule Timeclock.Approvals.Definition do
 
     attribute :name, :string
 
-    attribute :type, Timeclock.Types.Definition do
+    attribute :type, :integer do
       public? true
     end
 
