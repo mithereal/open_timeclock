@@ -83,8 +83,10 @@ defmodule Timeclock.Absences.Definition do
 
     has_many :absences, Timeclock.Absences.Absence do
       public? true
+      destination_attribute :absence_definition_id
     end
   end
+
 
   postgres do
     table "absence_definitions"

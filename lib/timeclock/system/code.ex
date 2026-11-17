@@ -28,6 +28,23 @@ defmodule Timeclock.System.Code do
       public? true
       destination_attribute :code_id
     end
+
+    has_many :adjustment_definitions, Timeclock.Adjustments.Definition do
+      public? true
+      destination_attribute :code_id
+    end
+
+    has_many :clocking_definitions, Timeclock.Clocking.Definition do
+      public? true
+      destination_attribute :code_id
+    end
+
+    has_many :statuses, Timeclock.System.Status do
+      public? true
+      destination_attribute :code_id
+    end
+  end
+
   end
 
   postgres do

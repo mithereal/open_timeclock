@@ -59,7 +59,18 @@ defmodule Timeclock.System.Status do
       public? true
       destination_attribute :status_id
     end
+
+    has_many :adjustments, Timeclock.Adjustments.Adjustment do
+      public? true
+      destination_attribute :status_id
+    end
+
+    has_many :clockings, Timeclock.Clocking.Clocking do
+      public? true
+      destination_attribute :status_id
+    end
   end
+
 
   postgres do
     table "status"

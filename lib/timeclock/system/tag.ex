@@ -28,6 +28,21 @@ defmodule Timeclock.System.Tag do
       public? true
       destination_attribute :tag_id
     end
+
+    has_many :adjustment_definitions, Timeclock.Adjustments.Definition do
+      public? true
+      destination_attribute :tag_id
+    end
+
+    has_many :clocking_definitions, Timeclock.Clocking.Definition do
+      public? true
+      destination_attribute :tag_id
+    end
+
+    has_many :clocking_interface_details, Timeclock.Clocking.InterfaceDetail do
+      public? true
+      destination_attribute :tag_id
+    end
   end
 
   postgres do
@@ -41,11 +56,14 @@ defmodule Timeclock.System.Tag do
     create :create do
       primary? true
       accept [:name]
+      change run_reactor(Timeclock.System.Reactors.SyncTag)
     end
 
     update :update do
       primary? true
+      require_atomic? false
       accept [:name]
+      change run_reactor(Timeclock.System.Reactors.SyncTag)
     end
 
     destroy :destroy do

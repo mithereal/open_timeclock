@@ -17,8 +17,17 @@ defmodule Timeclock.System.Reactors.SyncTag do
     end
   end
 
-  step :broadcast_tag_updated do
+  step :run_lua_tag_hooks do
     argument :tag, result(:validate_tag_record)
+
+    run fn %{tag: tag}, _context ->
+      # Hook point: notify Lua reporting & Athanor filter plugins of tag update
+      {:ok, tag}
+    end
+  end
+
+  step :broadcast_tag_updated do
+    argument :tag, result(:run_lua_tag_hooks)
 
     run fn %{tag: tag}, _context ->
       case Phoenix.PubSub.broadcast(Timeclock.PubSub, "system:tags", {:tag_updated, tag.id, tag.name}) do
