@@ -21,8 +21,10 @@ defmodule Timeclock.Scheduling.Reactors.SyncBreakRule do
     argument :rule, result(:validate_break_rule_bounds)
 
     run fn %{rule: rule}, _context ->
-      # Hook point: notify Lua meal/rest break compliance & auto-deduction plugins
-      {:ok, rule}
+      case Timeclock.Plugins.LuaRunner.dispatch("break.compliance", %{break_rule: rule}) do
+        {:ok, _payload} -> {:ok, rule}
+        {:error, reason} -> {:error, reason}
+      end
     end
   end
 
