@@ -22,17 +22,8 @@ defmodule Timeclock.System.Reactors.SyncSettings do
     end
   end
 
-  step :run_lua_system_hooks do
-    argument :settings, result(:verify_provider_config)
-
-    run fn %{settings: settings}, _context ->
-      # Hook point: notify Lua notification/integration plugins (pass non-secret metadata only)
-      {:ok, settings}
-    end
-  end
-
   step :broadcast_settings_updated do
-    argument :settings, result(:run_lua_system_hooks)
+    argument :settings, result(:verify_provider_config)
 
     run fn %{settings: settings}, _context ->
       # Never include API keys or SMTP passwords in PubSub payloads

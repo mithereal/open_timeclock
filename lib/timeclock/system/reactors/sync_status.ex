@@ -25,17 +25,8 @@ defmodule Timeclock.System.Reactors.SyncStatus do
     end
   end
 
-  step :run_lua_status_hooks do
-    argument :status, result(:validate_status_semantics)
-
-    run fn %{status: status}, _context ->
-      # Hook point: notify Lua attendance/overtime plugins of status rule change
-      {:ok, status}
-    end
-  end
-
   step :broadcast_status_updated do
-    argument :status, result(:run_lua_status_hooks)
+    argument :status, result(:validate_status_semantics)
 
     run fn %{status: status}, _context ->
       case Phoenix.PubSub.broadcast(

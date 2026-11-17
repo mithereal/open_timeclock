@@ -21,8 +21,10 @@ defmodule Timeclock.System.Reactors.SyncCode do
     argument :code, result(:validate_code_format)
 
     run fn %{code: code}, _context ->
-      # Hook point: sync new/updated payroll code with Lua payroll export plugins
-      {:ok, code}
+      case Timeclock.Plugins.LuaRunner.dispatch("payroll.code_sync", %{code: code}) do
+        {:ok, _payload} -> {:ok, code}
+        {:error, reason} -> {:error, reason}
+      end
     end
   end
 
