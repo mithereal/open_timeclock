@@ -110,6 +110,12 @@ defmodule TimeclockWeb.Router do
 
       # Standard Employee Leave Submission Portal
       live "/time-off", TimeclockWeb.AbsenceRequestLive, :index
+      
+      live "/home/entries", TimeEntriesLive, :index
+
+      live "/home/adjustments", AdjustmentsLive, :index
+      
+      live "/home/delegations", ApprovalDelegationsLive, :index
     end
   end
 
@@ -143,6 +149,10 @@ defmodule TimeclockWeb.Router do
 
       # Encrypted System Settings & Swoosh SMTP Configuration
       live "/system-settings", SystemSettingsLive, :index
+
+      live "/admin/accounts", Admin.AccountsLive, :index
+
+      live "/admin/definitions", Admin.DefinitionsLive, :index
     end
 
     # Explicit Administrative Role Protection Session Scope

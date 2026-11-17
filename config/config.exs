@@ -16,10 +16,15 @@ config :timeclock, Oban,
   repo: Timeclock.Repo,
   queues: [
     default: 10,
+    workflow: 10,
     mailers: 10,
     ash_notifications: 5
   ],
-  plugins: [{Oban.Plugins.Cron, []}]
+  plugins: [
+    {Oban.Plugins.Pruner, max_age: 604_800},
+    {Oban.Plugins.Lifeline, rescue_after: :timer.minutes(30)},
+    {Oban.Plugins.Cron, []}
+  ]
 
 config :cinder,
   default_page_size: [default: 25, options: [10, 25, 50, 100]],
@@ -30,7 +35,7 @@ config :ash,
   include_embedded_source_by_default?: false,
   show_keysets_for_all_actions?: false,
   default_page_type: :keyset,
-  policies: [no_filter_static_forbidden_reads?: false, private_fields: :include],
+  policies: [no_filter_static_forbidden_reads?: false, private_fields: :hide],
   keep_read_action_loads_when_loading?: false,
   default_actions_require_atomic?: true,
   read_action_after_action_hooks_in_order?: true,
@@ -49,6 +54,8 @@ config :spark,
         :postgres,
         :resource,
         :code_interface,
+        :workflow,
+        :oban,
         :actions,
         :policies,
         :pub_sub,

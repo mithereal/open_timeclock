@@ -16,9 +16,6 @@ defmodule Timeclock.MixProject do
     ]
   end
 
-  # Configuration for the OTP application.
-  #
-  # Type `mix help compile.app` for more information.
   def application do
     [
       mod: {Timeclock.Application, []},
@@ -32,29 +29,31 @@ defmodule Timeclock.MixProject do
     ]
   end
 
-  # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
-  # Specifies your project dependencies.
-  #
-  # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:oban, "~> 2.0"},
-      {:ash_oban, "~> 0.7"},
-      {:cinder, "~> 0.8"},
-      {:picosat_elixir, "~> 0.2"},
-      {:sourceror, "~> 1.8"},
-      {:live_debugger, "~> 0.5", only: [:dev]},
-      {:ash_admin, "~> 0.13"},
-      {:ash_authentication_phoenix, "~> 2.0"},
-      {:ash_authentication, "~> 4.0"},
+      # Core Ash & Workflow Orchestration
+      {:ash, "~> 3.0"},
       {:ash_postgres, "~> 2.0"},
       {:ash_phoenix, "~> 2.0"},
-      {:ash_commanded, "~> 0.2.0"},
-      {:ash, "~> 3.0"},
+      {:ash_authentication, "~> 4.0"},
+      {:ash_authentication_phoenix, "~> 2.0"},
+      {:ash_admin, "~> 0.13"},
+      {:ash_oban, "~> 0.7"},
+      {:ash_state_machine, "~> 0.2"},
+      {:ash_workflow, "~> 0.1"},
+      {:reactor, "~> 0.15"},
+      {:ash_paper_trail, "~> 0.5.7"},
+      {:ash_archival, "~> 2.0.3"},
+      {:ash_sqids, "~> 0.1.0"},
+      {:oban, "~> 2.0"},
+      {:picosat_elixir, "~> 0.2"},
+      {:sourceror, "~> 1.8"},
       {:igniter, ">= 0.0.0"},
+
+      # Phoenix, LiveView & UI Components
       {:phoenix, "~> 1.8.3"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.13"},
@@ -62,8 +61,14 @@ defmodule Timeclock.MixProject do
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 1.1.0", override: true},
-      {:lazy_html, ">= 0.1.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
+      {:phoenix_live_favicon, "~> 1.0.0"},
+      {:gantt_ex, "~> 0.5.0"},
+      {:cinder, "~> 0.8"},
+      {:live_charts, "~> 0.4.0"},
+      {:mishka_chelekom, "~> 0.0.8", only: :dev},
+      {:live_debugger, "~> 0.5", only: [:dev]},
+      {:lazy_html, ">= 0.1.0", only: :test},
       {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.3", runtime: Mix.env() == :dev},
       {:heroicons,
@@ -73,45 +78,37 @@ defmodule Timeclock.MixProject do
        app: false,
        compile: false,
        depth: 1},
+
+      # Mailer, HTTP & Security
       {:swoosh, "~> 1.21"},
+      {:phoenix_swoosh, "~> 1.2"},
+      {:premailex, "~> 0.3.0"},
+      {:gen_smtp, "~> 1.2"},
       {:req, "~> 0.5"},
+      {:hackney, ">= 0.0.0"},
+      {:cloak_ecto, "~> 1.3"},
+      {:cors_plug, "~> 3.0"},
+      {:plug_health, "~> 0.1.0"},
+      {:bandit, "~> 1.5"},
+      {:dns_cluster, "~> 0.2.0"},
+
+      # Utilities, Timezones & Telemetry
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 1.0", override: true},
       {:jason, "~> 1.2"},
-      {:dns_cluster, "~> 0.2.0"},
-      {:bandit, "~> 1.5"},
-      {:ash_sqids, "~> 0.1.0"},
-      {:phoenix_live_favicon, "~> 1.0.0"},
-      {:premailex, "~> 0.3.0"},
-      {:phoenix_swoosh, "~> 1.2"},
-      {:mishka_chelekom, "~> 0.0.8", only: :dev},
-      {:plug_health, "~> 0.1.0"},
-      {:observer_cli, "~> 1.8"},
+      {:recase, "~> 0.5"},
       {:maybe, "~> 1.0"},
       {:phoenix_copy, ">= 0.0.0"},
-      {:gen_smtp, "~> 1.2"},
-      {:hackney, ">= 0.0.0"},
-      {:recase, "~> 0.5"},
-      {:live_charts, "~> 0.4.0"},
-      {:cors_plug, "~> 3.0"},
+      {:observer_cli, "~> 1.8"},
       {:ex_cldr, "~> 2.46"},
-      {:cloak_ecto, "~> 1.3"},
       {:tz, "~> 0.28"},
-      {:ash_paper_trail, "~> 0.5.7"},
-      {:ash_archival, "~> 2.0.3"},
-      {:glific_phil_columns, "~> 3.2"},
       {:timex, "~> 3.7", override: true},
-      {:faker, "~> 0.18.0"}
+      {:glific_phil_columns, "~> 3.2"},
+      {:faker, "~> 0.18.0", only: [:dev, :test]}
     ]
   end
 
-  # Aliases are shortcuts or tasks specific to the current project.
-  # For example, to install project dependencies and perform other setup tasks, run:
-  #
-  #     $ mix setup
-  #
-  # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
       seed: ["phil_columns.seed"],
