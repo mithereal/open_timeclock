@@ -24,8 +24,10 @@ defmodule Timeclock.Scheduling.Reactors.SyncShift do
     argument :shift, result(:validate_shift_template)
 
     run fn %{shift: shift}, _context ->
-      # Hook point: notify Lua night-differential, break-deduction, or overtime plugins
-      {:ok, shift}
+      case Timeclock.Plugins.LuaRunner.dispatch("shift.differential", %{shift: shift}) do
+        {:ok, _payload} -> {:ok, shift}
+        {:error, reason} -> {:error, reason}
+      end
     end
   end
 

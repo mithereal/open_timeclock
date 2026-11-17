@@ -24,8 +24,10 @@ defmodule Timeclock.Scheduling.Reactors.SyncSchedule do
     argument :schedule, result(:verify_schedule_window)
 
     run fn %{schedule: sched}, _context ->
-      # Hook point: invoke Lua predictive-scheduling, clopen-check, or overtime forecast plugins
-      {:ok, sched}
+      case Timeclock.Plugins.LuaRunner.dispatch("schedule.synced", %{schedule: sched}) do
+        {:ok, _payload} -> {:ok, sched}
+        {:error, reason} -> {:error, reason}
+      end
     end
   end
 
