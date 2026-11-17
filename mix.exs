@@ -102,6 +102,7 @@ defmodule Timeclock.MixProject do
       {:phoenix_copy, ">= 0.0.0"},
       {:observer_cli, "~> 1.8"},
       {:ex_cldr, "~> 2.46"},
+      {:luerl, "~> 1.2"},
       {:tz, "~> 0.28"},
       {:timex, "~> 3.7", override: true},
       {:glific_phil_columns, "~> 3.2"},

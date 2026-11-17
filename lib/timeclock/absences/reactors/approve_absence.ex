@@ -1,41 +1,50 @@
 defmodule Timeclock.Absences.Reactors.ApproveAbsence do
   use Ash.Reactor
+  require Logger
 
   input :record
 
-  step :validate_accrual_balance do
+  step :verify_approval_state do
     argument :absence, input(:record)
 
-    run fn %{absence: absence}, _context ->
-      # Check PTO/sick balance; return {:error, :insufficient_balance} to halt & rollback
-      {:ok, %{validated: true, absence_id: absence.id}}
+    run fn
+      %{absence: %Timeclock.Absences.Absence{state: :approved} = absence}, _context ->
+        {:ok, absence}
+
+      _invalid, _context ->
+        {:error, :absence_not_in_approved_state}
     end
   end
 
   step :run_lua_absence_hooks do
-    argument :absence, input(:record)
-    wait_for :validate_accrual_balance
+    argument :absence, result(:verify_approval_state)
 
     run fn %{absence: absence}, _context ->
-      # Invoke your Lua sandbox hook: "absence.after_approve"
-      {:ok, absence}
+      case Timeclock.Plugins.LuaRunner.dispatch("absence.after_approve", %{absence: absence}) do
+        {:ok, _payload} -> {:ok, absence}
+        {:error, reason} -> {:error, reason}
+      end
     end
   end
 
-  step :broadcast_update do
-    argument :absence, input(:record)
-    wait_for :run_lua_absence_hooks
+  step :broadcast_absence_approved do
+    argument :absence, result(:run_lua_absence_hooks)
 
     run fn %{absence: absence}, _context ->
-      Phoenix.PubSub.broadcast(
-        Timeclock.PubSub,
-        "absences:#{absence.user_id}",
-        {:absence_approved, absence.id}
-      )
+      case Phoenix.PubSub.broadcast(
+             Timeclock.PubSub,
+             "absences:#{absence.user_id}",
+             {:absence_approved, absence.id}
+           ) do
+        :ok ->
+          {:ok, absence}
 
-      {:ok, absence}
+        {:error, reason} ->
+          Logger.warning("Failed to broadcast absence approval #{absence.id}: #{inspect(reason)}")
+          {:ok, absence}
+      end
     end
   end
 
-  return :broadcast_update
+  return :broadcast_absence_approved
 end

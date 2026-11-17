@@ -114,7 +114,7 @@ defmodule TimeclockWeb.Router do
       live "/home/entries", TimeEntriesLive, :index
 
       live "/home/adjustments", AdjustmentsLive, :index
-      
+
       live "/home/delegations", ApprovalDelegationsLive, :index
     end
   end
@@ -150,9 +150,11 @@ defmodule TimeclockWeb.Router do
       # Encrypted System Settings & Swoosh SMTP Configuration
       live "/system-settings", SystemSettingsLive, :index
 
-      live "/admin/accounts", Admin.AccountsLive, :index
+      live "/accounts", Admin.AccountsLive, :index
 
-      live "/admin/definitions", Admin.DefinitionsLive, :index
+      live "/definitions", Admin.DefinitionsLive, :index
+
+      live "/plugins", Admin.PluginsLive, :index
     end
 
     # Explicit Administrative Role Protection Session Scope

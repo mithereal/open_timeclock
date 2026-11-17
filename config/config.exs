@@ -89,7 +89,8 @@ config :timeclock,
     Timeclock.Projects,
     Timeclock.System,
     Timeclock.Scheduling,
-    Timeclock.TimeTracking
+    Timeclock.TimeTracking,
+    Timeclock.Plugins
   ],
   ash_authentication: [return_error_on_invalid_magic_link_token?: true]
 

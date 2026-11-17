@@ -24,17 +24,8 @@ defmodule Timeclock.Calendar.Reactors.SyncCalendarEvent do
     end
   end
 
-  step :run_lua_holiday_hooks do
-    argument :event, result(:validate_event_dates)
-
-    run fn %{event: event}, _context ->
-      # Hook point: notify Lua holiday pay / differential plugins of event update
-      {:ok, event}
-    end
-  end
-
   step :broadcast_event_updated do
-    argument :event, result(:run_lua_holiday_hooks)
+    argument :event, result(:validate_event_dates)
 
     run fn %{event: event}, _context ->
       case Phoenix.PubSub.broadcast(

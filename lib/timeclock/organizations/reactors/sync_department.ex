@@ -24,17 +24,8 @@ defmodule Timeclock.Organizations.Reactors.SyncDepartment do
     end
   end
 
-  step :run_lua_department_hooks do
-    argument :department, result(:validate_department_defaults)
-
-    run fn %{department: dept}, _context ->
-      # Hook point: notify Lua scheduling, routing, or payroll plugins of department update
-      {:ok, dept}
-    end
-  end
-
   step :broadcast_department_updated do
-    argument :department, result(:run_lua_department_hooks)
+    argument :department, result(:validate_department_defaults)
 
     run fn %{department: dept}, _context ->
       case Phoenix.PubSub.broadcast(

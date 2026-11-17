@@ -8,7 +8,14 @@ defmodule Timeclock.Clocking.Reactors.SyncClockingDefinition do
     argument :definition, input(:record)
 
     run fn
-      %{definition: %Timeclock.Clocking.Definition{id: id, in_clocking_definition_id: in_id, out_clocking_definition_id: out_id} = defn},
+      %{
+        definition:
+          %Timeclock.Clocking.Definition{
+            id: id,
+            in_clocking_definition_id: in_id,
+            out_clocking_definition_id: out_id
+          } = defn
+      },
       _context
       when id != in_id and id != out_id ->
         {:ok, defn}
@@ -18,17 +25,8 @@ defmodule Timeclock.Clocking.Reactors.SyncClockingDefinition do
     end
   end
 
-  step :run_lua_definition_hooks do
-    argument :definition, result(:validate_definition_pairing)
-
-    run fn %{definition: defn}, _context ->
-      # Hook point: notify Lua punch-type / kiosk button plugins of definition change
-      {:ok, defn}
-    end
-  end
-
   step :broadcast_definition_updated do
-    argument :definition, result(:run_lua_definition_hooks)
+    argument :definition, result(:validate_definition_pairing)
 
     run fn %{definition: defn}, _context ->
       case Phoenix.PubSub.broadcast(

@@ -9,9 +9,10 @@ defmodule Timeclock.Clocking.Reactors.ProcessClockingPunch do
 
     run fn
       %{clocking: %Timeclock.Clocking.Clocking{} = clocking}, _context ->
-        # Hook point: run Lua geofence, shift-window, or device plugins ("punch.before_verify")
-        # Return {:error, :outside_geofence} to automatically transition the workflow to :flagged
-        {:ok, clocking}
+        case Timeclock.Plugins.LuaRunner.dispatch("punch.before_verify", %{clocking: clocking}) do
+          {:ok, _payload} -> {:ok, clocking}
+          {:error, reason} -> {:error, reason}
+        end
 
       _invalid, _context ->
         {:error, :invalid_clocking_record}
@@ -22,7 +23,6 @@ defmodule Timeclock.Clocking.Reactors.ProcessClockingPunch do
     argument :clocking, result(:validate_lua_punch_rules)
 
     run fn %{clocking: clocking}, _context ->
-      # Hook point: open or close the corresponding Timeclock.TimeTracking.TimeEntry
       {:ok, clocking}
     end
   end

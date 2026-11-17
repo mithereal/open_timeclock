@@ -4,16 +4,13 @@ defmodule Timeclock.Approvals.Reactors.SetupApprovalDefinition do
 
   input :record
 
-  step :validate_parameter_rules do
+  step :validate_definition_rules do
     argument :definition, input(:record)
 
     run fn
-      %{definition: %Timeclock.Approvals.Definition{end_time_parameter_required: true, start_time_parameter_required: false}},
-      _context ->
-        {:error, :end_time_requires_start_time}
-
-      %{definition: %Timeclock.Approvals.Definition{} = definition}, _context ->
-        {:ok, definition}
+      %{definition: %Timeclock.Approvals.Definition{name: name} = defn}, _context
+      when is_binary(name) and byte_size(name) >= 2 ->
+        {:ok, defn}
 
       _invalid, _context ->
         {:error, :invalid_approval_definition}
@@ -21,20 +18,20 @@ defmodule Timeclock.Approvals.Reactors.SetupApprovalDefinition do
   end
 
   step :broadcast_definition_updated do
-    argument :definition, result(:validate_parameter_rules)
+    argument :definition, result(:validate_definition_rules)
 
-    run fn %{definition: definition}, _context ->
+    run fn %{definition: defn}, _context ->
       case Phoenix.PubSub.broadcast(
              Timeclock.PubSub,
              "approval_definitions",
-             {:approval_definition_updated, definition.id}
+             {:approval_definition_updated, defn.id, defn.name}
            ) do
         :ok ->
-          {:ok, definition}
+          {:ok, defn}
 
         {:error, reason} ->
-          Logger.warning("Failed to broadcast approval definition update: #{inspect(reason)}")
-          {:ok, definition}
+          Logger.warning("Failed to broadcast approval definition #{defn.id}: #{inspect(reason)}")
+          {:ok, defn}
       end
     end
   end

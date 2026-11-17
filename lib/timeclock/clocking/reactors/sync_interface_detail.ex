@@ -11,7 +11,6 @@ defmodule Timeclock.Clocking.Reactors.SyncInterfaceDetail do
     run fn
       %{detail: %Timeclock.Clocking.InterfaceDetail{id: id, is_default: true} = detail},
       _context ->
-        # Demote any other default button atomically so only one default kiosk button exists
         from(d in Timeclock.Clocking.InterfaceDetail,
           where: d.id != ^id and d.is_default == true
         )
@@ -27,17 +26,8 @@ defmodule Timeclock.Clocking.Reactors.SyncInterfaceDetail do
     end
   end
 
-  step :run_lua_kiosk_ui_hooks do
-    argument :detail, result(:enforce_single_default)
-
-    run fn %{detail: detail}, _context ->
-      # Hook point: notify Athanor / Lua kiosk UI plugins of button layout change
-      {:ok, detail}
-    end
-  end
-
   step :broadcast_kiosk_layout_updated do
-    argument :detail, result(:run_lua_kiosk_ui_hooks)
+    argument :detail, result(:enforce_single_default)
 
     run fn %{detail: detail}, _context ->
       case Phoenix.PubSub.broadcast(

@@ -17,17 +17,8 @@ defmodule Timeclock.Calendar.Reactors.SyncCalendarGroup do
     end
   end
 
-  step :run_lua_group_hooks do
-    argument :group, result(:validate_group_structure)
-
-    run fn %{group: group}, _context ->
-      # Hook point: notify Lua scheduling/holiday plugins of calendar group change
-      {:ok, group}
-    end
-  end
-
   step :broadcast_group_updated do
-    argument :group, result(:run_lua_group_hooks)
+    argument :group, result(:validate_group_structure)
 
     run fn %{group: group}, _context ->
       case Phoenix.PubSub.broadcast(

@@ -17,17 +17,8 @@ defmodule Timeclock.Organizations.Reactors.SyncCompany do
     end
   end
 
-  step :run_lua_company_hooks do
-    argument :company, result(:validate_company_entity)
-
-    run fn %{company: company}, _context ->
-      # Hook point: notify Lua payroll, jurisdiction tax, or compliance plugins of company setup
-      {:ok, company}
-    end
-  end
-
   step :broadcast_company_updated do
-    argument :company, result(:run_lua_company_hooks)
+    argument :company, result(:validate_company_entity)
 
     run fn %{company: company}, _context ->
       case Phoenix.PubSub.broadcast(

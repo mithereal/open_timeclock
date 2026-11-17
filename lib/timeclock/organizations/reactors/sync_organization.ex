@@ -17,17 +17,8 @@ defmodule Timeclock.Organizations.Reactors.SyncOrganization do
     end
   end
 
-  step :run_lua_organization_hooks do
-    argument :organization, result(:validate_organization_entity)
-
-    run fn %{organization: org}, _context ->
-      # Hook point: initialize tenant sandbox or notify Lua plugins of organization update
-      {:ok, org}
-    end
-  end
-
   step :broadcast_organization_updated do
-    argument :organization, result(:run_lua_organization_hooks)
+    argument :organization, result(:validate_organization_entity)
 
     run fn %{organization: org}, _context ->
       case Phoenix.PubSub.broadcast(

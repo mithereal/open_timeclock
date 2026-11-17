@@ -4,29 +4,26 @@ defmodule Timeclock.Approvals.Reactors.FinalizeApproval do
 
   input :record
 
-  step :verify_approval_signature do
+  step :verify_approval_signoff do
     argument :approval, input(:record)
 
     run fn
-      %{approval: %Timeclock.Approvals.Approval{status_set_by_user_id: reviewer_id} = approval},
-      _context
-      when not is_nil(reviewer_id) ->
+      %{approval: %Timeclock.Approvals.Approval{state: :approved} = approval}, _context ->
         {:ok, approval}
 
-      %{approval: %Timeclock.Approvals.Approval{status_set_by_user_id: nil}}, _context ->
-        {:error, :missing_approver_signature}
-
       _invalid, _context ->
-        {:error, :invalid_approval_record}
+        {:error, :approval_not_in_approved_state}
     end
   end
 
   step :run_lua_approval_hooks do
-    argument :approval, result(:verify_approval_signature)
+    argument :approval, result(:verify_approval_signoff)
 
     run fn %{approval: approval}, _context ->
-      # Hook point: invoke Lua plugins subscribed to "approval.after_approve"
-      {:ok, approval}
+      case Timeclock.Plugins.LuaRunner.dispatch("approval.after_approve", %{approval: approval}) do
+        {:ok, _payload} -> {:ok, approval}
+        {:error, reason} -> {:error, reason}
+      end
     end
   end
 
@@ -37,7 +34,7 @@ defmodule Timeclock.Approvals.Reactors.FinalizeApproval do
       case Phoenix.PubSub.broadcast(
              Timeclock.PubSub,
              "approvals:#{approval.user_id}",
-             {:approval_completed, approval.id, approval.status}
+             {:approval_completed, approval.id}
            ) do
         :ok ->
           {:ok, approval}
