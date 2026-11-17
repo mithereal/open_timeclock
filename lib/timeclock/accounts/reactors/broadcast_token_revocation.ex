@@ -21,8 +21,11 @@ defmodule Timeclock.Accounts.Reactors.BroadcastTokenRevocation do
     argument :revocation, result(:extract_revocation_subject)
 
     run fn %{revocation: revocation}, _context ->
-      # Hook point: notify Lua security/SIEM audit plugins of token revocation (never pass raw JTI)
-      {:ok, revocation}
+      # Never pass raw JWT/JTI identifiers to Lua plugins
+      case Timeclock.Plugins.LuaRunner.dispatch("security.token_revoked", %{revocation: revocation}) do
+        {:ok, _payload} -> {:ok, revocation}
+        {:error, reason} -> {:error, reason}
+      end
     end
   end
 
@@ -30,7 +33,7 @@ defmodule Timeclock.Accounts.Reactors.BroadcastTokenRevocation do
     argument :revocation, result(:run_lua_security_audit_hooks)
 
     run fn %{revocation: %{subject: subject} = revocation}, _context ->
-      # LiveViews subscribed to "accounts:sessions:#{subject}" can force immediate disconnect
+      # LiveViews subscribed to "accounts:sessions:#{subject}" force immediate disconnect
       case Phoenix.PubSub.broadcast(
              Timeclock.PubSub,
              "accounts:sessions:#{subject}",
