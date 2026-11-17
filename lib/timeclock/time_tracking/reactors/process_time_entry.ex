@@ -26,8 +26,10 @@ defmodule Timeclock.TimeTracking.Reactors.ProcessTimeEntry do
     argument :entry, result(:validate_geolocation_if_present)
 
     run fn %{entry: entry}, _context ->
-      # Hook point: invoke Lua overtime, break-compliance, or job-costing plugins
-      {:ok, entry}
+      case Timeclock.Plugins.LuaRunner.dispatch("time_entry.after_record", %{entry: entry}) do
+        {:ok, _payload} -> {:ok, entry}
+        {:error, reason} -> {:error, reason}
+      end
     end
   end
 

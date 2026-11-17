@@ -17,17 +17,8 @@ defmodule Timeclock.Accounts.Reactors.SyncRole do
     end
   end
 
-  step :run_lua_rbac_hooks do
-    argument :role, result(:validate_role_permissions)
-
-    run fn %{role: role}, _context ->
-      # Hook point: notify Lua RBAC & plugin permission sandbox of updated role permissions
-      {:ok, role}
-    end
-  end
-
   step :broadcast_role_updated do
-    argument :role, result(:run_lua_rbac_hooks)
+    argument :role, result(:validate_role_permissions)
 
     run fn %{role: role}, _context ->
       payload = %{

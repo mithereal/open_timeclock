@@ -47,8 +47,10 @@ defmodule Timeclock.TimeTracking.Reactors.ValidateGeolocation do
     argument :check_result, result(:check_geofence_radius)
 
     run fn %{check_result: res}, _context ->
-      # Hook point: invoke Lua geofence/zone plugins ("geolocation.validate")
-      {:ok, res}
+      case Timeclock.Plugins.LuaRunner.dispatch("geolocation.validate", res) do
+        {:ok, _payload} -> {:ok, res}
+        {:error, reason} -> {:error, reason}
+      end
     end
   end
 

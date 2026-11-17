@@ -17,17 +17,8 @@ defmodule Timeclock.Accounts.Reactors.SyncUserRole do
     end
   end
 
-  step :run_lua_rbac_assignment_hooks do
-    argument :user_role, result(:validate_assignment_keys)
-
-    run fn %{user_role: ur}, _context ->
-      # Hook point: notify Lua RBAC / permission cache plugins of user role change
-      {:ok, ur}
-    end
-  end
-
   step :broadcast_user_role_changed do
-    argument :user_role, result(:run_lua_rbac_assignment_hooks)
+    argument :user_role, result(:validate_assignment_keys)
 
     run fn %{user_role: ur}, _context ->
       payload = %{

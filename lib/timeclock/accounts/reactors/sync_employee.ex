@@ -18,17 +18,8 @@ defmodule Timeclock.Accounts.Reactors.SyncEmployee do
     end
   end
 
-  step :run_lua_employee_hooks do
-    argument :employee, result(:validate_employee_record)
-
-    run fn %{employee: employee}, _context ->
-      # Hook point: invoke Lua accrual-tier, department-routing, or payroll plugins
-      {:ok, employee}
-    end
-  end
-
   step :broadcast_employee_updated do
-    argument :employee, result(:run_lua_employee_hooks)
+    argument :employee, result(:validate_employee_record)
 
     run fn %{employee: employee}, _context ->
       payload = %{

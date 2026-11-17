@@ -18,17 +18,8 @@ defmodule Timeclock.Accounts.Reactors.SyncManager do
     end
   end
 
-  step :run_lua_manager_routing_hooks do
-    argument :manager, result(:validate_manager_assignment)
-
-    run fn %{manager: manager}, _context ->
-      # Hook point: notify Lua approval-routing & escalation plugins of department manager change
-      {:ok, manager}
-    end
-  end
-
   step :broadcast_manager_updated do
-    argument :manager, result(:run_lua_manager_routing_hooks)
+    argument :manager, result(:validate_manager_assignment)
 
     run fn %{manager: manager}, _context ->
       payload = %{

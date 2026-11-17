@@ -27,17 +27,8 @@ defmodule Timeclock.Accounts.Reactors.SyncUserLifecycle do
     end
   end
 
-  step :run_lua_user_hooks do
-    argument :user, result(:enforce_session_security)
-
-    run fn %{user: user}, _context ->
-      # Hook point: notify Lua HRIS, SSO, or audit plugins ("user.lifecycle_changed")
-      {:ok, user}
-    end
-  end
-
   step :broadcast_user_lifecycle do
-    argument :user, result(:run_lua_user_hooks)
+    argument :user, result(:enforce_session_security)
 
     run fn %{user: user}, _context ->
       payload = %{

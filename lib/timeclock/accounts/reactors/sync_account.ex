@@ -1,57 +1,56 @@
-defmodule Timeclock.Accounts.Reactors.SyncAccount do
+defmodule Timeclock.TimeTracking.Reactors.ProcessTimeEntry do
   use Ash.Reactor
   require Logger
 
   input :record
 
-  step :validate_account_invariants do
-    argument :account, input(:record)
+  step :validate_geolocation_if_present do
+    argument :entry, input(:record)
 
     run fn
-      %{account: %Timeclock.Accounts.Account{custom_id: cid, assigned_pin: pin} = account}, _context
-      when is_binary(cid) and is_integer(pin) and pin >= 1000 ->
-        {:ok, account}
+      %{entry: %Timeclock.TimeTracking.TimeEntry{geolocation: nil} = entry}, _context ->
+        {:ok, entry}
+
+      %{entry: %Timeclock.TimeTracking.TimeEntry{geolocation: geo} = entry}, _context ->
+        case Reactor.run(Timeclock.TimeTracking.Reactors.ValidateGeolocation, %{geolocation: geo}) do
+          {:ok, _res} -> {:ok, entry}
+          {:error, reason} -> {:error, reason}
+        end
 
       _invalid, _context ->
-        {:error, :invalid_account_record}
+        {:error, :invalid_time_entry_record}
     end
   end
 
-  step :run_lua_hr_sync_hooks do
-    argument :account, result(:validate_account_invariants)
+  step :run_lua_time_entry_hooks do
+    argument :entry, result(:validate_geolocation_if_present)
 
-    run fn %{account: account}, _context ->
-      # Hook point: invoke Lua HRIS, badge-reader, or payroll employee sync plugins
-      {:ok, account}
-    end
-  end
-
-  step :broadcast_account_updated do
-    argument :account, result(:run_lua_hr_sync_hooks)
-
-    run fn %{account: account}, _context ->
-      # Never include sensitive assigned_pin in PubSub payloads
-      payload = %{
-        id: account.id,
-        custom_id: account.custom_id,
-        is_archived: account.is_archived,
-        state: account.state
-      }
-
-      case Phoenix.PubSub.broadcast(
-             Timeclock.PubSub,
-             "accounts:#{account.id}",
-             {:account_updated, payload}
-           ) do
-        :ok ->
-          {:ok, account}
-
-        {:error, reason} ->
-          Logger.warning("Failed to broadcast account #{account.id}: #{inspect(reason)}")
-          {:ok, account}
+    run fn %{entry: entry}, _context ->
+      case Timeclock.Plugins.LuaRunner.dispatch("time_entry.after_record", %{entry: entry}) do
+        {:ok, _payload} -> {:ok, entry}
+        {:error, reason} -> {:error, reason}
       end
     end
   end
 
-  return :broadcast_account_updated
+  step :broadcast_time_entry_recorded do
+    argument :entry, result(:run_lua_time_entry_hooks)
+
+    run fn %{entry: entry}, _context ->
+      case Phoenix.PubSub.broadcast(
+             Timeclock.PubSub,
+             "time_entries:#{entry.user_id}",
+             {:time_entry_recorded, entry.id, entry.direction, entry.timestamp}
+           ) do
+        :ok ->
+          {:ok, entry}
+
+        {:error, reason} ->
+          Logger.warning("Failed to broadcast time entry #{entry.id}: #{inspect(reason)}")
+          {:ok, entry}
+      end
+    end
+  end
+
+  return :broadcast_time_entry_recorded
 end
