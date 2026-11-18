@@ -1,5 +1,7 @@
 defmodule Timeclock.TimeTracking.Geolocation do
-  @moduledoc false
+  @moduledoc """
+  Hardened embedded resource representing WGS-84 GPS coordinates for time entries and locations.
+  """
   use Ash.Resource,
     data_layer: :embedded,
     embed_nil_values?: false
@@ -9,18 +11,28 @@ defmodule Timeclock.TimeTracking.Geolocation do
 
     attribute :latitude, :float do
       public? true
+      allow_nil? false
+      constraints min: -90.0, max: 90.0
     end
 
     attribute :longitude, :float do
       public? true
+      allow_nil? false
+      constraints min: -180.0, max: 180.0
     end
   end
 
-  validations do
-    validate present([:latitude, :longitude]), on: [:create, :update]
-  end
-
   actions do
-    defaults [:read, :destroy, create: :*]
+    defaults [:read, :destroy]
+
+    create :create do
+      primary? true
+      accept [:latitude, :longitude]
+    end
+
+    update :update do
+      primary? true
+      accept [:latitude, :longitude]
+    end
   end
 end
